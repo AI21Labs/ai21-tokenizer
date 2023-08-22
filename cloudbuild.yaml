@@ -1,0 +1,94 @@
+steps:
+  - id: sonarqube-scan
+    name: us-docker.pkg.dev/${PROJECT_ID}/infra-docker/sonar-scanner
+    entrypoint: bash
+    args:
+      - -c
+      - if [ $BRANCH_NAME == "master" ]; then sonar-scanner -Dsonar.host.url=http://sonarqube.publishing-testing.ai21.com/sonarqube/ -Dsonar.projectKey=$_GIT_REPO -Dsonar.sources=. -Dsonar.qualitygate.wait=true; fi
+
+  - id: fetch-code
+    name: gcr.io/cloud-builders/git
+    args: [fetch, --unshallow, --tags]
+
+  - id: setup-ssh-access
+    name: gcr.io/cloud-builders/git
+    entrypoint: /bin/sh
+    secretEnv:
+      - BITBUCKET_SSH_KEY
+    volumes:
+      - name: ssh-key
+        path: /root/.ssh
+    args:
+      - -c
+      - |
+        mkdir -p /root/.ssh
+        echo "$${BITBUCKET_SSH_KEY}" > /root/.ssh/id_rsa
+        chmod 600 /root/.ssh/id_rsa
+        ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts
+
+  # Rename the current branch as CloudBuild set it to `master`. Required for semantic-release
+  - id: rename-current-branch
+    name: gcr.io/cloud-builders/git
+    args: [branch, -m, $BRANCH_NAME]
+
+  - id: unit-tests
+    name: python:3.10.6-slim
+    entrypoint: bash
+    args:
+      - -eEuo
+      - pipefail
+      - -c
+      - |-
+        pip install poetry keyrings.google-artifactregistry-auth
+        poetry config virtualenvs.create false
+        poetry install --no-root --with=dev
+        python -m pytest
+
+  - id: semantic-release
+    name: us-docker.pkg.dev/publishing-337912/infra-docker/ai21-repo-utils/ci-semantic-release:latest
+    volumes:
+      - name: ssh-key
+        path: /root/.ssh
+    env:
+      - GIT_AUTHOR_NAME=release-bot
+      - GIT_AUTHOR_EMAIL=release-bot@ai21.com
+      - GIT_COMMITTER_NAME=release-bot
+      - GIT_COMMITTER_EMAIL=release-bot@ai21.com
+      - SEMANTIC_RELEASE_PACKAGE=$_GIT_REPO
+      - SLACK_CHANNEL=Jurassic Tokenization-releases
+      - PYTHON_ARTIFACT_REGISTRY=${_AR_PYTHON_REPO}
+    secretEnv:
+      - SLACK_TOKEN
+    args:
+      - --repository-url
+      - git@bitbucket.org:ai21labs/$_GIT_REPO
+      - --no-ci
+      - --debug
+    waitFor:
+      - setup-ssh-access
+      - rename-current-branch
+
+  - id: cleanup-semantic-release-notes
+    name: gcr.io/cloud-builders/git
+    volumes:
+      - name: ssh-key
+        path: /root/.ssh
+    args:
+      - push
+      - -u
+      - git@bitbucket.org:ai21labs/$_GIT_REPO
+      - :refs/notes/semantic-release
+    waitFor:
+      - semantic-release
+
+availableSecrets:
+  secretManager:
+    - env: BITBUCKET_SSH_KEY
+      versionName: projects/$PROJECT_ID/secrets/bitbucket-semantic-release-ssh-key/versions/latest
+    - env: SLACK_TOKEN
+      versionName: projects/$PROJECT_ID/secrets/semantic-release-slack-bot-token/versions/latest
+
+timeout: 300s
+options:
+  pool:
+    name: projects/$PROJECT_ID/locations/us-central1/workerPools/E2-STANDARD-2

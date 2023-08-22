@@ -1,0 +1,124 @@
+minimum_pre_commit_version: 2.20.0
+fail_fast: false
+default_stages:
+  - commit
+exclude: (.idea|vscode)
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: detect-private-key
+      - id: no-commit-to-branch
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 3.0.0
+    hooks:
+      - id: forbid-binary
+      - id: git-check
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: 3.5.3
+    hooks:
+      - id: commitizen
+        name: Lint commit message
+        stages:
+          - commit-msg
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.23.3
+    hooks:
+      - id: check-jsonschema
+        name: Validate Pre-commit
+        files: .*\.pre-commit-config\.yaml
+        types:
+          - yaml
+        args:
+          - --schemafile
+          - https://json.schemastore.org/pre-commit-config.json
+      - id: check-jsonschema
+        name: Validate YamlLint configuration
+        files: .*\.yamllint\.yaml
+        types:
+          - yaml
+        args:
+          - --schemafile
+          - https://json.schemastore.org/yamllint.json
+      - id: check-jsonschema
+        name: Validate Prettier configuration
+        files: .*\.prettierrc\.yaml
+        types:
+          - yaml
+        args:
+          - --schemafile
+          - http://json.schemastore.org/prettierrc
+      - id: check-jsonschema
+        name: Validate ArgoWorkflow files
+        files: ^workflows/template/.*
+        types:
+          - yaml
+        args:
+          - --verbose
+          - --schemafile
+          - https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json
+  - repo: https://github.com/python-poetry/poetry
+    rev: 1.5.0
+    hooks:
+      - id: poetry-check
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.32.0
+    hooks:
+      - id: yamllint
+        name: Lint YAML files
+        args:
+          - --format
+          - parsable
+          - --strict
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.5
+    hooks:
+      - id: shellcheck
+        name: Check sh files (and patch)
+        entry: bash -eo pipefail -c 'shellcheck $@ -f diff | patch -p 1' --
+      - id: shellcheck
+        name: Check sh files (and print violations)
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.0.0
+    hooks:
+      - id: prettier
+        name: Formatter
+        additional_dependencies:
+          - prettier@2.8.8
+          - "prettier-plugin-sh@0.12.8" # https://github.com/un-ts/prettier/tree/master/packages/sh
+        types_or:
+          - yaml
+          - markdown
+          - shell
+  - repo: https://github.com/psf/black
+    rev: 23.7.0
+    hooks:
+      - id: black
+        types:
+          - python
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.280
+    hooks:
+      - id: ruff
+        args:
+          - --fix
+  - repo: local
+    hooks:
+      - id: hadolint
+        name: Lint Dockerfiles
+        language: docker_image
+        entry: hadolint/hadolint:v2.10.0 hadolint
+        types:
+          - dockerfile
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
