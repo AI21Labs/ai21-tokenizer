@@ -1,0 +1,99 @@
+[tool.black]
+line-length = 120
+target_version = ['py310']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs          # exclude a few common directories in the
+    | \.git           # root of the project
+    | \.pytest_cache
+    | \.mypy_cache
+    | \.venv
+    | venv
+    | _build
+    | build
+    | dist
+    | pynguin.egg-info
+  )/
+)
+'''
+
+[tool.isort]
+py_version = 310
+profile = "black"
+combine_as_imports = true
+lines_between_types = 1
+lines_after_imports = 2
+src_paths = [ "jurassic_tokenization", "tests"]
+
+[tool.coverage.run]
+
+branch = true
+source = ["jurassic_tokenization", "tests"]
+omit = ["tests/fixtures/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "def __repr__",
+  "def __str__",
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+  "if typing.TYPE_CHECKING:"
+]
+
+[tool.coverage.html]
+directory = "cov_html"
+
+[tool.coverage.xml]
+directory = "coverage.xml"
+
+[tool.commitizen]
+name = "cz_customize"
+
+[tool.commitizen.customize]
+schema_pattern = "(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|bump):(\\s.*)"
+
+[tool.poetry]
+name = "jurassic-tokenization"
+version = "0.0.0"
+description = ""
+authors = ["AI21 Labs"]
+readme = "README.md"
+packages = [
+    { include = "jurassic_tokenization" }
+]
+include = [
+    { path = "tests", format = "sdist" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+invoke = "*"
+isort = "*"
+mypy = "*"
+safety = "*"
+ruff = "*"
+
+
+[tool.poetry.group.test.dependencies]
+coverage = "^7.1.0"
+pytest = "7.2.1"
+pytest-cov = "4.0.0"
+pytest-mock = "3.10.0"
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "primary"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = [
+  "poetry-core",
+]
