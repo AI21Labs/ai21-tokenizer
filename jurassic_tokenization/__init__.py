@@ -45,8 +45,6 @@ class JurassicTokenizer:
         vocab_name: str | None = VOCAB_NAME,
         config: dict[str, Any] | None = None,
     ):
-        # assert (not (vocab_path.endswith(".model") or vocab_path.endswith(".args"))), \
-        #     "Expected path to vocab without .args/.model extension"
         self._vocab_path = vocab_path
         self._vocab_name = vocab_name
 
@@ -77,7 +75,7 @@ class JurassicTokenizer:
         self.space_mode = config.get("space_mode", None)
         self._space_tokens = self._map_space_tokens()
 
-    def _map_space_tokens(self):
+    def _map_space_tokens(self) -> list[SpaceSymbol]:
         res = []
         for count in range(32, 0, -1):
             tok_id = self.convert_tokens_to_ids("▁" * count)
@@ -92,27 +90,31 @@ class JurassicTokenizer:
         return load_binary(with_extension(path=self._vocab_path / self._vocab_name, suffix=".model"))
 
     @property
-    def vocab_size(self):
+    def vocab_size(self) -> int:
         return self._sp.vocab_size()
 
-    def _encode(self, text):
+    def _encode(self, text: str) -> list[int]:
         if self.space_mode is None:
             return self._sp.encode(text)
-        assert self.space_mode == "left"
-        assert self._manual_add_dummy_prefix, "Space Encoding is only supported with manual dummy prefix"
+        # assert self.space_mode == "left"
+        # assert self._manual_add_dummy_prefix, "Space Encoding is only supported with manual dummy prefix"
         res = []
         text = text.replace("\t", " ")
         remainder = ""
+
         for sub_text in self._space_split.split(text):
             if not sub_text:
                 continue
+
             if not sub_text.startswith("  "):
                 res.extend(self._sp.encode(remainder + sub_text))
                 remainder = ""
                 continue
+
             remaining = len(sub_text) - 1
             remainder = " "
             space_index = 0
+
             while remaining:
                 while self._space_tokens[space_index].count > remaining:
                     space_index += 1
@@ -121,6 +123,7 @@ class JurassicTokenizer:
                 res.append(self._space_tokens[space_index].tok_id)
         if remainder:
             res.extend(self._sp.encode(remainder))
+
         return res
 
     def encode(self, text: str) -> list[int]:
@@ -160,11 +163,13 @@ class JurassicTokenizer:
         assert all([_id != self.unk_id for _id in res])
         return res
 
-    def _encode_post_process(self, ids):
+    def _encode_post_process(self, ids: list[int]) -> list[int]:
         if self.number_mode is None:
             return ids
+
         i = 0
         res = []
+
         while i < len(ids):
             token = self.convert_ids_to_tokens(ids[i])
             if not is_number(token):
@@ -172,12 +177,14 @@ class JurassicTokenizer:
                 i += 1
             else:
                 num = ""
+
                 while i < len(ids):
                     token = self.convert_ids_to_tokens(ids[i])
                     if not is_number(token):
                         break
                     num += token
                     i += 1
+
                 res.extend(self._tokenize_number(num, self.number_mode))
 
         return res
@@ -190,13 +197,16 @@ class JurassicTokenizer:
         res_text = ""
         offsets = []
         tokens = self.convert_ids_to_tokens(ids)
+
         for token in tokens:
             if token not in self.no_show_tokens:
                 text = token.replace("▁", " ")
             else:
                 text = ""
+
             if start_of_line and text.startswith(" "):
                 text = text[1:]
+
             if token == self.newline_piece:
                 text = "\n"
 
@@ -207,6 +217,7 @@ class JurassicTokenizer:
 
         if return_offsets:
             return res_text, offsets
+
         return res_text
 
     def convert_tokens_to_ids(self, tokens):
@@ -214,6 +225,7 @@ class JurassicTokenizer:
             return [self._token_to_id.get(x, self.unk_id) for x in tokens]
         else:
             assert isinstance(tokens, str)
+
             return self._token_to_id.get(tokens, self.unk_id)
 
     def convert_ids_to_tokens(self, ids):
