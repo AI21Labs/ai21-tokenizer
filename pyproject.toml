@@ -72,6 +72,7 @@ include = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
+sentencepiece = "0.1.96"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
@@ -91,6 +92,9 @@ pytest-mock = "3.10.0"
 [[tool.poetry.source]]
 name = "PyPI"
 priority = "primary"
+
+[tool.ruff]
+line-length = 120
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
