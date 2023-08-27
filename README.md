@@ -30,8 +30,9 @@ poetry add jurassic_tokenization
 ---
 
 ```python
-import jurassic_tokenization
+from jurassic_tokenization import JurassicTokenizer
 
+tokenizer = JurassicTokenizer.create('j2-tokenizer')
 # Your code here
 ```
 
@@ -54,7 +55,6 @@ import jurassic_tokenization
 3. Run validation by leveraging [pre-commit](https://pre-commit.com)
    1. Install `pre-commit install --install-hooks -t pre-commit -t commit-msg`
    2. To run on-demand `pre-commit run -a`
-      - `pre-commit run shellcheck -a --verbose --hook-stage manual` for recommendation
 4. Submit a pull-request
 
 ### Run CI tasks locally
