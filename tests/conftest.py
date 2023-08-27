@@ -12,4 +12,4 @@ def resources_path() -> Path:
 
 @pytest.fixture(scope="session")
 def tokenizer() -> JurassicTokenizer:
-    return JurassicTokenizer.create()
+    return JurassicTokenizer.create("j2-tokenizer")

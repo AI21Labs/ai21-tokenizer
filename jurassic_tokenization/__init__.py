@@ -8,8 +8,10 @@ from typing import Any
 
 import sentencepiece as spm
 
-VOCAB_PATH = Path(__file__).parent / "resources"
-VOCAB_NAME = "j2-dictionary"
+_LOCAL_RESOURCES_PATH = Path(__file__).parent / "resources"
+_PRETRAINED_TOKENIZERS = [
+    "j2-tokenizer",
+]
 
 _NUMBER_DIGITS = set("0123456789")
 
@@ -41,16 +43,16 @@ class SpaceSymbol:
 class JurassicTokenizer:
     def __init__(
         self,
-        vocab_path: Path | None = VOCAB_PATH,
-        vocab_name: str | None = VOCAB_NAME,
+        tokenizer_path: Path | str | None,
+        tokenizer_name: str | None,
         config: dict[str, Any] | None = None,
     ):
-        self._vocab_path = vocab_path
-        self._vocab_name = vocab_name
+        self._vocab_path = Path(tokenizer_path)
+        self._vocab_name = tokenizer_name
 
         config = config if config is not None else self._load_config()
-        self.unk_id = config.get("unk_id", None)
-        self.eop_id = config.get("eop_id", None)
+        self.unk_id = config.get("unk_id")
+        self.eop_id = config.get("eop_id")
 
         self.newline_piece = config.get("newline_piece")
         self.mask_pieces = config.get("mask_pieces", [])
@@ -60,27 +62,28 @@ class JurassicTokenizer:
 
         self._manual_add_dummy_prefix = not (config.get("add_dummy_prefix", True))
 
-        self._id_to_token = {i: self._sp.id_to_piece(i) for i in range(self.vocab_size)}
-        self._token_to_id = {self._sp.id_to_piece(i): i for i in range(self.vocab_size)}
+        self._id_to_token = {i: self._sp.id_to_piece(i) for i in range(self._vocab_size)}
+        self._token_to_id = {self._sp.id_to_piece(i): i for i in range(self._vocab_size)}
         self.no_show_tokens = set(
-            self.convert_ids_to_tokens([i for i in range(self.vocab_size) if self._sp.IsControl(i)])
+            self.convert_ids_to_tokens([i for i in range(self._vocab_size) if self._sp.IsControl(i)])
         )
 
-        self.newline_id = self.convert_tokens_to_ids(self.newline_piece)
+        self.newline_id = self._convert_tokens_to_ids(self.newline_piece)
 
         self._sample_split = re.compile(r"▁*[^▁]+|▁")
         self._space_split = re.compile("( {2,})")  # Split by 2 or more consecutive spaces
 
-        self.number_mode = config.get("number_mode", None)
-        self.space_mode = config.get("space_mode", None)
+        self.number_mode = config.get("number_mode")
+        self.space_mode = config.get("space_mode")
         self._space_tokens = self._map_space_tokens()
 
     def _map_space_tokens(self) -> list[SpaceSymbol]:
         res = []
         for count in range(32, 0, -1):
-            tok_id = self.convert_tokens_to_ids("▁" * count)
+            tok_id = self._convert_tokens_to_ids("▁" * count)
             if tok_id != self.unk_id:
                 res.append(SpaceSymbol(tok_id=tok_id, count=count))
+
         return res
 
     def _load_config(self) -> dict[str, Any]:
@@ -90,14 +93,13 @@ class JurassicTokenizer:
         return load_binary(with_extension(path=self._vocab_path / self._vocab_name, suffix=".model"))
 
     @property
-    def vocab_size(self) -> int:
+    def _vocab_size(self) -> int:
         return self._sp.vocab_size()
 
     def _encode(self, text: str) -> list[int]:
         if self.space_mode is None:
             return self._sp.encode(text)
-        # assert self.space_mode == "left"
-        # assert self._manual_add_dummy_prefix, "Space Encoding is only supported with manual dummy prefix"
+
         res = []
         text = text.replace("\t", " ")
         remainder = ""
@@ -118,9 +120,10 @@ class JurassicTokenizer:
             while remaining:
                 while self._space_tokens[space_index].count > remaining:
                     space_index += 1
-                    assert space_index < len(self._space_tokens)
+
                 remaining -= self._space_tokens[space_index].count
                 res.append(self._space_tokens[space_index].tok_id)
+
         if remainder:
             res.extend(self._sp.encode(remainder))
 
@@ -143,10 +146,9 @@ class JurassicTokenizer:
         return self._encode_post_process(toks)
 
     def _tokenize_number(self, num, mode):
-        assert is_number(num)
         if mode.endswith("_keep"):
             # If the full number is in the vocab in keep mode, just use it
-            single_id = self.convert_tokens_to_ids(num)
+            single_id = self._convert_tokens_to_ids(num)
             if single_id != self.unk_id:
                 return [single_id]
             mode = mode.rstrip("_keep")
@@ -155,9 +157,9 @@ class JurassicTokenizer:
             if mode == "right":
                 offset = len(num) % 3
                 if offset:
-                    res.append(self.convert_tokens_to_ids(num[:offset]))
+                    res.append(self._convert_tokens_to_ids(num[:offset]))
                     num = num[offset:]
-            res += [self.convert_tokens_to_ids(num[i : i + 3]) for i in range(0, len(num), 3)]
+            res += [self._convert_tokens_to_ids(num[i : i + 3]) for i in range(0, len(num), 3)]
         else:
             raise ValueError(f"Invalid number mode: {mode}")
         assert all([_id != self.unk_id for _id in res])
@@ -189,11 +191,9 @@ class JurassicTokenizer:
 
         return res
 
-    def decode(self, ids, start_of_line=True, return_offsets=False):
-        # This decode function doesn't work exactly like SentencePiece's decode, as it removes leading whitespaces at
-        # the beginning of lines. This is the behaviour we want, so that's what we implement here. This logic is what
-        # was implemented in the make_text function in jurassic-serving.
-        # It can also return the indices of tokens in resulting text
+    def decode(self, ids: list[int]) -> str:
+        start_of_line = True
+
         res_text = ""
         offsets = []
         tokens = self.convert_ids_to_tokens(ids)
@@ -215,45 +215,27 @@ class JurassicTokenizer:
 
             start_of_line = token == self.newline_piece
 
-        if return_offsets:
-            return res_text, offsets
-
         return res_text
 
-    def convert_tokens_to_ids(self, tokens):
+    def _convert_tokens_to_ids(self, tokens: list[str] | str) -> list[int] | str:
         if isinstance(tokens, list):
             return [self._token_to_id.get(x, self.unk_id) for x in tokens]
         else:
-            assert isinstance(tokens, str)
-
             return self._token_to_id.get(tokens, self.unk_id)
 
-    def convert_ids_to_tokens(self, ids):
+    def convert_ids_to_tokens(self, ids: list[int] | int) -> list[int] | int:
         if isinstance(ids, list):
             return [self._id_to_token[x] for x in ids]
         else:
-            assert isinstance(ids, int)
             return self._id_to_token[ids]
 
-    def get_mask_token_id(self, mask_index=0):
-        assert len(self.mask_pieces) > mask_index, f"This vocab has no mask-piece for mask_index={mask_index}"
-        return self.mask_pieces[mask_index]
+    @classmethod
+    def create(cls, tokenizer_name: str) -> JurassicTokenizer:
+        if tokenizer_name not in _PRETRAINED_TOKENIZERS:
+            raise ValueError(f"Unknown tokenizer - {tokenizer_name}. Must be one of {cls.pretrained_tokenizers()}")
 
-    def encode_prompt_completion(self, prompt, completion):
-        prompt_tokens = self.encode(prompt, is_start=True)
-        # Add leading space only when prompt and completion are not in the same sentence
-        if prompt.endswith("\n"):
-            completion_tokens = self.encode(completion, is_start=True)
-        else:
-            completion_tokens = self.encode(completion, is_start=False)
-        return prompt_tokens, completion_tokens
-
-    def get_whitespace_token_ids(self):
-        return [x.tok_id for x in self._space_tokens] + [self.newline_id]
-
-    def get_numeric_token_ids(self):
-        return [k for k, v in self._id_to_token.items() if v.isnumeric()]
+        return JurassicTokenizer(tokenizer_path=_LOCAL_RESOURCES_PATH, tokenizer_name=tokenizer_name)
 
     @classmethod
-    def create(cls) -> JurassicTokenizer:
-        return JurassicTokenizer(vocab_path=VOCAB_PATH, vocab_name=VOCAB_NAME)
+    def pretrained_tokenizers(cls) -> list[str]:
+        return _PRETRAINED_TOKENIZERS

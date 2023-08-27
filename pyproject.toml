@@ -59,15 +59,12 @@ schema_pattern = "(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|
 
 [tool.poetry]
 name = "jurassic-tokenization"
-version = "0.0.0"
+version = "0.0.1"
 description = ""
 authors = ["AI21 Labs"]
 readme = "README.md"
 packages = [
     { include = "jurassic_tokenization" }
-]
-include = [
-    { path = "tests", format = "sdist" }
 ]
 
 [tool.poetry.dependencies]
