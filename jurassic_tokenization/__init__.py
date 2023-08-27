@@ -123,22 +123,17 @@ class JurassicTokenizer:
             res.extend(self._sp.encode(remainder))
         return res
 
-    def encode(self, text, is_start=True):
-        if not self._manual_add_dummy_prefix and not is_start:
-            # If it's not a 'start', but SPM is configured to auto-add a prefix space, we try to remove
-            # the leading prefix if exists. This is not guaranteed to succeed, for example if the next sentence
-            # doesn't start with a space but was sentence-split, we can't avoid SPM adding the leading space
-            if text.startswith(" ") or text.startswith("\t"):
-                text = text[1:]
+    def encode(self, text: str) -> list[int]:
         lines = text.split("\n")
         toks = []
+
         for i, line in enumerate(lines):
             if i > 0:
                 toks.append(self.newline_id)
             if not line:
                 continue
             # We add the dummy prefix on every newline, and also for the 1st line if it's a 'start'
-            if self._manual_add_dummy_prefix and (i > 0 or (i == 0 and is_start)):
+            if self._manual_add_dummy_prefix and (i > 0 or i == 0):
                 line = " " + line
             toks.extend(self._encode(line))
 
