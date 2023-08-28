@@ -1,13 +1,6 @@
 # Jurassic Tokenization
 
-[![semantic-release](https://img.shields.io/badge/semantic-release-e10079.svg?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
-
 ---
-
-## Prerequisites
-
-- [pyenv](https://github.com/pyenv/pyenv)
-- [poetry](https://python-poetry.org/)
 
 ## Installation
 
@@ -39,6 +32,13 @@ tokenizer = JurassicTokenizer.from_pretrained('j2-tokenizer')
 ## Contribute
 
 ---
+
+### Prerequisites
+
+- [pyenv](https://github.com/pyenv/pyenv)
+- [poetry](https://python-poetry.org/)
+
+### Steps
 
 1. Clone the repository:
 

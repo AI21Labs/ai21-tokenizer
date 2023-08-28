@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Union
+from typing import List, Union, Optional, Dict, Any
 
 import sentencepiece as spm
 
@@ -24,24 +24,11 @@ class SpaceSymbol:
     count: int
 
 
-@dataclass
-class ModelConfig:
-    vocab_size: int
-    pad_id: int
-    bos_id: int
-    eos_id: int
-    unk_id: int
-    add_dummy_prefix: bool
-    newline_piece: str
-    number_mode: str
-    space_mode: str
-
-
 class JurassicTokenizer:
     def __init__(
         self,
         model_path: Union[Path, str],
-        config: ModelConfig = None,
+        config: Optional[Dict[str, Any]] = None,
     ):
         # noinspection PyArgumentList
         self._sp = spm.SentencePieceProcessor(model_proto=load_binary(model_path))
@@ -58,10 +45,10 @@ class JurassicTokenizer:
         self._id_to_token = {i: self._sp.id_to_piece(i) for i in range(self._vocab_size)}
         self._token_to_id = {self._sp.id_to_piece(i): i for i in range(self._vocab_size)}
         self._no_show_tokens = set(
-            self._convert_ids_to_tokens([i for i in range(self._vocab_size) if self._sp.IsControl(i)])
+            self.convert_ids_to_tokens([i for i in range(self._vocab_size) if self._sp.IsControl(i)])
         )
 
-        self._newline_id = self._convert_tokens_to_ids(self._newline_piece)
+        self._newline_id = self._convert_token_to_id(self._newline_piece)
 
         self._sample_split = re.compile(r"▁*[^▁]+|▁")
         self._space_split = re.compile("( {2,})")  # Split by 2 or more consecutive spaces
@@ -73,7 +60,7 @@ class JurassicTokenizer:
     def _map_space_tokens(self) -> List[SpaceSymbol]:
         res = []
         for count in range(32, 0, -1):
-            tok_id = self._convert_tokens_to_ids("▁" * count)
+            tok_id = self._convert_token_to_id("▁" * count)
             if tok_id != self.unk_id:
                 res.append(SpaceSymbol(tok_id=tok_id, count=count))
 
@@ -119,7 +106,7 @@ class JurassicTokenizer:
     def _tokenize_number(self, num: str, mode: str) -> list[int]:
         if mode.endswith("_keep"):
             # If the full number is in the vocab in keep mode, just use it
-            single_id = self._convert_tokens_to_ids(num)
+            single_id = self._convert_token_to_id(num)
 
             if single_id != self.unk_id:
                 return [single_id]
@@ -133,10 +120,10 @@ class JurassicTokenizer:
                 offset = len(num) % 3
 
                 if offset:
-                    res.append(self._convert_tokens_to_ids(num[:offset]))
+                    res.append(self._convert_token_to_id(num[:offset]))
                     num = num[offset:]
 
-            res += [self._convert_tokens_to_ids(num[i : i + 3]) for i in range(0, len(num), 3)]
+            res += [self._convert_token_to_id(num[i : i + 3]) for i in range(0, len(num), 3)]
         else:
             raise ValueError(f"Invalid number mode: {mode}")
 
@@ -150,7 +137,7 @@ class JurassicTokenizer:
         res = []
 
         while i < len(ids):
-            token = self._convert_ids_to_tokens(ids[i])
+            token = self._convert_id_to_token(ids[i])
             if not is_number(token):
                 res.append(ids[i])
                 i += 1
@@ -158,7 +145,7 @@ class JurassicTokenizer:
                 num = ""
 
                 while i < len(ids):
-                    token = self._convert_ids_to_tokens(ids[i])
+                    token = self._convert_id_to_token(ids[i])
                     if not is_number(token):
                         break
                     num += token
@@ -168,19 +155,16 @@ class JurassicTokenizer:
 
         return res
 
-    def _convert_tokens_to_ids(self, tokens: List[str] | str) -> List[int] | int:
-        if isinstance(tokens, list):
-            return [self._token_to_id.get(x, self.unk_id) for x in tokens]
-        else:
-            return self._token_to_id.get(tokens, self.unk_id)
+    def _convert_token_to_id(self, token: str) -> int:
+        return self._token_to_id.get(token, self.unk_id)
 
-    def _convert_ids_to_tokens(self, ids: List[int] | int) -> List[int] | int:
-        if isinstance(ids, list):
-            return [self._id_to_token[x] for x in ids]
-        else:
-            return self._id_to_token[ids]
+    def _convert_id_to_token(self, token_id: int) -> str:
+        return self._id_to_token[token_id]
 
     def encode(self, text: str) -> List[int]:
+        """
+        Tokenizes the input text and returns it's token ids
+        """
         lines = text.split("\n")
         toks = []
 
@@ -197,11 +181,14 @@ class JurassicTokenizer:
         return self._encode_post_process(toks)
 
     def decode(self, ids: List[int]) -> str:
+        """
+        Transforms token ids into text
+        """
         start_of_line = True
 
         res_text = ""
         offsets = []
-        tokens = self._convert_ids_to_tokens(ids)
+        tokens = self.convert_ids_to_tokens(ids)
 
         for token in tokens:
             if token not in self._no_show_tokens:
@@ -221,6 +208,12 @@ class JurassicTokenizer:
             start_of_line = token == self._newline_piece
 
         return res_text
+
+    def convert_ids_to_tokens(self, token_ids: List[int]) -> List[str]:
+        return [self._convert_id_to_token(token_id) for token_id in token_ids]
+
+    def convert_tokens_to_ids(self, tokens: List[str]) -> List[int]:
+        return [self._convert_token_to_id(token) for token in tokens]
 
     @classmethod
     def from_pretrained(cls, tokenizer_name: str = "j2-tokenizer") -> JurassicTokenizer:
