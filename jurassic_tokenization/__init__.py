@@ -3,16 +3,19 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, List, Dict
+from typing import List, Union
 
 import sentencepiece as spm
 
-from jurassic_tokenization.utils import load_json, with_extension, load_binary, is_number
+from jurassic_tokenization.utils import load_json, load_binary, is_number
 
 _LOCAL_RESOURCES_PATH = Path(__file__).parent / "resources"
 _PRETRAINED_TOKENIZERS = [
     "j2-tokenizer",
 ]
+
+MODEL_EXTENSION = ".model"
+MODEL_CONFIG_FILENAME = "config.json"
 
 
 @dataclass
@@ -21,25 +24,34 @@ class SpaceSymbol:
     count: int
 
 
+@dataclass
+class ModelConfig:
+    vocab_size: int
+    pad_id: int
+    bos_id: int
+    eos_id: int
+    unk_id: int
+    add_dummy_prefix: bool
+    newline_piece: str
+    number_mode: str
+    space_mode: str
+
+
 class JurassicTokenizer:
     def __init__(
         self,
-        tokenizer_path: Path | str | None,
-        tokenizer_name: str | None,
-        config: Dict[str, Any] | None = None,
+        model_path: Union[Path, str],
+        config: ModelConfig = None,
     ):
-        self._vocab_path = Path(tokenizer_path)
-        self._vocab_name = tokenizer_name
+        # noinspection PyArgumentList
+        self._sp = spm.SentencePieceProcessor(model_proto=load_binary(model_path))
+        config = config or {}
 
-        config = config if config is not None else self._load_config()
         self.unk_id = config.get("unk_id")
         self.eop_id = config.get("eop_id")
 
         self._newline_piece = config.get("newline_piece")
         self._mask_pieces = config.get("mask_pieces", [])
-
-        # noinspection PyArgumentList
-        self._sp = spm.SentencePieceProcessor(model_proto=self._load_model())
 
         self._manual_add_dummy_prefix = not (config.get("add_dummy_prefix", True))
 
@@ -66,12 +78,6 @@ class JurassicTokenizer:
                 res.append(SpaceSymbol(tok_id=tok_id, count=count))
 
         return res
-
-    def _load_config(self) -> Dict[str, Any]:
-        return load_json(with_extension(path=self._vocab_path / self._vocab_name, suffix=".args"))
-
-    def _load_model(self) -> bytes:
-        return load_binary(with_extension(path=self._vocab_path / self._vocab_name, suffix=".model"))
 
     @property
     def _vocab_size(self) -> int:
@@ -184,7 +190,7 @@ class JurassicTokenizer:
             if not line:
                 continue
             # We add the dummy prefix on every newline, and also for the 1st line if it's a 'start'
-            if self._manual_add_dummy_prefix and (i > 0 or i == 0):
+            if self._manual_add_dummy_prefix and i >= 0:
                 line = " " + line
             toks.extend(self._encode(line))
 
@@ -217,11 +223,16 @@ class JurassicTokenizer:
         return res_text
 
     @classmethod
-    def create(cls, tokenizer_name: str = "j2-tokenizer") -> JurassicTokenizer:
+    def from_pretrained(cls, tokenizer_name: str = "j2-tokenizer") -> JurassicTokenizer:
         if tokenizer_name not in _PRETRAINED_TOKENIZERS:
             raise ValueError(f"Unknown tokenizer - {tokenizer_name}. Must be one of {cls.pretrained_tokenizers()}")
 
-        return JurassicTokenizer(tokenizer_path=_LOCAL_RESOURCES_PATH, tokenizer_name=tokenizer_name)
+        tokenizer_dir = _LOCAL_RESOURCES_PATH / tokenizer_name
+        model_path = tokenizer_dir / f"{tokenizer_name}.model"
+        config_path = tokenizer_dir / MODEL_CONFIG_FILENAME
+        config = load_json(config_path)
+
+        return JurassicTokenizer(model_path=model_path, config=config)
 
     @classmethod
     def pretrained_tokenizers(cls) -> List[str]:

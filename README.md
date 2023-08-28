@@ -32,7 +32,7 @@ poetry add jurassic_tokenization
 ```python
 from jurassic_tokenization import JurassicTokenizer
 
-tokenizer = JurassicTokenizer.create('j2-tokenizer')
+tokenizer = JurassicTokenizer.from_pretrained('j2-tokenizer')
 # Your code here
 ```
 

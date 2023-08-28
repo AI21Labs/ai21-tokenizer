@@ -27,4 +27,4 @@ def test_tokenizer_encode_set(tokenizer: JurassicTokenizer, resources_path: Path
 
 def test_tokenizer_create__when_receives_unknown_name__should_raise():
     with pytest.raises(ValueError):
-        JurassicTokenizer.create("unknown_name")
+        JurassicTokenizer.from_pretrained("unknown_name")
