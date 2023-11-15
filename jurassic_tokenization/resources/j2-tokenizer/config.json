@@ -1,0 +1,11 @@
+{
+    "vocab_size": 262144,
+    "pad_id": 0,
+    "bos_id": 1,
+    "eos_id": 2,
+    "unk_id": 3,
+    "add_dummy_prefix": false,
+    "newline_piece": "<|newline|>",
+    "number_mode": "right_keep",
+    "space_mode": "left"
+}

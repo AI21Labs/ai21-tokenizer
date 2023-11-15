@@ -162,3 +162,4 @@ cython_debug/
 # Vim
 *.swp
 .idea
+.DS_Store

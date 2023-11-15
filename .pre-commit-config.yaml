@@ -8,6 +8,7 @@ repos:
     rev: v4.4.0
     hooks:
       - id: check-added-large-files
+        exclude: (jurassic_tokenization/resources|tests/resources)
       - id: check-case-conflict
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
@@ -19,6 +20,7 @@ repos:
     rev: 3.0.0
     hooks:
       - id: forbid-binary
+        exclude: (jurassic_tokenization/resources|tests/resources)
       - id: git-check
   - repo: https://github.com/commitizen-tools/commitizen
     rev: 3.5.3

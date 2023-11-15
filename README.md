@@ -1,13 +1,6 @@
 # Jurassic Tokenization
 
-[![semantic-release](https://img.shields.io/badge/semantic-release-e10079.svg?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
-
 ---
-
-## Prerequisites
-
-- [pyenv](https://github.com/pyenv/pyenv)
-- [poetry](https://python-poetry.org/)
 
 ## Installation
 
@@ -30,14 +23,22 @@ poetry add jurassic_tokenization
 ---
 
 ```python
-import jurassic_tokenization
+from jurassic_tokenization import JurassicTokenizer
 
+tokenizer = JurassicTokenizer.from_pretrained('j2-tokenizer')
 # Your code here
 ```
 
 ## Contribute
 
 ---
+
+### Prerequisites
+
+- [pyenv](https://github.com/pyenv/pyenv)
+- [poetry](https://python-poetry.org/)
+
+### Steps
 
 1. Clone the repository:
 
@@ -54,7 +55,6 @@ import jurassic_tokenization
 3. Run validation by leveraging [pre-commit](https://pre-commit.com)
    1. Install `pre-commit install --install-hooks -t pre-commit -t commit-msg`
    2. To run on-demand `pre-commit run -a`
-      - `pre-commit run shellcheck -a --verbose --hook-stage manual` for recommendation
 4. Submit a pull-request
 
 ### Run CI tasks locally
