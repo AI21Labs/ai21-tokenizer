@@ -42,10 +42,10 @@ class JurassicTokenizer:
 
         self._manual_add_dummy_prefix = not (config.get("add_dummy_prefix", True))
 
-        self._id_to_token_map = {i: self._sp.id_to_piece(i) for i in range(self._vocab_size)}
-        self._token_to_id_map = {self._sp.id_to_piece(i): i for i in range(self._vocab_size)}
+        self._id_to_token_map = {i: self._sp.id_to_piece(i) for i in range(self.vocab_size)}
+        self._token_to_id_map = {self._sp.id_to_piece(i): i for i in range(self.vocab_size)}
         self._no_show_tokens = set(
-            self._convert_ids_to_tokens([i for i in range(self._vocab_size) if self._sp.IsControl(i)])
+            self._convert_ids_to_tokens([i for i in range(self.vocab_size) if self._sp.IsControl(i)])
         )
 
         self._newline_id = self._token_to_id(self._newline_piece)
@@ -67,7 +67,7 @@ class JurassicTokenizer:
         return res
 
     @property
-    def _vocab_size(self) -> int:
+    def vocab_size(self) -> int:
         return self._sp.vocab_size()
 
     def _encode(self, text: str) -> List[int]:
