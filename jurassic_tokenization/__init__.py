@@ -42,13 +42,13 @@ class JurassicTokenizer:
 
         self._manual_add_dummy_prefix = not (config.get("add_dummy_prefix", True))
 
-        self._id_to_token = {i: self._sp.id_to_piece(i) for i in range(self._vocab_size)}
-        self._token_to_id = {self._sp.id_to_piece(i): i for i in range(self._vocab_size)}
+        self._id_to_token_map = {i: self._sp.id_to_piece(i) for i in range(self._vocab_size)}
+        self._token_to_id_map = {self._sp.id_to_piece(i): i for i in range(self._vocab_size)}
         self._no_show_tokens = set(
-            self.convert_ids_to_tokens([i for i in range(self._vocab_size) if self._sp.IsControl(i)])
+            self._convert_ids_to_tokens([i for i in range(self._vocab_size) if self._sp.IsControl(i)])
         )
 
-        self._newline_id = self._convert_token_to_id(self._newline_piece)
+        self._newline_id = self._token_to_id(self._newline_piece)
 
         self._sample_split = re.compile(r"▁*[^▁]+|▁")
         self._space_split = re.compile("( {2,})")  # Split by 2 or more consecutive spaces
@@ -60,7 +60,7 @@ class JurassicTokenizer:
     def _map_space_tokens(self) -> List[SpaceSymbol]:
         res = []
         for count in range(32, 0, -1):
-            tok_id = self._convert_token_to_id("▁" * count)
+            tok_id = self._token_to_id("▁" * count)
             if tok_id != self.unk_id:
                 res.append(SpaceSymbol(tok_id=tok_id, count=count))
 
@@ -106,7 +106,7 @@ class JurassicTokenizer:
     def _tokenize_number(self, num: str, mode: str) -> list[int]:
         if mode.endswith("_keep"):
             # If the full number is in the vocab in keep mode, just use it
-            single_id = self._convert_token_to_id(num)
+            single_id = self._token_to_id(num)
 
             if single_id != self.unk_id:
                 return [single_id]
@@ -120,10 +120,10 @@ class JurassicTokenizer:
                 offset = len(num) % 3
 
                 if offset:
-                    res.append(self._convert_token_to_id(num[:offset]))
+                    res.append(self._token_to_id(num[:offset]))
                     num = num[offset:]
 
-            res += [self._convert_token_to_id(num[i : i + 3]) for i in range(0, len(num), 3)]
+            res += [self._token_to_id(num[i : i + 3]) for i in range(0, len(num), 3)]
         else:
             raise ValueError(f"Invalid number mode: {mode}")
 
@@ -137,7 +137,7 @@ class JurassicTokenizer:
         res = []
 
         while i < len(ids):
-            token = self._convert_id_to_token(ids[i])
+            token = self._id_to_token(ids[i])
             if not is_number(token):
                 res.append(ids[i])
                 i += 1
@@ -145,7 +145,7 @@ class JurassicTokenizer:
                 num = ""
 
                 while i < len(ids):
-                    token = self._convert_id_to_token(ids[i])
+                    token = self._id_to_token(ids[i])
                     if not is_number(token):
                         break
                     num += token
@@ -154,12 +154,6 @@ class JurassicTokenizer:
                 res.extend(self._tokenize_number(num, self._number_mode))
 
         return res
-
-    def _convert_token_to_id(self, token: str) -> int:
-        return self._token_to_id.get(token, self.unk_id)
-
-    def _convert_id_to_token(self, token_id: int) -> str:
-        return self._id_to_token[token_id]
 
     def encode(self, text: str) -> List[int]:
         """
@@ -180,7 +174,7 @@ class JurassicTokenizer:
 
         return self._encode_post_process(toks)
 
-    def decode(self, ids: List[int]) -> str:
+    def decode(self, token_ids: List[int]) -> str:
         """
         Transforms token ids into text
         """
@@ -188,7 +182,7 @@ class JurassicTokenizer:
 
         res_text = ""
         offsets = []
-        tokens = self.convert_ids_to_tokens(ids)
+        tokens = self._convert_ids_to_tokens(token_ids)
 
         for token in tokens:
             if token not in self._no_show_tokens:
@@ -209,11 +203,20 @@ class JurassicTokenizer:
 
         return res_text
 
-    def convert_ids_to_tokens(self, token_ids: List[int]) -> List[str]:
-        return [self._convert_id_to_token(token_id) for token_id in token_ids]
+    def _id_to_token(self, token_id: int) -> str:
+        return self._id_to_token_map[token_id]
+
+    def _convert_ids_to_tokens(self, token_ids: List[int]) -> List[str]:
+        return [self._id_to_token(token_id) for token_id in token_ids]
+
+    def _token_to_id(self, token: str) -> int:
+        return self._token_to_id_map.get(token, self.unk_id)
 
     def convert_tokens_to_ids(self, tokens: List[str]) -> List[int]:
-        return [self._convert_token_to_id(token) for token in tokens]
+        return [self._token_to_id(token) for token in tokens]
+
+    def convert_ids_to_tokens(self, token_ids: List[int]) -> List[str]:
+        return [self._id_to_token(token_id) for token_id in token_ids]
 
     @classmethod
     def from_pretrained(cls, tokenizer_name: str = "j2-tokenizer") -> JurassicTokenizer:

@@ -28,3 +28,21 @@ def test_tokenizer_encode_set(tokenizer: JurassicTokenizer, resources_path: Path
 def test_tokenizer_create__when_receives_unknown_name__should_raise():
     with pytest.raises(ValueError):
         JurassicTokenizer.from_pretrained("unknown_name")
+
+
+def test_tokenizer__convert_tokens_to_ids(tokenizer: JurassicTokenizer):
+    expected_tokens = ["▁hello"]
+    ids = tokenizer.encode("hello")
+    actual_tokens = tokenizer.convert_ids_to_tokens(ids)
+
+    assert actual_tokens == expected_tokens
+
+
+def test_tokenizer__convert_ids_to_tokens(tokenizer: JurassicTokenizer):
+    expected_ids = [30671]
+    ids = tokenizer.encode("hello")
+
+    tokens = tokenizer.convert_ids_to_tokens(ids)
+    actual_ids = tokenizer.convert_tokens_to_ids(tokens)
+
+    assert actual_ids == expected_ids
