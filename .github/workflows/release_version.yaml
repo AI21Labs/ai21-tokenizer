@@ -25,9 +25,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm install
-      - run: npm run build
-      - run: npm run test
       - uses: MeilCli/bump-release-action@v1
         with:
           config_path: ".github/bump.yaml"
