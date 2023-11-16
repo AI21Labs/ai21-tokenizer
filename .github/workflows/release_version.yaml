@@ -1,11 +1,19 @@
 name: Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      bump:
-        description: "bump type, major or minor or patch or empty string"
-        default: ""
+  push:
+    branches: [release_action]
+#    inputs:
+#      bump:
+#        description: "bump type, major or minor or patch or empty string"
+#        default: ""
+
+#on:
+#  workflow_dispatch:
+#    inputs:
+#      bump:
+#        description: "bump type, major or minor or patch or empty string"
+#        default: ""
 
 jobs:
   release:
