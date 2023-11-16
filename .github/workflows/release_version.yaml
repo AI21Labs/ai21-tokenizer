@@ -24,6 +24,3 @@ jobs:
         with:
           config_path: ".github/bump.yaml"
           bump: ${{ github.event.inputs.bump }}
-          dry_run: ${{ github.event.inputs.dry_run }}
-          draft: ${{ github.event.inputs.draft }}
-          pre_release: ${{ github.event.inputs.pre_release }}
