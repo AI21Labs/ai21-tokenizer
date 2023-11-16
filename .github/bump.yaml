@@ -3,6 +3,7 @@ release:
   initial-version: "0.0.1"
   tag-prefix: "v"
 branch:
+  base-branch: "release_action"
   version-branch-prefix: "v"
   bump-version-commit-prefix: "v"
 categories:
