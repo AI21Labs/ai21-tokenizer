@@ -4,8 +4,6 @@ release:
   tag-prefix: "v"
 branch:
   base-branch: "release_action"
-  version-branch-prefix: "v"
-  bump-version-commit-prefix: "v"
 categories:
   - title: "Breaking Changes!"
     labels:
