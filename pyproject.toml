@@ -78,7 +78,20 @@ isort = "*"
 mypy = "*"
 safety = "*"
 ruff = "*"
+python-semantic-release = "^7.31.4"
 
+[tool.semantic_release]
+version_toml = [
+"pyproject.toml.tool.poetry.version"]
+branch = "main"
+upload_to_pypi = false
+upload_to_repository = false
+upload_to_release = true
+build_command = "pip install poetry && poetry build"
+version_source = "tag"
+commit_version_number = true
+major_on_zero = false
+commit_message = "chore(release): v{version} [skip ci]"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"

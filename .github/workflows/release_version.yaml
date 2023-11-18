@@ -1,28 +1,24 @@
-name: Release
+name: Semantic Release
 
 on:
   push:
-    branches: [release_action]
-#    inputs:
-#      bump:
-#        description: "bump type, major or minor or patch or empty string"
-#        default: ""
-
-#on:
-#  workflow_dispatch:
-#    inputs:
-#      bump:
-#        description: "bump type, major or minor or patch or empty string"
-#        default: ""
+    branches:
+      - release_action
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    concurrency: release
+    permissions:
+      id-token: write
+      contents: write
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: MeilCli/bump-release-action@v1
+
+      - name: Python Semantic Release
+        uses: python-semantic-release/python-semantic-release@master
         with:
-          config_path: ".github/bump.yaml"
-          bump: ${{ github.event.inputs.bump }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
