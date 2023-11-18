@@ -81,9 +81,8 @@ ruff = "*"
 python-semantic-release = "^7.31.4"
 
 [tool.semantic_release]
-version_toml = [
-"pyproject.toml.tool.poetry.version"]
-branch = "release_action"
+version_toml = ["pyproject.toml.tool.poetry.version"]
+match = "(release_action)"
 upload_to_pypi = false
 upload_to_repository = false
 upload_to_release = true
