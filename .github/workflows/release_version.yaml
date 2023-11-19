@@ -18,6 +18,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Show GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        shell: bash
+
       - name: Python Semantic Release
         uses: python-semantic-release/python-semantic-release@master
         with:
