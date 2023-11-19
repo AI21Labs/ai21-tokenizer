@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from typing import Union, List
 
 import pytest
 
@@ -30,19 +31,39 @@ def test_tokenizer_create__when_receives_unknown_name__should_raise():
         JurassicTokenizer.from_pretrained("unknown_name")
 
 
-def test_tokenizer__convert_tokens_to_ids(tokenizer: JurassicTokenizer):
-    expected_tokens = ["▁hello"]
-    ids = tokenizer.encode("hello")
+@pytest.mark.parametrize(
+    ids=[
+        "when_single_int__should_return_single_str",
+        "when_list_of_int__should_return_list_of_str",
+    ],
+    argnames=["ids", "expected_tokens"],
+    argvalues=[
+        (30671, "▁hello"),
+        ([7463, 1754], ["▁Hello", "▁world"]),
+    ],
+)
+def test_tokenizer__convert_ids_to_tokens(
+    ids: Union[int, List[int]], expected_tokens: Union[str, List[str]], tokenizer: JurassicTokenizer
+):
     actual_tokens = tokenizer.convert_ids_to_tokens(ids)
 
     assert actual_tokens == expected_tokens
 
 
-def test_tokenizer__convert_ids_to_tokens(tokenizer: JurassicTokenizer):
-    expected_ids = [30671]
-    ids = tokenizer.encode("hello")
-
-    tokens = tokenizer.convert_ids_to_tokens(ids)
+@pytest.mark.parametrize(
+    ids=[
+        "when_single_str__should_return_single_int",
+        "when_list_of_str__should_return_list_of_ints",
+    ],
+    argnames=["tokens", "expected_ids"],
+    argvalues=[
+        ("▁hello", 30671),
+        (["▁Hello", "▁world"], [7463, 1754]),
+    ],
+)
+def test_tokenizer__convert_tokens_to_ids(
+    tokens: Union[str, List[str]], expected_ids: Union[int, List[int]], tokenizer: JurassicTokenizer
+):
     actual_ids = tokenizer.convert_tokens_to_ids(tokens)
 
     assert actual_ids == expected_ids
