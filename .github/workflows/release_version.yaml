@@ -2,7 +2,8 @@ name: Semantic Release
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   release:
@@ -21,6 +22,7 @@ jobs:
         uses: python-semantic-release/python-semantic-release@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          root_options: "-vv"
 
       - name: Publish package distributions to GitHub Releases
         uses: python-semantic-release/upload-to-gh-release@main
