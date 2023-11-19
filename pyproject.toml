@@ -70,6 +70,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 sentencepiece = "0.1.96"
+python-semantic-release = "^8.3.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
@@ -78,7 +79,7 @@ isort = "*"
 mypy = "*"
 safety = "*"
 ruff = "*"
-python-semantic-release = "^7.31.4"
+python-semantic-release = "^8.3.0"
 
 [tool.semantic_release]
 version_toml = [
@@ -98,6 +99,7 @@ commit_message = "chore(release): v{version} [skip ci]"
 
 [tool.semantic_release.branches.main]
 match = "(main)"
+
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
