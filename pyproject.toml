@@ -99,6 +99,7 @@ commit_message = "chore(release): v{version} [skip ci]"
 [tool.semantic_release.branches.release_action_test]
 match = "(release_action_test)"
 
+
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
 pytest = "7.2.1"
