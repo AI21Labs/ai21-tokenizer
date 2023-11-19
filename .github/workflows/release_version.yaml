@@ -1,0 +1,27 @@
+name: Semantic Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    concurrency: release
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Python Semantic Release
+        uses: python-semantic-release/python-semantic-release@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+# Uncomment when we have a PyPI package to publish
+#    - name: Publish package distributions to PyPI
+#      uses: pypa/gh-action-pypi-publish@release/v1
+#      if: steps.release.outputs.released == 'true'
