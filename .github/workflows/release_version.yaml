@@ -2,7 +2,7 @@ name: Semantic Release
 
 on:
   push:
-    branches: [main]
+    branches: [release_action_test]
 
 jobs:
   release:
