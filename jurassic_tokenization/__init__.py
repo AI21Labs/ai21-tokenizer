@@ -155,7 +155,7 @@ class JurassicTokenizer:
 
         return res
 
-    def encode(self, text: str) -> List[int]:
+    def encode(self, text: str, **kwargs) -> List[int]:
         """
         Tokenizes the input text and returns it's token ids
         """
@@ -174,7 +174,7 @@ class JurassicTokenizer:
 
         return self._encode_post_process(toks)
 
-    def decode(self, token_ids: List[int]) -> str:
+    def decode(self, token_ids: List[int], **kwargs) -> str:
         """
         Transforms token ids into text
         """
@@ -212,10 +212,16 @@ class JurassicTokenizer:
     def _token_to_id(self, token: str) -> int:
         return self._token_to_id_map.get(token, self.unk_id)
 
-    def convert_tokens_to_ids(self, tokens: List[str]) -> List[int]:
+    def convert_tokens_to_ids(self, tokens: Union[str, List[str]]) -> Union[int, List[int]]:
+        if isinstance(tokens, str):
+            return self._token_to_id(tokens)
+
         return [self._token_to_id(token) for token in tokens]
 
-    def convert_ids_to_tokens(self, token_ids: List[int]) -> List[str]:
+    def convert_ids_to_tokens(self, token_ids: Union[int, List[int]], **kwargs) -> Union[str, List[str]]:
+        if isinstance(token_ids, int):
+            return self._id_to_token(token_ids)
+
         return [self._id_to_token(token_id) for token_id in token_ids]
 
     @classmethod
