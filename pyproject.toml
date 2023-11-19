@@ -100,7 +100,6 @@ commit_message = "chore(release): v{version} [skip ci]"
 match = "(main)"
 
 
-
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
 pytest = "7.2.1"
