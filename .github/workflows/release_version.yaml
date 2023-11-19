@@ -27,7 +27,3 @@ jobs:
         if: steps.release.outputs.released == 'true'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-# Uncomment when we have a PyPI package to publish
-#    - name: Publish package distributions to PyPI
-#      uses: pypa/gh-action-pypi-publish@release/v1
-#      if: steps.release.outputs.released == 'true'
