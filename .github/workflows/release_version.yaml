@@ -22,7 +22,7 @@ jobs:
       - name: Python Semantic Release
         uses: python-semantic-release/python-semantic-release@master
         with:
-          github_token: ${{ secrets.GH_PAT_SEM_REL }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           root_options: "-vv"
 
       - name: Publish package distributions to GitHub Releases
