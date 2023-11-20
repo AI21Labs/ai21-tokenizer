@@ -25,12 +25,12 @@ profile = "black"
 combine_as_imports = true
 lines_between_types = 1
 lines_after_imports = 2
-src_paths = [ "jurassic_tokenization", "tests"]
+src_paths = [ "tokenizer", "tests"]
 
 [tool.coverage.run]
 
 branch = true
-source = ["jurassic_tokenization", "tests"]
+source = ["tokenizer", "tests"]
 omit = ["tests/fixtures/*"]
 
 [tool.coverage.report]
@@ -58,13 +58,13 @@ name = "cz_customize"
 schema_pattern = "(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|bump):(\\s.*)"
 
 [tool.poetry]
-name = "jurassic-tokenization"
+name = "ai21_tokenizer"
 version = "0.1.2"
 description = ""
 authors = ["AI21 Labs"]
 readme = "README.md"
 packages = [
-    { include = "jurassic_tokenization" }
+    { include = "ai21_tokenizer" }
 ]
 
 [tool.poetry.dependencies]
