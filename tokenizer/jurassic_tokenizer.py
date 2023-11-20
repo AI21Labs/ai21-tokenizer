@@ -7,7 +7,7 @@ from typing import List, Union, Optional, Dict, Any
 
 import sentencepiece as spm
 
-from tokenizer.tokenizer import Tokenizer
+from tokenizer.base_tokenizer import BaseTokenizer
 from tokenizer.utils import load_binary, is_number
 
 
@@ -17,7 +17,7 @@ class SpaceSymbol:
     count: int
 
 
-class JurassicTokenizer(Tokenizer):
+class JurassicTokenizer(BaseTokenizer):
     def __init__(
         self,
         model_path: Union[Path, str],
@@ -216,10 +216,3 @@ class JurassicTokenizer(Tokenizer):
             return self._id_to_token(token_ids)
 
         return [self._id_to_token(token_id) for token_id in token_ids]
-
-    @classmethod
-    def from_pretrained(cls, tokenizer_name: str = "j2-tokenizer") -> JurassicTokenizer:
-        model_path = cls._model_path(tokenizer_name)
-        config = cls._config(tokenizer_name)
-
-        return JurassicTokenizer(model_path=model_path, config=config)
