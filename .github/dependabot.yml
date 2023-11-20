@@ -13,4 +13,4 @@ updates:
       prefix: "fix"
       prefix-development: "chore"
       include: "scope"
-
+    open-pull-requests-limit: 1
