@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from jurassic_tokenization import JurassicTokenizer
+from tokenizer.jurassic_tokenizer import JurassicTokenizer
 
 
 @pytest.fixture

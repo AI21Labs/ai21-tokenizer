@@ -7,15 +7,8 @@ from typing import List, Union, Optional, Dict, Any
 
 import sentencepiece as spm
 
-from jurassic_tokenization.utils import load_json, load_binary, is_number
-
-_LOCAL_RESOURCES_PATH = Path(__file__).parent / "resources"
-_PRETRAINED_TOKENIZERS = [
-    "j2-tokenizer",
-]
-
-MODEL_EXTENSION = ".model"
-MODEL_CONFIG_FILENAME = "config.json"
+from tokenizer.tokenizer import Tokenizer
+from tokenizer.utils import load_binary, is_number
 
 
 @dataclass
@@ -24,7 +17,7 @@ class SpaceSymbol:
     count: int
 
 
-class JurassicTokenizer:
+class JurassicTokenizer(Tokenizer):
     def __init__(
         self,
         model_path: Union[Path, str],
@@ -226,16 +219,7 @@ class JurassicTokenizer:
 
     @classmethod
     def from_pretrained(cls, tokenizer_name: str = "j2-tokenizer") -> JurassicTokenizer:
-        if tokenizer_name not in _PRETRAINED_TOKENIZERS:
-            raise ValueError(f"Unknown tokenizer - {tokenizer_name}. Must be one of {cls.pretrained_tokenizers()}")
-
-        tokenizer_dir = _LOCAL_RESOURCES_PATH / tokenizer_name
-        model_path = tokenizer_dir / f"{tokenizer_name}.model"
-        config_path = tokenizer_dir / MODEL_CONFIG_FILENAME
-        config = load_json(config_path)
+        model_path = cls._model_path(tokenizer_name)
+        config = cls._config(tokenizer_name)
 
         return JurassicTokenizer(model_path=model_path, config=config)
-
-    @classmethod
-    def pretrained_tokenizers(cls) -> List[str]:
-        return _PRETRAINED_TOKENIZERS
