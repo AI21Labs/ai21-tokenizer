@@ -13,7 +13,7 @@ _PRETRAINED_MODEL_NAMES = [
 
 class TokenizerFactory:
     @classmethod
-    def get_tokenizer(cls, tokenizer_name: str = "j2-tokenizer") -> Tokenizer:
+    def get_tokenizer(cls, tokenizer_name: str = PreTrainedTokenizers.J2_TOKENIZER) -> Tokenizer:
         if tokenizer_name not in _PRETRAINED_MODEL_NAMES:
             raise ValueError(f"Unknown tokenizer - {tokenizer_name}. Must be one of {_PRETRAINED_MODEL_NAMES}")
 
