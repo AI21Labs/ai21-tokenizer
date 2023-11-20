@@ -23,7 +23,7 @@ poetry add ai21_tokenizer
 ---
 
 ```python
-from jurassic_tokenization import JurassicTokenizer
+from ai21_tokenizer.jurassic_tokenization import JurassicTokenizer
 
 tokenizer = JurassicTokenizer.from_pretrained('j2-tokenizer')
 # Your code here
