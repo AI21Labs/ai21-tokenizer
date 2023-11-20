@@ -12,7 +12,7 @@ MODEL_CONFIG_FILENAME = "config.json"
 
 
 class PreTrainedTokenizers:
-    J2_TOKENIZER = "j2-tokenizer"
+    J2_TOKENIZER = "j2-ai21_tokenizer"
 
 
 _PRETRAINED_MODEL_NAMES = [
