@@ -24,7 +24,9 @@ jobs:
         run: |
           git remote -v
           git config --get-all remote.origin.url
-          echo "GitHub Token: ${{ secrets.GH_PAT_SEM_REL }}"
+          echo "GitHub Token SEM REL: ${{ secrets.GH_PAT_SEM_REL }}"
+          echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
+          echo "PYPI Token: ${{ secrets.PYPI_API_TOKEN }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT_SEM_REL }}
 #      - name: Python Semantic Release
