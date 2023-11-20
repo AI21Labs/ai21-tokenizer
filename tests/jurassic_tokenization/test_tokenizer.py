@@ -1,6 +1,7 @@
 import json
+
 from pathlib import Path
-from typing import Union, List
+from typing import List, Union
 
 import pytest
 

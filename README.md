@@ -9,13 +9,13 @@
 ### pip
 
 ```bash
-pip install jurassic_tokenization
+pip install ai21_tokenizer
 ```
 
 ### poetry
 
 ```bash
-poetry add jurassic_tokenization
+poetry add ai21_tokenizer
 ```
 
 ## Usage
@@ -43,7 +43,7 @@ tokenizer = JurassicTokenizer.from_pretrained('j2-tokenizer')
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/AI21Labs/jurassic-tokenization.git
+   git clone https://github.com/AI21Labs/ai21_tokenizer.git
    ```
 
 2. Set up a virtual environment with the `init` script

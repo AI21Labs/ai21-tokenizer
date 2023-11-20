@@ -57,7 +57,7 @@ def staticcheck(tsk):
     """
     Run static check on the projects files
     """
-    cmd = "mypy jurassic_tokenization tests"
+    cmd = "mypy ai21_tokenizer tests"
     tsk.run(cmd, echo=True, pty=True)
 
 
@@ -66,14 +66,14 @@ def isort(tsk):
     """
     Run static check on the projects files
     """
-    cmd = "isort jurassic_tokenization tests"
+    cmd = "isort ai21_tokenizer tests"
     tsk.run(cmd, echo=True, pty=True)
 
 
 @task
 def build(tsk):
     """
-    generate a package for jurassic_tokenization
+    generate a package for ai21_tokenizer
     """
     cmd = "poetry build"
     tsk.run(cmd, echo=True, pty=True)
