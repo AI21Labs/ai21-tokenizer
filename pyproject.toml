@@ -59,7 +59,7 @@ schema_pattern = "(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|
 
 [tool.poetry]
 name = "jurassic-tokenization"
-version = "0.0.1"
+version = "0.1.1"
 description = ""
 authors = ["AI21 Labs"]
 readme = "README.md"
@@ -85,10 +85,9 @@ version_toml = [
     "pyproject.toml:tool.poetry.version"
 ]
 version_variable = [
-    "__version__"
+    "version.py:__version__"
 ]
 match = "(main)"
-upload_to_pypi = false
 upload_to_release = true
 build_command = "pip install poetry && poetry build"
 version_source = "tag"
@@ -98,6 +97,7 @@ commit_message = "chore(release): v{version} [skip ci]"
 
 [tool.semantic_release.branches.main]
 match = "(main)"
+
 
 
 [tool.poetry.group.test.dependencies]
