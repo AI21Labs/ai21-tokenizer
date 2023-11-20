@@ -4,6 +4,12 @@ name: Semantic PR
 concurrency:
   group: Semantic-PR-${{ github.head_ref }}
   cancel-in-progress: true
+
+
+permissions:
+  contents: read
+
+
 on:
   pull_request:
     types:
