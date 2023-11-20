@@ -87,8 +87,7 @@ version_toml = [
 version_variable = [
     "__version__"
 ]
-match = "(main)"
-upload_to_pypi = false
+match = "(fix_sem_rel_token)"
 upload_to_release = true
 build_command = "pip install poetry && poetry build"
 version_source = "tag"
@@ -96,8 +95,8 @@ commit_version_number = true
 major_on_zero = false # to be removed once we feel comfortable enough to increase major version
 commit_message = "chore(release): v{version} [skip ci]"
 
-[tool.semantic_release.branches.main]
-match = "(main)"
+[tool.semantic_release.branches.fix_sem_rel_token]
+match = "(fix_sem_rel_token)"
 
 
 
