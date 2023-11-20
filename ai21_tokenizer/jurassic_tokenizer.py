@@ -7,8 +7,8 @@ from typing import List, Union, Optional, Dict, Any
 
 import sentencepiece as spm
 
-from tokenizer.base_tokenizer import BaseTokenizer
-from tokenizer.utils import load_binary, is_number
+from ai21_tokenizer.base_tokenizer import BaseTokenizer
+from ai21_tokenizer.utils import load_binary, is_number
 
 
 @dataclass

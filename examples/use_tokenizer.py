@@ -1,4 +1,4 @@
-from tokenizer import TokenizerFactory
+from ai21_tokenizer import TokenizerFactory
 
 tokenizer = TokenizerFactory.get_tokenizer()
 example_sentence = "This sentence should be encoded and then decoded. Hurray!"

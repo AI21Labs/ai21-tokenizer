@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from tokenizer import Tokenizer
-from tokenizer.jurassic_tokenizer import JurassicTokenizer
+from ai21_tokenizer import Tokenizer
+from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
 
 
 @pytest.fixture

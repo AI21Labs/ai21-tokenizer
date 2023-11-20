@@ -4,7 +4,7 @@ from typing import Union, List
 
 import pytest
 
-from tokenizer.jurassic_tokenizer import JurassicTokenizer
+from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
 
 
 def test_tokenizer_encode_decode(tokenizer: JurassicTokenizer):

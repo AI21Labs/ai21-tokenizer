@@ -1,9 +1,9 @@
 from pathlib import Path
 from typing import Dict, Any
 
-from tokenizer.base_tokenizer import BaseTokenizer
-from tokenizer.jurassic_tokenizer import JurassicTokenizer
-from tokenizer.utils import load_json
+from ai21_tokenizer.base_tokenizer import BaseTokenizer
+from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
+from ai21_tokenizer.utils import load_json
 
 _LOCAL_RESOURCES_PATH = Path(__file__).parent / "resources"
 
@@ -12,7 +12,7 @@ MODEL_CONFIG_FILENAME = "config.json"
 
 
 class PreTrainedTokenizers:
-    J2_TOKENIZER = "j2-tokenizer"
+    J2_TOKENIZER = "j2-ai21_tokenizer"
 
 
 _PRETRAINED_MODEL_NAMES = [
