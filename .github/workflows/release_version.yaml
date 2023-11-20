@@ -29,14 +29,14 @@ jobs:
           echo "PYPI Token: ${{ secrets.PYPI_API_TOKEN }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT_SEM_REL }}
-#      - name: Python Semantic Release
-#        uses: python-semantic-release/python-semantic-release@master
-#        with:
-#          github_token: ${{ secrets.GH_PAT_SEM_REL }}
-#          root_options: "-vv"
-#
-#      - name: Publish package distributions to GitHub Releases
-#        uses: python-semantic-release/upload-to-gh-release@main
-#        if: steps.release.outputs.released == 'true'
-#        with:
-#          token: ${{ secrets.GH_PAT_SEM_REL }}
+      - name: Python Semantic Release
+        uses: python-semantic-release/python-semantic-release@master
+        with:
+          github_token: ${{ secrets.GH_PAT_SEM_REL }}
+          root_options: "-vv"
+
+      - name: Publish package distributions to GitHub Releases
+        uses: python-semantic-release/upload-to-gh-release@main
+        if: steps.release.outputs.released == 'true'
+        with:
+          token: ${{ secrets.GH_PAT_SEM_REL }}
