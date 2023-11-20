@@ -13,7 +13,7 @@ on:
       - reopened
 jobs:
   semantic-pr:
-    permissions: read-all
+    permissions: write-all
     runs-on: ubuntu-20.04
     timeout-minutes: 1
     steps:
@@ -23,5 +23,6 @@ jobs:
           requireScope: false
           wip: true
           validateSingleCommit: true
+          root_options: "-vv"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
