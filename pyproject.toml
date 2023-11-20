@@ -102,7 +102,7 @@ match = "(main)"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
-pytest = "7.2.1"
+pytest = "7.4.3"
 pytest-cov = "4.0.0"
 pytest-mock = "3.10.0"
 
