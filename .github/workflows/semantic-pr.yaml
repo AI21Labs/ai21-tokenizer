@@ -23,6 +23,5 @@ jobs:
           requireScope: false
           wip: true
           validateSingleCommit: true
-          root_options: "-vv"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
