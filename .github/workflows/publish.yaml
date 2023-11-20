@@ -30,9 +30,6 @@ jobs:
       - name: Set Poetry environment
         run: |
           poetry env use ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          poetry install
       - name: Build package
         run: poetry build
       - name: Publish package to PYPI
