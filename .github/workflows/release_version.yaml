@@ -17,16 +17,15 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.GH_PAT_SEM_REL_CLS }}
 
       - name: Python Semantic Release
         uses: python-semantic-release/python-semantic-release@master
         with:
-          github_token: ${{ secrets.GH_PAT_SEM_REL_CLS }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           root_options: "-vv"
 
       - name: Publish package distributions to GitHub Releases
         uses: python-semantic-release/upload-to-gh-release@main
         if: steps.release.outputs.released == 'true'
         with:
-          token: ${{ secrets.GH_PAT_SEM_REL_CLS }}
+          token: ${{ secrets.GITHUB_TOKEN }}
