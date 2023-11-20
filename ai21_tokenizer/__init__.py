@@ -21,6 +21,11 @@ _PRETRAINED_MODEL_NAMES = [
 
 
 class Tokenizer:
+    """
+    Factory class to create AI21 tokenizer
+    Currently supports only J2-Tokenizer
+    """
+
     _tokenizer_name = PreTrainedTokenizers.J2_TOKENIZER
 
     @classmethod
