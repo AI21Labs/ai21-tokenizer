@@ -3,7 +3,7 @@ name: Semantic Release
 on:
   push:
     branches:
-      - fix_sem_rel_token
+      - main
 
 jobs:
   release:
@@ -18,25 +18,9 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-          ref: main
 
-      - name: Debugging
-        run: |
-          git remote -v
-          git config --get-all remote.origin.url
-          echo "GitHub Token SEM REL: ${{ secrets.GH_PAT_SEM_REL }}"
-          echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
-          echo "PYPI Token: ${{ secrets.PYPI_API_TOKEN }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT_SEM_REL }}
       - name: Python Semantic Release
         uses: python-semantic-release/python-semantic-release@master
         with:
           github_token: ${{ secrets.GH_PAT_SEM_REL }}
           root_options: "-vv"
-
-      - name: Publish package distributions to GitHub Releases
-        uses: python-semantic-release/upload-to-gh-release@main
-        if: steps.release.outputs.released == 'true'
-        with:
-          token: ${{ secrets.GH_PAT_SEM_REL }}
