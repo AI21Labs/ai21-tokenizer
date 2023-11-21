@@ -62,6 +62,21 @@ Please make sure you have the pre-commit hooks installed before committing your 
 Each commit should be a single logical change and should be aligned with the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 Since we are using a pre-commit hook to enforce this, any other commit message format will be rejected.
 
+### Run CI tasks locally
+
+```bash
+$ inv --list
+Available tasks:
+
+  clean          clean (remove) packages
+  lint           python lint
+  outdated       outdated packages
+  test           Run unit tests
+  update         update packages
+  audit          run safety checks on project dependencies
+  formatter      auto formats the modified files
+```
+
 ### Tests
 
 We use [pytest](https://docs.pytest.org/en/stable/) for testing. To run the tests, run:
