@@ -59,7 +59,7 @@ schema_pattern = "(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|
 
 [tool.poetry]
 name = "ai21-tokenizer"
-version = "0.3.0"
+version = "0.3.1"
 description = ""
 authors = ["AI21 Labs"]
 readme = "README.md"
@@ -97,6 +97,7 @@ commit_message = "chore(release): v{version} [skip ci]"
 
 [tool.semantic_release.branches.main]
 match = "(main)"
+
 
 
 [tool.poetry.group.test.dependencies]
