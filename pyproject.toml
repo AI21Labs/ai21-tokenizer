@@ -98,6 +98,8 @@ commit_message = "chore(release): v{version} [skip ci]"
 [tool.semantic_release.branches.main]
 match = "(main)"
 
+[tool.semantic_release.changelog.environment]
+newline_sequence = "\n"
 
 
 [tool.poetry.group.test.dependencies]
