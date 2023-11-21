@@ -9,7 +9,7 @@ config_path = resource_path / "j2-tokenizer/config.json"
 config = load_json(config_path)
 tokenizer = JurassicTokenizer(model_path=model_path, config=config)
 
-example_sentence = "This sentence should be encoded and then decoded. Hurray!!"
+example_sentence = "This sentence should be encoded and then decoded. Hurray!!!"
 encoded = tokenizer.encode(example_sentence)
 decoded = tokenizer.decode(encoded)
 
