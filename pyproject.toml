@@ -84,7 +84,7 @@ python-semantic-release = "^8.3.0"
 version_toml = [
     "pyproject.toml:tool.poetry.version"
 ]
-version_variable = [
+version_variables = [
     "version.py:__version__"
 ]
 match = "(main)"
