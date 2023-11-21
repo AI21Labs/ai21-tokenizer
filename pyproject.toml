@@ -58,7 +58,7 @@ name = "cz_customize"
 schema_pattern = "(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|bump):(\\s.*)"
 
 [tool.poetry]
-name = "ai21_tokenizer"
+name = "ai21-tokenizer"
 version = "0.2.0"
 description = ""
 authors = ["AI21 Labs"]
@@ -97,10 +97,6 @@ commit_message = "chore(release): v{version} [skip ci]"
 
 [tool.semantic_release.branches.main]
 match = "(main)"
-
-
-
-
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
