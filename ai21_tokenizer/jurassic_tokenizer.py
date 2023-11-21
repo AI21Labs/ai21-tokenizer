@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from pathlib import Path
 from typing import List, Union, Optional, Dict, Any
 
 import sentencepiece as spm
 
 from ai21_tokenizer.base_tokenizer import BaseTokenizer
-from ai21_tokenizer.utils import load_binary, is_number
+from ai21_tokenizer.utils import load_binary, is_number, PathLike
 
 
 @dataclass
@@ -20,7 +19,7 @@ class SpaceSymbol:
 class JurassicTokenizer(BaseTokenizer):
     def __init__(
         self,
-        model_path: Union[Path, str],
+        model_path: PathLike,
         config: Optional[Dict[str, Any]] = None,
     ):
         # noinspection PyArgumentList
