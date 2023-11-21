@@ -66,7 +66,7 @@ Since we are using a pre-commit hook to enforce this, any other commit message f
 
 We use [pytest](https://docs.pytest.org/en/stable/) for testing. To run the tests, run:
 
-    poetry run pytest
+    inv test
 
 If adding a new test, please make sure to add it to the `tests` directory and have the file location be under the same hierarchy as the file being tested.
 
