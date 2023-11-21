@@ -84,10 +84,10 @@ python-semantic-release = "^8.3.0"
 version_toml = [
     "pyproject.toml:tool.poetry.version"
 ]
-version_variable = [
+version_variables = [
     "version.py:__version__"
 ]
-match = "(main)"
+match = "(version_path)"
 upload_to_release = true
 build_command = "pip install poetry && poetry build"
 version_source = "tag"
@@ -95,8 +95,8 @@ commit_version_number = true
 major_on_zero = false # to be removed once we feel comfortable enough to increase major version
 commit_message = "chore(release): v{version} [skip ci]"
 
-[tool.semantic_release.branches.main]
-match = "(main)"
+[tool.semantic_release.branches.version_path]
+match = "(version_path)"
 
 [tool.semantic_release.changelog.environment]
 newline_sequence = "\n"
