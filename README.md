@@ -9,13 +9,13 @@
 ### pip
 
 ```bash
-pip install jurassic_tokenization
+pip install ai21_tokenizer
 ```
 
 ### poetry
 
 ```bash
-poetry add jurassic_tokenization
+poetry add ai21_tokenizer
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ poetry add jurassic_tokenization
 ---
 
 ```python
-from jurassic_tokenization import JurassicTokenizer
+from ai21_tokenizer import JurassicTokenizer
 
 tokenizer = JurassicTokenizer.from_pretrained('j2-tokenizer')
 # Your code here

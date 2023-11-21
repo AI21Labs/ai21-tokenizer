@@ -2,7 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from jurassic_tokenization import JurassicTokenizer
+from ai21_tokenizer import Tokenizer
+from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
 
 
 @pytest.fixture
@@ -12,4 +13,9 @@ def resources_path() -> Path:
 
 @pytest.fixture(scope="session")
 def tokenizer() -> JurassicTokenizer:
-    return JurassicTokenizer.from_pretrained("j2-tokenizer")
+    jurassic_tokenizer = Tokenizer.get_tokenizer()
+
+    if isinstance(jurassic_tokenizer, JurassicTokenizer):
+        return jurassic_tokenizer
+
+    raise ValueError("JurassicTokenizer not found")
