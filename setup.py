@@ -14,7 +14,7 @@ setup(
     author="AI21 Labs",
     author_email="support@ai21.com",
     description="Library for tokenizing text using AI21 Labs' Jurassic ai21_tokenizer",
-    url="https://github.com/AI21Labs/ai21_tokenizer",
+    url="https://github.com/AI21Labs/ai21-tokenizer",
     long_description_content_type="text/markdown",
     long_description=long_description,
     packages=find_packages(exclude=["tests", "tests.*", "ci_scripts"]),
