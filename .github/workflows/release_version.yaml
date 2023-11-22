@@ -24,8 +24,3 @@ jobs:
         with:
           github_token: ${{ secrets.GH_PAT_SEM_REL_ASAFG }}
           root_options: "-vv"
-
-      - name: Prettify code
-        uses: creyD/prettier_action@v4.3
-        with:
-          prettier_options: --write CHANGELOG.md
