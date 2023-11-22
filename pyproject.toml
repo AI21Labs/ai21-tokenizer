@@ -99,11 +99,7 @@ commit_message = "chore(release): v{version} [skip ci]"
 match = "(main)"
 
 [tool.semantic_release.changelog.environment]
-newline_sequence = "\r"
-
-
-
-
+newline_sequence = "\n"
 
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
