@@ -99,7 +99,7 @@ commit_message = "chore(release): v{version} [skip ci]"
 match = "(main)"
 
 [tool.semantic_release.changelog.environment]
-newline_sequence = "\n"
+newline_sequence = "\r"
 
 
 
