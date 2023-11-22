@@ -3,7 +3,6 @@
 
 name: Upload Python Package
 
-# remove once repo is ready to be published
 on:
   release:
     types: [published]
