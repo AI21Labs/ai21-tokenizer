@@ -4,10 +4,9 @@
 name: Upload Python Package
 
 # remove once repo is ready to be published
-on: workflow_dispatch
-#on:
-#  release:
-#    types: [published]
+on:
+  release:
+    types: [published]
 
 permissions:
   contents: read
