@@ -85,7 +85,7 @@ version_toml = [
     "pyproject.toml:tool.poetry.version"
 ]
 version_variables = [
-    "version.py:__version__"
+    "ai21_tokenizer/version.py:VERSION"
 ]
 match = "(main)"
 upload_to_release = true
