@@ -1,4 +1,4 @@
-# Jurassic Tokenization
+# AI21 Labs Tokenizer
 
 ---
 
@@ -22,6 +22,8 @@ poetry add ai21-tokenizer
 
 ---
 
+### Tokenizer Creation
+
 ```python
 from ai21_tokenizer import Tokenizer
 
@@ -39,4 +41,4 @@ config = {} # "dictionary object of your config.json file"
 tokenizer = JurassicTokenizer(model_path=model_path, config=config)
 ```
 
-For more examples, please see our [examples](examples) folder.
+**For more examples, please see our [examples](examples) folder.**
