@@ -2,7 +2,28 @@
 
 
 
+## v0.3.6 (2023-11-22)
+
+### Ci
+
+* ci: added python version to pypi publish (#50) ([`83cbbea`](https://github.com/AI21Labs/ai21-tokenizer/commit/83cbbeaa2626ff0adfc10a4d325a345322fade70))
+
+* ci: exclude changelog (#48) ([`9222c55`](https://github.com/AI21Labs/ai21-tokenizer/commit/9222c5566b8d220ca70e9c1eb6ed6aec679c9873))
+
+### Documentation
+
+* docs: CODEOWNERS (#49) ([`1e6513b`](https://github.com/AI21Labs/ai21-tokenizer/commit/1e6513badd83cde1b48da6dcf5c31ae0ec1795c3))
+
+### Fix
+
+* fix: support ai21_tokenizer.__version__ (#52) ([`13944eb`](https://github.com/AI21Labs/ai21-tokenizer/commit/13944eb7a8ae540e0be329abb12920e374c62b23))
+
+
 ## v0.3.5 (2023-11-22)
+
+### Chore
+
+* chore(release): v0.3.5 [skip ci] ([`217b14e`](https://github.com/AI21Labs/ai21-tokenizer/commit/217b14ef23e7e63da9e0de5896bb002dcf89697d))
 
 ### Fix
 
