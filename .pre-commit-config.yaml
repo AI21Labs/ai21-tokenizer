@@ -99,6 +99,7 @@ repos:
     hooks:
       - id: prettier
         name: Formatter
+        exclude: (CHANGELOG.md)
         additional_dependencies:
           - prettier@2.8.8
           - "prettier-plugin-sh@0.12.8" # https://github.com/un-ts/prettier/tree/master/packages/sh
