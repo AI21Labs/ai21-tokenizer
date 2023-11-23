@@ -2,7 +2,38 @@
 
 
 
+## v0.3.7 (2023-11-23)
+
+### Ci
+
+* ci: workflow dispatch for release (#54) ([`dbf5609`](https://github.com/AI21Labs/ai21-tokenizer/commit/dbf5609f63966804ea56e3c6b3e671498cd9feb3))
+
+* ci: Automate pypi publish (#53)
+
+* ci: Automate pypi publish on new release
+
+* fix: Remove comment
+
+* fix: title of action
+
+* fix: title of action ([`7c04fda`](https://github.com/AI21Labs/ai21-tokenizer/commit/7c04fdab10f57c4ed61ce974a5f98ed2b5ec0abd))
+
+### Fix
+
+* fix: Examples in readme (#55)
+
+* ci: workflow dispatch for release
+
+* docs: Updated readme with more examples
+
+* docs: Added docs to base class ([`94f3a3c`](https://github.com/AI21Labs/ai21-tokenizer/commit/94f3a3c9539346ac1bc501f6c83ce1e3525d055a))
+
+
 ## v0.3.6 (2023-11-22)
+
+### Chore
+
+* chore(release): v0.3.6 [skip ci] ([`550644d`](https://github.com/AI21Labs/ai21-tokenizer/commit/550644d181a36eb9a2d4312959a27a04743cde25))
 
 ### Ci
 
