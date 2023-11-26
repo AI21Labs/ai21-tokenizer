@@ -2,7 +2,18 @@
 
 
 
+## v0.3.8 (2023-11-26)
+
+### Fix
+
+* fix: readme example (#56) ([`b713da8`](https://github.com/AI21Labs/ai21-tokenizer/commit/b713da8cdfe6434ac03cd25eaea7036ed172bf59))
+
+
 ## v0.3.7 (2023-11-23)
+
+### Chore
+
+* chore(release): v0.3.7 [skip ci] ([`a181ae6`](https://github.com/AI21Labs/ai21-tokenizer/commit/a181ae67bee062b1ac74633a0b6d37fc2a34c4fc))
 
 ### Ci
 
