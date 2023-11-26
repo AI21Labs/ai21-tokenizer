@@ -47,7 +47,7 @@ encoded_text = tokenizer.encode(text_to_encode)
 print(f"Encoded text: {encoded_text}")
 
 decoded_text = tokenizer.decode(encoded_text)
-print(f"Decoded text: {encoded_text}")
+print(f"Decoded text: {decoded_text}")
 ```
 
 #### What if you had wanted to convert your tokens to ids or vice versa?
