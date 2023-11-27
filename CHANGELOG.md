@@ -2,7 +2,44 @@
 
 
 
+## v0.3.9 (2023-11-27)
+
+### Chore
+
+* chore: add github badges (#58) ([`821455c`](https://github.com/AI21Labs/ai21-tokenizer/commit/821455c6bf2e897a3bf3619d2e078e2daf3d4653))
+
+* chore(deps-dev): bump urllib3 from 2.0.4 to 2.0.7 (#57)
+
+Bumps [urllib3](https://github.com/urllib3/urllib3) from 2.0.4 to 2.0.7.
+- [Release notes](https://github.com/urllib3/urllib3/releases)
+- [Changelog](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst)
+- [Commits](https://github.com/urllib3/urllib3/compare/2.0.4...2.0.7)
+
+---
+updated-dependencies:
+- dependency-name: urllib3
+  dependency-type: indirect
+...
+
+Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt; ([`93ef6d6`](https://github.com/AI21Labs/ai21-tokenizer/commit/93ef6d6a18ca7ce7fb65fdf4cbc09e7105bcd8c3))
+
+### Fix
+
+* fix: Modify badges (#59)
+
+* docs: fixed url
+
+* fix: inline
+
+* fix: README.md ([`20b7090`](https://github.com/AI21Labs/ai21-tokenizer/commit/20b709012059719a5084b7abed745f8705f0e8a1))
+
+
 ## v0.3.8 (2023-11-26)
+
+### Chore
+
+* chore(release): v0.3.8 [skip ci] ([`645ff5e`](https://github.com/AI21Labs/ai21-tokenizer/commit/645ff5ea0ffda722dae0fd211bded29f75b72066))
 
 ### Fix
 
