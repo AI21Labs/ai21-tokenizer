@@ -1,10 +1,11 @@
-<p align="center">
-  <a href="https://github.com/AI21Labs/ai21-tokenizer"><h1>AI21 Labs Tokenizer</h1></a>
-</p>
+<h1 align="center">
+    <a href="https://github.com/AI21Labs/ai21-tokenizer">AI21 Labs Tokenizer</a>
+</h1>
 
 <p align="center">
     <em>A SentencePiece based tokenizer for production uses</em>
 </p>
+
 <p align="center">
 <a href="https://github.com/AI21Labs/ai21-tokenizer/actions?query=workflow%3ATest+event%3Apush+branch%3Amain"><img src="https://github.com/AI21Labs/ai21-tokenizer/actions/workflows/test.yaml/badge.svg" alt="Test"></a>
 <a href="https://pypi.org/project/ai21-tokenizer" target="_blank"><img src="https://img.shields.io/pypi/v/ai21-tokenizer?color=%2334D058&label=pypi%20package" alt="Package version"></a>
