@@ -1,12 +1,12 @@
 <p align="center">
-  <a href="https://fastapi.tiangolo.com"><h1>AI21 Labs Tokenizer</h1></a>
+  <a href="https://github.com/AI21Labs/ai21-tokenizer"><h1>AI21 Labs Tokenizer</h1></a>
 </p>
 
 <p align="center">
     <em>A SentencePiece based tokenizer for production uses</em>
 </p>
 <p align="center">
-<a href="https://github.com/AI21Labs/ai21-tokenizer/actions?query=workflow%3ATest+event%3Apush+branch%3Amain" target="_blank">
+<a href="https://github.com/AI21Labs/ai21-tokenizer/actions?query=workflow%3ATest+event%3Apush+branch%3Amain">
     <img src="https://github.com/AI21Labs/ai21-tokenizer/actions/workflows/test.yaml/badge.svg" alt="Test">
 </a>
 <a href="https://pypi.org/project/ai21-tokenizer" target="_blank">
@@ -27,7 +27,6 @@
 </p>
 
 ---
-
 
 ## Installation
 
