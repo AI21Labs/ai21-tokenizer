@@ -2,9 +2,18 @@
 
 
 
+## v0.3.11 (2023-12-27)
+
+### Fix
+
+* fix: BaseTokenizer in init (#68) ([`3cc71e7`](https://github.com/AI21Labs/ai21-tokenizer/commit/3cc71e747a0b5d5450dbe70618456d415171ae23))
+
+
 ## v0.3.10 (2023-12-27)
 
 ### Chore
+
+* chore(release): v0.3.10 [skip ci] ([`1601535`](https://github.com/AI21Labs/ai21-tokenizer/commit/16015359022592a058a48893076fd4c34ab85b74))
 
 * chore(deps-dev): bump safety from 2.3.4 to 2.3.5 (#64)
 
