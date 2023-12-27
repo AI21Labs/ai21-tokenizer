@@ -39,7 +39,7 @@ class TokenizerFactory:
 
     @classmethod
     def _model_path(cls, tokenizer_name: str) -> Path:
-        return cls._tokenizer_dir(tokenizer_name) / f"{tokenizer_name}.{_MODEL_EXTENSION}"
+        return cls._tokenizer_dir(tokenizer_name) / f"{tokenizer_name}{_MODEL_EXTENSION}"
 
     @classmethod
     def _get_config(cls, tokenizer_name: str) -> Dict[str, Any]:
