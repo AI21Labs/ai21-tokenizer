@@ -33,6 +33,8 @@ class JurassicTokenizer(BaseTokenizer):
         self.eos_id = config.get("eos_id")
 
         self._newline_piece = config.get("newline_piece")
+        self.newline_id = self.convert_tokens_to_ids(self.newline_piece)
+
         self._mask_pieces = config.get("mask_pieces", [])
 
         self._manual_add_dummy_prefix = not (config.get("add_dummy_prefix", True))
