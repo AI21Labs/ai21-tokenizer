@@ -150,10 +150,11 @@ class JurassicTokenizer(BaseTokenizer):
 
         return res
 
-    def encode(self, text: str, is_start: bool = True, **kwargs) -> List[int]:
+    def encode(self, text: str, **kwargs) -> List[int]:
         """
         Tokenizes the input text and returns it's token ids
         """
+        is_start = kwargs.get("is_start", True)
         lines = text.split("\n")
         toks = []
 
