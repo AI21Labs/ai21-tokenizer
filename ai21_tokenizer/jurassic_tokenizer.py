@@ -30,6 +30,7 @@ class JurassicTokenizer(BaseTokenizer):
         self.unk_id = config.get("unk_id")
         self.eop_id = config.get("eop_id")
         self.bos_id = config.get("bos_id")
+        self.eos_id = config.get("eos_id")
 
         self._newline_piece = config.get("newline_piece")
         self._mask_pieces = config.get("mask_pieces", [])
