@@ -2,7 +2,42 @@
 
 
 
+## v0.6.0 (2023-12-28)
+
+### Chore
+
+* chore: add test case for encode with is_start=False (#74)
+
+* chore: add test case for encode with is_start=False
+
+* fix: split is_start=False to a different testcase ([`77c0a39`](https://github.com/AI21Labs/ai21-tokenizer/commit/77c0a39d1bcde81cc0166a512eb454dad6d3c569))
+
+### Feature
+
+* feat: Add decode with offsets (#73)
+
+* feat: Add decode_with_offsets() to JurassicTokenizer
+
+* refactor: remove kwargs from decode_with_offsets since it&#39;s not used
+
+* chore: Add unittest for decode and for offsets
+
+* fix: test only decode_with_offsets
+
+* fix: dummy for returned offsets in decode_with_offsets ([`a5a7bb4`](https://github.com/AI21Labs/ai21-tokenizer/commit/a5a7bb4b27fa4f74a0b1a1d6874599556a35c1c5))
+
+* feat: Add the is_start parameter to JurassicTokenizer.encode() (#72)
+
+* feat: Add the is_start parameter to JurassicTokenizer.encode()
+
+* refactor: take &#39;is_start&#39; from kwargs ([`296bda5`](https://github.com/AI21Labs/ai21-tokenizer/commit/296bda5578edd57ff58d6763b3ccd5b9ba709795))
+
+
 ## v0.5.0 (2023-12-28)
+
+### Chore
+
+* chore(release): v0.5.0 [skip ci] ([`96f384f`](https://github.com/AI21Labs/ai21-tokenizer/commit/96f384f2873ec363016c8def483f59ac535acba9))
 
 ### Feature
 
