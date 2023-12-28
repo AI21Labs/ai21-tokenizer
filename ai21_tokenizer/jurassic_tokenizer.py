@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import List, Union, Optional, Dict, Any
+from typing import List, Union, Optional, Dict, Any, Tuple
 
 import sentencepiece as spm
 
@@ -174,6 +174,13 @@ class JurassicTokenizer(BaseTokenizer):
         """
         Transforms token ids into text
         """
+        res_text, _ = self.decode_with_offsets(token_ids)
+        return res_text
+
+    def decode_with_offsets(self, token_ids: List[int]) -> Tuple[str, List[Tuple[int, int]]]:
+        """
+        Transforms token ids into text, and returns the offsets of each token as well
+        """
         start_of_line = True
 
         res_text = ""
@@ -197,7 +204,7 @@ class JurassicTokenizer(BaseTokenizer):
 
             start_of_line = token == self._newline_piece
 
-        return res_text
+        return res_text, offsets
 
     def _id_to_token(self, token_id: int) -> str:
         return self._id_to_token_map[token_id]
