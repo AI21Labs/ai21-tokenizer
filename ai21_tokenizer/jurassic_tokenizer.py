@@ -159,7 +159,7 @@ class JurassicTokenizer(BaseTokenizer):
 
         for i, line in enumerate(lines):
             if i > 0:
-                toks.append(self._newline_id)
+                toks.append(self.newline_id)
             if not line:
                 continue
             # We add the dummy prefix on every newline, and also for the 1st line if it's a 'start'
