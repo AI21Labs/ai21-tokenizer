@@ -26,6 +26,21 @@ def test_tokenizer_encode_set(tokenizer: JurassicTokenizer, resources_path: Path
             ), f"Not equal at doc {i}"
 
 
+def test_tokenizer_decode_set(tokenizer: JurassicTokenizer, resources_path: Path):
+    tokenized_docs_path = resources_path / "200_tokenized_C4_val_docs.jsonl"
+    with tokenized_docs_path.open("r") as tokenized_docs_file:
+        for i, tokenized_doc_line in enumerate(tokenized_docs_file.readlines()):
+            tokenized_doc = json.loads(tokenized_doc_line)
+
+            tokens = tokenized_doc["token_ids_start_true"]
+            decoded_text = tokenizer.decode(tokens)
+            _, offsets = tokenizer.decode_with_offsets(tokens)
+            assert tokenized_doc["decoded_text_from_start_true"] == decoded_text, f"Not equal at doc {i}"
+            assert [
+                tuple(x) for x in tokenized_doc["decoded_offsets_from_start_true"]
+            ] == offsets, f"Not equal at doc {i}"
+
+
 @pytest.mark.parametrize(
     ids=[
         "when_single_int__should_return_single_str",
