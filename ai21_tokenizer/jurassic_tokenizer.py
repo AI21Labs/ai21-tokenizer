@@ -33,8 +33,6 @@ class JurassicTokenizer(BaseTokenizer):
         self.eos_id = config.get("eos_id")
 
         self._newline_piece = config.get("newline_piece")
-        self.newline_id = self.convert_tokens_to_ids(self._newline_piece)
-
         self._mask_pieces = config.get("mask_pieces", [])
 
         self._manual_add_dummy_prefix = not (config.get("add_dummy_prefix", True))
@@ -45,7 +43,7 @@ class JurassicTokenizer(BaseTokenizer):
             self._convert_ids_to_tokens([i for i in range(self.vocab_size) if self._sp.IsControl(i)])
         )
 
-        self._newline_id = self._token_to_id(self._newline_piece)
+        self.newline_id = self._token_to_id(self._newline_piece)
 
         self._sample_split = re.compile(r"▁*[^▁]+|▁")
         self._space_split = re.compile("( {2,})")  # Split by 2 or more consecutive spaces
