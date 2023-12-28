@@ -2,7 +2,34 @@
 
 
 
+## v0.5.0 (2023-12-28)
+
+### Feature
+
+* feat: Add more special tokens (#71)
+
+* fix: commitizen tag starts with &#34;v&#34;
+
+* feat: add eos_id
+
+* feat: Add newline_id
+
+* fix: typo &#34;_newline_piece&#34; instead of &#34;newline_piece&#34;
+
+* fix: newline_id already existed as &#34;private&#34;. Just make it &#34;public&#34;
+
+* fix: forgot to rename everywhere ([`9a9e1a8`](https://github.com/AI21Labs/ai21-tokenizer/commit/9a9e1a8a21dbfd4d3f983ce8ec1f97335470e2c6))
+
+### Fix
+
+* fix: commitizen tag starts with &#34;v&#34; (#70) ([`cf495ad`](https://github.com/AI21Labs/ai21-tokenizer/commit/cf495ada8341131c0d022f02d2c9e86cee8723ba))
+
+
 ## v0.4.0 (2023-12-28)
+
+### Chore
+
+* chore(release): v0.4.0 [skip ci] ([`b761edc`](https://github.com/AI21Labs/ai21-tokenizer/commit/b761edc0947b132192d4f963dd8d8704df4ebac4))
 
 ### Feature
 
