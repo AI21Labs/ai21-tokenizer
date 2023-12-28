@@ -174,10 +174,10 @@ class JurassicTokenizer(BaseTokenizer):
         """
         Transforms token ids into text
         """
-        res_text, offsets = self.decode_with_offsets(token_ids, **kwargs)
+        res_text, offsets = self.decode_with_offsets(token_ids)
         return res_text
 
-    def decode_with_offsets(self, token_ids: List[int], **kwargs) -> Tuple[str, List[Tuple[int, int]]]:
+    def decode_with_offsets(self, token_ids: List[int]) -> Tuple[str, List[Tuple[int, int]]]:
         """
         Transforms token ids into text, and returns the offsets of each token as well
         """
