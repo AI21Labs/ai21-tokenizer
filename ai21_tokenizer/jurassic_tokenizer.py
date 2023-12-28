@@ -174,7 +174,7 @@ class JurassicTokenizer(BaseTokenizer):
         """
         Transforms token ids into text
         """
-        res_text, offsets = self.decode_with_offsets(token_ids)
+        res_text, _ = self.decode_with_offsets(token_ids)
         return res_text
 
     def decode_with_offsets(self, token_ids: List[int]) -> Tuple[str, List[Tuple[int, int]]]:
