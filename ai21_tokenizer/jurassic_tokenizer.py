@@ -30,6 +30,7 @@ class JurassicTokenizer(BaseTokenizer):
         self.unk_id = config.get("unk_id")
         self.eop_id = config.get("eop_id")
         self.bos_id = config.get("bos_id")
+        self.eos_id = config.get("eos_id")
 
         self._newline_piece = config.get("newline_piece")
         self._mask_pieces = config.get("mask_pieces", [])
@@ -42,7 +43,7 @@ class JurassicTokenizer(BaseTokenizer):
             self._convert_ids_to_tokens([i for i in range(self.vocab_size) if self._sp.IsControl(i)])
         )
 
-        self._newline_id = self._token_to_id(self._newline_piece)
+        self.newline_id = self._token_to_id(self._newline_piece)
 
         self._sample_split = re.compile(r"▁*[^▁]+|▁")
         self._space_split = re.compile("( {2,})")  # Split by 2 or more consecutive spaces
@@ -158,7 +159,7 @@ class JurassicTokenizer(BaseTokenizer):
 
         for i, line in enumerate(lines):
             if i > 0:
-                toks.append(self._newline_id)
+                toks.append(self.newline_id)
             if not line:
                 continue
             # We add the dummy prefix on every newline, and also for the 1st line if it's a 'start'
