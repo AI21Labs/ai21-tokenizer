@@ -2,7 +2,18 @@
 
 
 
+## v0.4.0 (2023-12-28)
+
+### Feature
+
+* feat: add pad_id and bos_id to jurassic_tokenizer (#69) ([`ffb2ce3`](https://github.com/AI21Labs/ai21-tokenizer/commit/ffb2ce38aa59eec03305c4fdc6bfedd99c7b5255))
+
+
 ## v0.3.11 (2023-12-27)
+
+### Chore
+
+* chore(release): v0.3.11 [skip ci] ([`5280149`](https://github.com/AI21Labs/ai21-tokenizer/commit/528014946c5d35bbd9a5c8fa8c6eed7754e1f2f1))
 
 ### Fix
 
