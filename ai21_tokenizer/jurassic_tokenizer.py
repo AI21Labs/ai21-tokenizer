@@ -150,7 +150,7 @@ class JurassicTokenizer(BaseTokenizer):
 
         return res
 
-    def encode(self, text: str, **kwargs) -> List[int]:
+    def encode(self, text: str, is_start: bool = True, **kwargs) -> List[int]:
         """
         Tokenizes the input text and returns it's token ids
         """
@@ -163,7 +163,7 @@ class JurassicTokenizer(BaseTokenizer):
             if not line:
                 continue
             # We add the dummy prefix on every newline, and also for the 1st line if it's a 'start'
-            if self._manual_add_dummy_prefix and i >= 0:
+            if self._manual_add_dummy_prefix and (i > 0 or (i == 0 and is_start)):
                 line = " " + line
             toks.extend(self._encode(line))
 
