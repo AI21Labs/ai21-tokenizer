@@ -154,6 +154,7 @@ class JurassicTokenizer(BaseTokenizer):
         """
         Tokenizes the input text and returns it's token ids
         """
+        is_start = kwargs.get("is_start", True)
         lines = text.split("\n")
         toks = []
 
@@ -163,7 +164,7 @@ class JurassicTokenizer(BaseTokenizer):
             if not line:
                 continue
             # We add the dummy prefix on every newline, and also for the 1st line if it's a 'start'
-            if self._manual_add_dummy_prefix and i >= 0:
+            if self._manual_add_dummy_prefix and (i > 0 or (i == 0 and is_start)):
                 line = " " + line
             toks.extend(self._encode(line))
 
