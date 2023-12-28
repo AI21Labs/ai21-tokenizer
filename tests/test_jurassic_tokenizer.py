@@ -25,6 +25,10 @@ def test_tokenizer_encode_set(tokenizer: JurassicTokenizer, resources_path: Path
                 tokenized_doc["doc_text"]
             ), f"Not equal at doc {i}"
 
+            assert tokenized_doc["token_ids_start_false"] == tokenizer.encode(
+                tokenized_doc["doc_text"], is_start=False
+            ), f"Not equal at doc {i}"
+
 
 @pytest.mark.parametrize(
     ids=[
