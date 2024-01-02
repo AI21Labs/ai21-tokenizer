@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from typing import List, Union, Optional, Dict, Any, Tuple
+from typing import List, Union, Optional, Dict, Any, Tuple, BinaryIO
 
 import sentencepiece as spm
 
@@ -19,11 +19,16 @@ class SpaceSymbol:
 class JurassicTokenizer(BaseTokenizer):
     def __init__(
         self,
-        model_path: PathLike,
+        model_path: Optional[PathLike] = None,
+        model_file_handle: Optional[BinaryIO] = None,
         config: Optional[Dict[str, Any]] = None,
     ):
+        self._validate_init(model_path=model_path, model_file_handle=model_file_handle)
+
+        model_proto = load_binary(model_path) if model_path else model_file_handle.read()
+
         # noinspection PyArgumentList
-        self._sp = spm.SentencePieceProcessor(model_proto=load_binary(model_path))
+        self._sp = spm.SentencePieceProcessor(model_proto=model_proto)
         config = config or {}
 
         self.pad_id = config.get("pad_id")
@@ -51,6 +56,13 @@ class JurassicTokenizer(BaseTokenizer):
         self._number_mode = config.get("number_mode")
         self._space_mode = config.get("space_mode")
         self._space_tokens = self._map_space_tokens()
+
+    def _validate_init(self, model_path: Optional[PathLike], model_file_handle: Optional[BinaryIO]) -> None:
+        if model_path is None and model_file_handle is None:
+            raise ValueError("Must provide exactly one of model_path or model_file_handle. Got none.")
+
+        if model_path is not None and model_file_handle is not None:
+            raise ValueError("Must provide exactly one of model_path or model_file_handle. Got both.")
 
     def _map_space_tokens(self) -> List[SpaceSymbol]:
         res = []
@@ -226,3 +238,13 @@ class JurassicTokenizer(BaseTokenizer):
             return self._id_to_token(token_ids)
 
         return [self._id_to_token(token_id) for token_id in token_ids]
+
+    @classmethod
+    def from_file_handle(
+        cls, model_file_handle: BinaryIO, config: Optional[Dict[str, Any]] = None
+    ) -> JurassicTokenizer:
+        return cls(model_file_handle=model_file_handle, config=config)
+
+    @classmethod
+    def from_file_path(cls, model_path: PathLike, config: Optional[Dict[str, Any]] = None) -> JurassicTokenizer:
+        return cls(model_path=model_path, config=config)
