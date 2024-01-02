@@ -19,8 +19,8 @@ class SpaceSymbol:
 class JurassicTokenizer(BaseTokenizer):
     def __init__(
         self,
-        model_path: Optional[PathLike],
-        model_file_handle: Optional[BinaryIO],
+        model_path: Optional[PathLike] = None,
+        model_file_handle: Optional[BinaryIO] = None,
         config: Optional[Dict[str, Any]] = None,
     ):
         JurassicTokenizer._assert_exactly_one(model_path, model_file_handle)
