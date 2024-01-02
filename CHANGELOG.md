@@ -2,9 +2,36 @@
 
 
 
+## v0.7.0 (2024-01-02)
+
+### Feature
+
+* feat: Init tokenizer from filehandle (#76)
+
+* feat: allow creating JurassicTokenizer from model file handle
+
+* fix: Add default for model_path and model_file_handle
+
+* feat: Add JurassicTokenizer.from_file_path classmethod
+
+* fix: remove model_path=None in JurassicTokenizer.from_file_handle
+
+* fix: rename _assert_exactly_one to _validate_init and make it not static
+
+* refactor: semantics
+
+* test: Added tests
+
+---------
+
+Co-authored-by: Asaf Gardin &lt;asafg@ai21.com&gt; ([`dcb73a7`](https://github.com/AI21Labs/ai21-tokenizer/commit/dcb73a72348e576b06cd4a066e06141ceae37a44))
+
+
 ## v0.6.0 (2023-12-28)
 
 ### Chore
+
+* chore(release): v0.6.0 [skip ci] ([`7b8348d`](https://github.com/AI21Labs/ai21-tokenizer/commit/7b8348d303eb54c4a75ca1c58be5c08c35ec3de8))
 
 * chore: add test case for encode with is_start=False (#74)
 
