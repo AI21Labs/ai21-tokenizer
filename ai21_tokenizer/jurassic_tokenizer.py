@@ -23,7 +23,7 @@ class JurassicTokenizer(BaseTokenizer):
         model_file_handle: Optional[BinaryIO] = None,
         config: Optional[Dict[str, Any]] = None,
     ):
-        self._validate_init(model_path, model_file_handle)
+        self._validate_init(model_path=model_path, model_file_handle=model_file_handle)
 
         model_proto = load_binary(model_path) if model_path else model_file_handle.read()
 
@@ -56,16 +56,6 @@ class JurassicTokenizer(BaseTokenizer):
         self._number_mode = config.get("number_mode")
         self._space_mode = config.get("space_mode")
         self._space_tokens = self._map_space_tokens()
-
-    @classmethod
-    def from_file_handle(
-        cls, model_file_handle: BinaryIO, config: Optional[Dict[str, Any]] = None
-    ) -> JurassicTokenizer:
-        return cls(model_file_handle=model_file_handle, config=config)
-
-    @classmethod
-    def from_file_path(cls, model_path: PathLike, config: Optional[Dict[str, Any]] = None) -> JurassicTokenizer:
-        return cls(model_path=model_path, config=config)
 
     def _validate_init(self, model_path: Optional[PathLike], model_file_handle: Optional[BinaryIO]) -> None:
         if model_path is None and model_file_handle is None:
@@ -248,3 +238,13 @@ class JurassicTokenizer(BaseTokenizer):
             return self._id_to_token(token_ids)
 
         return [self._id_to_token(token_id) for token_id in token_ids]
+
+    @classmethod
+    def from_file_handle(
+        cls, model_file_handle: BinaryIO, config: Optional[Dict[str, Any]] = None
+    ) -> JurassicTokenizer:
+        return cls(model_file_handle=model_file_handle, config=config)
+
+    @classmethod
+    def from_file_path(cls, model_path: PathLike, config: Optional[Dict[str, Any]] = None) -> JurassicTokenizer:
+        return cls(model_path=model_path, config=config)
