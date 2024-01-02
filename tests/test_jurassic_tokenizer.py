@@ -92,6 +92,25 @@ def test_tokenizer__convert_tokens_to_ids(
     assert actual_ids == expected_ids
 
 
+@pytest.mark.parametrize(
+    ids=[
+        "when_start_of_line__should_return_no_leading_whitespace",
+        "when_not_start_of_line__should_return_leading_whitespace",
+    ],
+    argnames=["tokens", "start_of_line", "expected_text"],
+    argvalues=[
+        ([30671], True, "hello"),
+        ([30671], False, " hello"),
+    ],
+)
+def test_tokenizer__decode_with_start_of_line(
+    tokens: List[int], start_of_line: bool, expected_text: str, tokenizer: JurassicTokenizer
+):
+    actual_text = tokenizer.decode(tokens, start_of_line=start_of_line)
+
+    assert actual_text == expected_text
+
+
 def test_tokenizer__from_file_handle():
     text = "Hello world!"
     model_config = {
