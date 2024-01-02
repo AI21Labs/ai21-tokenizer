@@ -61,7 +61,7 @@ class JurassicTokenizer(BaseTokenizer):
     def from_file_handle(
         cls, model_file_handle: BinaryIO, config: Optional[Dict[str, Any]] = None
     ) -> JurassicTokenizer:
-        return cls(model_path=None, model_file_handle=model_file_handle, config=config)
+        return cls(model_file_handle=model_file_handle, config=config)
 
     @classmethod
     def from_file_path(cls, model_path: PathLike, config: Optional[Dict[str, Any]] = None) -> JurassicTokenizer:
