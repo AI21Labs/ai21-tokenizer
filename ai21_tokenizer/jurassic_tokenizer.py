@@ -63,6 +63,10 @@ class JurassicTokenizer(BaseTokenizer):
     ) -> JurassicTokenizer:
         return cls(model_path=None, model_file_handle=model_file_handle, config=config)
 
+    @classmethod
+    def from_file_path(cls, model_path: PathLike, config: Optional[Dict[str, Any]] = None) -> JurassicTokenizer:
+        return cls(model_path=model_path, config=config)
+
     @staticmethod
     def _assert_exactly_one(model_path: Optional[PathLike], model_file_handle: Optional[BinaryIO]) -> None:
         if model_path is None and model_file_handle is None:
