@@ -2,7 +2,42 @@
 
 
 
+## v0.8.0 (2024-01-03)
+
+### Chore
+
+* chore(deps-dev): bump pytest from 7.2.1 to 7.4.4 (#75)
+
+Bumps [pytest](https://github.com/pytest-dev/pytest) from 7.2.1 to 7.4.4.
+- [Release notes](https://github.com/pytest-dev/pytest/releases)
+- [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst)
+- [Commits](https://github.com/pytest-dev/pytest/compare/7.2.1...7.4.4)
+
+---
+updated-dependencies:
+- dependency-name: pytest
+  dependency-type: direct:development
+  update-type: version-update:semver-minor
+...
+
+Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+Co-authored-by: asafgardin &lt;147075902+asafgardin@users.noreply.github.com&gt; ([`081dda3`](https://github.com/AI21Labs/ai21-tokenizer/commit/081dda305ebc33af78ad433d511bdef3d63e1307))
+
+### Feature
+
+* feat: Add start_of_line to decode (#77)
+
+* feat: Add start_of_line param to decode
+
+* test: added unittest with start_of_line=True and False ([`182a8d1`](https://github.com/AI21Labs/ai21-tokenizer/commit/182a8d10020862c233f7f67cddb965eee2398b98))
+
+
 ## v0.7.0 (2024-01-02)
+
+### Chore
+
+* chore(release): v0.7.0 [skip ci] ([`26f34b2`](https://github.com/AI21Labs/ai21-tokenizer/commit/26f34b290cdc6b5166872bd6b8af5ca53d736936))
 
 ### Feature
 
