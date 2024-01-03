@@ -1,11 +1,13 @@
 import json
+
 from pathlib import Path
-from typing import Union, List, BinaryIO, Optional
+from typing import BinaryIO, List, Optional, Union
 
 import pytest
 
 from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
 from ai21_tokenizer.utils import PathLike
+
 
 _LOCAL_RESOURCES_PATH = Path(__file__).parents[1] / "ai21_tokenizer" / "resources" / "j2-tokenizer"
 

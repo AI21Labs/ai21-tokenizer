@@ -1,9 +1,10 @@
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
 
 from ai21_tokenizer.base_tokenizer import BaseTokenizer
 from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
 from ai21_tokenizer.utils import load_json
+
 
 _LOCAL_RESOURCES_PATH = Path(__file__).parent / "resources"
 _MODEL_EXTENSION = ".model"

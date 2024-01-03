@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import re
+
 from dataclasses import dataclass
-from typing import List, Union, Optional, Dict, Any, Tuple, BinaryIO
+from typing import Any, BinaryIO, Dict, List, Optional, Tuple, Union
 
 import sentencepiece as spm
 
 from ai21_tokenizer.base_tokenizer import BaseTokenizer
-from ai21_tokenizer.utils import load_binary, is_number, PathLike
+from ai21_tokenizer.utils import PathLike, is_number, load_binary
 
 
 @dataclass

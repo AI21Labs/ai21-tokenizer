@@ -1,3 +1,5 @@
+<!-- markdownlint-configure-file {"MD024": { "siblings_only": true }, "MD012": false, "MD032": false, "MD035": false } -->
+
 # CHANGELOG
 
 
@@ -9,13 +11,13 @@
 * chore(deps-dev): bump pytest from 7.2.1 to 7.4.4 (#75)
 
 Bumps [pytest](https://github.com/pytest-dev/pytest) from 7.2.1 to 7.4.4.
-- [Release notes](https://github.com/pytest-dev/pytest/releases)
-- [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst)
-- [Commits](https://github.com/pytest-dev/pytest/compare/7.2.1...7.4.4)
+* [Release notes](https://github.com/pytest-dev/pytest/releases)
+* [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst)
+* [Commits](https://github.com/pytest-dev/pytest/compare/7.2.1...7.4.4)
 
 ---
 updated-dependencies:
-- dependency-name: pytest
+* dependency-name: pytest
   dependency-type: direct:development
   update-type: version-update:semver-minor
 ...
@@ -51,7 +53,7 @@ Co-authored-by: asafgardin &lt;147075902+asafgardin@users.noreply.github.com&gt;
 
 * fix: remove model_path=None in JurassicTokenizer.from_file_handle
 
-* fix: rename _assert_exactly_one to _validate_init and make it not static
+* fix: rename _assert_exactly_one to_validate_init and make it not static
 
 * refactor: semantics
 
@@ -153,13 +155,13 @@ Co-authored-by: Asaf Gardin &lt;asafg@ai21.com&gt; ([`dcb73a7`](https://github.c
 * chore(deps-dev): bump safety from 2.3.4 to 2.3.5 (#64)
 
 Bumps [safety](https://github.com/pyupio/safety) from 2.3.4 to 2.3.5.
-- [Release notes](https://github.com/pyupio/safety/releases)
-- [Changelog](https://github.com/pyupio/safety/blob/main/CHANGELOG.md)
-- [Commits](https://github.com/pyupio/safety/compare/2.3.4...2.3.5)
+* [Release notes](https://github.com/pyupio/safety/releases)
+* [Changelog](https://github.com/pyupio/safety/blob/main/CHANGELOG.md)
+* [Commits](https://github.com/pyupio/safety/compare/2.3.4...2.3.5)
 
 ---
 updated-dependencies:
-- dependency-name: safety
+* dependency-name: safety
   dependency-type: direct:development
   update-type: version-update:semver-patch
 ...
@@ -170,13 +172,13 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 * chore(deps-dev): bump ruff from 0.0.285 to 0.1.8 (#63)
 
 Bumps [ruff](https://github.com/astral-sh/ruff) from 0.0.285 to 0.1.8.
-- [Release notes](https://github.com/astral-sh/ruff/releases)
-- [Changelog](https://github.com/astral-sh/ruff/blob/main/CHANGELOG.md)
-- [Commits](https://github.com/astral-sh/ruff/compare/v0.0.285...v0.1.8)
+* [Release notes](https://github.com/astral-sh/ruff/releases)
+* [Changelog](https://github.com/astral-sh/ruff/blob/main/CHANGELOG.md)
+* [Commits](https://github.com/astral-sh/ruff/compare/v0.0.285...v0.1.8)
 
 ---
 updated-dependencies:
-- dependency-name: ruff
+* dependency-name: ruff
   dependency-type: direct:development
   update-type: version-update:semver-minor
 ...
@@ -187,13 +189,13 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 * chore(deps-dev): bump black from 22.12.0 to 23.3.0 (#61)
 
 Bumps [black](https://github.com/psf/black) from 22.12.0 to 23.3.0.
-- [Release notes](https://github.com/psf/black/releases)
-- [Changelog](https://github.com/psf/black/blob/main/CHANGES.md)
-- [Commits](https://github.com/psf/black/compare/22.12.0...23.3.0)
+* [Release notes](https://github.com/psf/black/releases)
+* [Changelog](https://github.com/psf/black/blob/main/CHANGES.md)
+* [Commits](https://github.com/psf/black/compare/22.12.0...23.3.0)
 
 ---
 updated-dependencies:
-- dependency-name: black
+* dependency-name: black
   dependency-type: direct:development
   update-type: version-update:semver-major
 ...
@@ -204,13 +206,13 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 * chore(deps-dev): bump safety from 2.3.4 to 2.3.5 (#60)
 
 Bumps [safety](https://github.com/pyupio/safety) from 2.3.4 to 2.3.5.
-- [Release notes](https://github.com/pyupio/safety/releases)
-- [Changelog](https://github.com/pyupio/safety/blob/main/CHANGELOG.md)
-- [Commits](https://github.com/pyupio/safety/compare/2.3.4...2.3.5)
+* [Release notes](https://github.com/pyupio/safety/releases)
+* [Changelog](https://github.com/pyupio/safety/blob/main/CHANGELOG.md)
+* [Commits](https://github.com/pyupio/safety/compare/2.3.4...2.3.5)
 
 ---
 updated-dependencies:
-- dependency-name: safety
+* dependency-name: safety
   dependency-type: direct:development
   update-type: version-update:semver-patch
 ...
@@ -246,13 +248,13 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 * chore(deps-dev): bump urllib3 from 2.0.4 to 2.0.7 (#57)
 
 Bumps [urllib3](https://github.com/urllib3/urllib3) from 2.0.4 to 2.0.7.
-- [Release notes](https://github.com/urllib3/urllib3/releases)
-- [Changelog](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst)
-- [Commits](https://github.com/urllib3/urllib3/compare/2.0.4...2.0.7)
+* [Release notes](https://github.com/urllib3/urllib3/releases)
+* [Changelog](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst)
+* [Commits](https://github.com/urllib3/urllib3/compare/2.0.4...2.0.7)
 
 ---
 updated-dependencies:
-- dependency-name: urllib3
+* dependency-name: urllib3
   dependency-type: indirect
 ...
 
@@ -466,13 +468,13 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 * chore(deps-dev): bump black from 22.12.0 to 23.3.0 (#32)
 
 Bumps [black](https://github.com/psf/black) from 22.12.0 to 23.3.0.
-- [Release notes](https://github.com/psf/black/releases)
-- [Changelog](https://github.com/psf/black/blob/main/CHANGES.md)
-- [Commits](https://github.com/psf/black/compare/22.12.0...23.3.0)
+* [Release notes](https://github.com/psf/black/releases)
+* [Changelog](https://github.com/psf/black/blob/main/CHANGES.md)
+* [Commits](https://github.com/psf/black/compare/22.12.0...23.3.0)
 
 ---
 updated-dependencies:
-- dependency-name: black
+* dependency-name: black
   dependency-type: direct:development
   update-type: version-update:semver-major
 ...
@@ -539,13 +541,13 @@ Co-authored-by: github-actions &lt;github-actions@github.com&gt; ([`e55cd1d`](ht
 * chore(deps-dev): bump safety from 2.3.4 to 2.3.5 (#28)
 
 Bumps [safety](https://github.com/pyupio/safety) from 2.3.4 to 2.3.5.
-- [Release notes](https://github.com/pyupio/safety/releases)
-- [Changelog](https://github.com/pyupio/safety/blob/main/CHANGELOG.md)
-- [Commits](https://github.com/pyupio/safety/compare/2.3.4...2.3.5)
+* [Release notes](https://github.com/pyupio/safety/releases)
+* [Changelog](https://github.com/pyupio/safety/blob/main/CHANGELOG.md)
+* [Commits](https://github.com/pyupio/safety/compare/2.3.4...2.3.5)
 
 ---
 updated-dependencies:
-- dependency-name: safety
+* dependency-name: safety
   dependency-type: direct:development
   update-type: version-update:semver-patch
 ...
@@ -556,13 +558,13 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 * chore(deps-dev): bump pytest-mock from 3.10.0 to 3.11.1 (#24)
 
 Bumps [pytest-mock](https://github.com/pytest-dev/pytest-mock) from 3.10.0 to 3.11.1.
-- [Release notes](https://github.com/pytest-dev/pytest-mock/releases)
-- [Changelog](https://github.com/pytest-dev/pytest-mock/blob/main/CHANGELOG.rst)
-- [Commits](https://github.com/pytest-dev/pytest-mock/compare/v3.10.0...v3.11.1)
+* [Release notes](https://github.com/pytest-dev/pytest-mock/releases)
+* [Changelog](https://github.com/pytest-dev/pytest-mock/blob/main/CHANGELOG.rst)
+* [Commits](https://github.com/pytest-dev/pytest-mock/compare/v3.10.0...v3.11.1)
 
 ---
 updated-dependencies:
-- dependency-name: pytest-mock
+* dependency-name: pytest-mock
   dependency-type: direct:development
   update-type: version-update:semver-minor
 ...
