@@ -20,8 +20,8 @@ class JurassicTokenizer(BaseTokenizer):
     def __init__(
         self,
         model_path: Optional[PathLike] = None,
-        model_file_handle: Optional[BinaryIO] = None,
         config: Optional[Dict[str, Any]] = None,
+        model_file_handle: Optional[BinaryIO] = None,
     ):
         self._validate_init(model_path=model_path, model_file_handle=model_file_handle)
 
