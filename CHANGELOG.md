@@ -2,9 +2,18 @@
 
 
 
+## v0.8.1 (2024-01-07)
+
+### Fix
+
+* fix: re-ordered parameters in ctor to avoid a breaking change (#79) ([`6c1b608`](https://github.com/AI21Labs/ai21-tokenizer/commit/6c1b6088c0914ffc77b53613047606c398e0557c))
+
+
 ## v0.8.0 (2024-01-03)
 
 ### Chore
+
+* chore(release): v0.8.0 [skip ci] ([`c8b54df`](https://github.com/AI21Labs/ai21-tokenizer/commit/c8b54dff67c13587943f03198ec5a4e1dca7be88))
 
 * chore(deps-dev): bump pytest from 7.2.1 to 7.4.4 (#75)
 
