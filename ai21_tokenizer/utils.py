@@ -1,6 +1,8 @@
 import json
+
 from pathlib import Path
 from typing import Any, Dict, Union
+
 
 _NUMBER_DIGITS = set("0123456789")
 PathLike = Union[Path, str]
