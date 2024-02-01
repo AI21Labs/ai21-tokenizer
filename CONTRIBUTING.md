@@ -2,7 +2,7 @@
 
 We welcome contributions to the AI21 Tokenizer. Please read the following guidelines before submitting your pull request.
 
-### Examples of contributions include:
+## Examples of contributions include
 
 - Bug fixes
 - Documentation improvements
@@ -26,36 +26,53 @@ Include the following information in your post:
 
 Fork the AI21 Tokenizer repository and clone it to your local machine. Create a new branch for your changes:
 
-    git clone https://github.com:AI21Labs/USERNAME/ai21-tokenizer
-    cd ai21-tokenizer
-    git checkout -b my-fix-branch master
+```bash
+git clone https://github.com:AI21Labs/USERNAME/ai21-tokenizer
+cd ai21-tokenizer
+git checkout -b my-fix-branch master
+```
 
-### Installation
+## Prerequisites
 
-#### MacOS
+- [Docker Engine](https://docs.docker.com/engine/install/) version 19.03.13
+- [Docker Compose](https://docs.docker.com/compose/install/) version 1.27.4
+- [pyenv](https://github.com/pyenv/pyenv)
+- [poetry](https://python-poetry.org/)
+
+## Installation
+
+### MacOS
 
 We recommend running the provided `init.sh` script to install the required dependencies and set up the development environment. This script will install poetry if not already installed. To run the script, simply run:
 
-    ./init.sh
+```bash
+source ./init.sh
+```
 
-#### Windows/Linux
+### Windows/Linux
 
 We recommend using [poetry](https://python-poetry.org/) to install the required dependencies and set up the development environment. To install poetry, run:
 
-    pip install poetry
+```bash
+pip install poetry
+```
 
 Then, to install the required dependencies, run:
 
-    poetry install
+```bash
+poetry install
+```
 
 After that Install [pre-commit](https://pre-commit.com/#installation) and run:
 
-    pre-commit install --install-hooks -t pre-commit -t commit-msg
+```bash
+pre-commit install --install-hooks -t pre-commit -t pre-push -t commit-msg
+```
 
 Installing the pre-commit hooks would take care of formatting and linting your code before committing.
 Please make sure you have the pre-commit hooks installed before committing your code.
 
-**We recommend creating your own venv using pyenv or virtualenv when working on this repository, in order to eliminate unnecessary dependencies from external libraries**
+**Note:** We recommend creating your own venv using pyenv or virtualenv when working on this repository, in order to eliminate unnecessary dependencies from external libraries
 
 ### Commits
 
@@ -81,19 +98,21 @@ Available tasks:
 
 We use [pytest](https://docs.pytest.org/en/stable/) for testing. To run the tests, run:
 
-    inv test
+```bash
+inv test
+```
 
 If adding a new test, please make sure to add it to the `tests` directory and have the file location be under the same hierarchy as the file being tested.
 
 Make sure you use `pytest` for tests writing and not any other testing framework.
 
-### How to open a pull request?
+## How to open a pull request?
 
 Push your branch to your forked repository and open a pull request against the `main` branch of the AI21 Tokenizer repository. Please make sure to include a description of your changes in the pull request.
 
 The title of the pull request should follow the above-mentioned [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 
-### Feedback
+## Feedback
 
 If you have any questions or feedback, please feel free to reach out to us.
 

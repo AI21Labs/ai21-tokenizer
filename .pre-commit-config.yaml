@@ -1,4 +1,4 @@
-minimum_pre_commit_version: 2.20.0
+minimum_pre_commit_version: 2.19.0
 fail_fast: false
 default_stages:
   - commit
@@ -127,3 +127,17 @@ repos:
         entry: hadolint/hadolint:v2.10.0 hadolint
         types:
           - dockerfile
+      - id: markdownlint
+        name: Lint Markdown files
+        language: docker_image
+        entry: 06kellyjac/markdownlint-cli:0.28.1
+        args:
+          - --fix
+        types:
+          - markdown
+      - id: quality-checks
+        name: Quality Checks
+        entry: ci.sh --fix
+        language: script
+        stages: [push]
+        pass_filenames: false

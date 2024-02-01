@@ -78,6 +78,7 @@ isort = "*"
 mypy = "*"
 safety = "*"
 ruff = "*"
+pip = "*"
 python-semantic-release = "^8.3.0"
 
 [tool.semantic_release]
