@@ -2,7 +2,32 @@
 
 
 
+## v0.8.2 (2024-03-11)
+
+### Ci
+
+* ci: add Python 3.12 to test matrix (#82)
+
+* ci: add Python 3.12 to test matrix
+
+* chore: use sentencepiece 0.2.0 or higher
+
+* fix: update poetry.lock ([`8084117`](https://github.com/AI21Labs/ai21-tokenizer/commit/8084117c74813a99b79ecefd12888817470e1838))
+
+### Fix
+
+* fix: docs (#83) ([`c26949a`](https://github.com/AI21Labs/ai21-tokenizer/commit/c26949a62d5e612a7ff8132c6e6896b263be7b28))
+
+### Unknown
+
+* Update issue templates ([`86ea6e7`](https://github.com/AI21Labs/ai21-tokenizer/commit/86ea6e79a5670c0e8049ac587ed1b5f4b8790ae9))
+
+
 ## v0.8.1 (2024-01-07)
+
+### Chore
+
+* chore(release): v0.8.1 [skip ci] ([`fcacbf8`](https://github.com/AI21Labs/ai21-tokenizer/commit/fcacbf89a590e47d6ac3b8d385c9a6628a3ef4b2))
 
 ### Fix
 
