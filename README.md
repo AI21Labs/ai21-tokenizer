@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-    <em>A SentencePiece based tokenizer for production uses</em>
+    <em>A SentencePiece based tokenizer for production uses with AI21's models</em>
 </p>
 
 <p align="center">
