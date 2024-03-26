@@ -18,12 +18,6 @@ class PreTrainedTokenizers:
     JAMBA_TOKENIZER = "jamba-tokenizer"
 
 
-_PRETRAINED_MODEL_NAMES = [
-    PreTrainedTokenizers.J2_TOKENIZER,
-    PreTrainedTokenizers.JAMBA_TOKENIZER,
-]
-
-
 class TokenizerFactory:
     """
     Factory class to create AI21 tokenizer
