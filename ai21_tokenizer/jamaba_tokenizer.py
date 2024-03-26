@@ -11,10 +11,9 @@ class JambaTokenizer(BaseTokenizer):
 
     def __init__(
         self,
-        model_path: Optional[PathLike] = None,
+        model_path: Optional[PathLike],
         cache_dir: Optional[PathLike] = None,
     ):
-        self._name_or_path = model_path
         self._tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_path, cache_dir=cache_dir)
 
     def encode(self, text: str, **kwargs) -> List[int]:
