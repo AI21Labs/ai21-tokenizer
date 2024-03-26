@@ -29,7 +29,7 @@ class TokenizerFactory:
         model_path = cls._model_path(tokenizer_name)
 
         if tokenizer_name == PreTrainedTokenizers.JAMBA_TOKENIZER:
-            os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "true"
+            os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "true"  # Disable Huggingface advice warning
             return JambaTokenizer(model_path=model_path.parent, cache_dir=_MODEL_CACHE_DIR)
 
         config = cls._get_config(tokenizer_name)
