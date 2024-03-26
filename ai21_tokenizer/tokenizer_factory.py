@@ -36,7 +36,7 @@ class TokenizerFactory:
 
         if tokenizer_name == PreTrainedTokenizers.JAMBA_TOKENIZER:
             os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "true"
-            return JambaTokenizer(model_path=model_path, cache_dir=_MODEL_CACHE_DIR)
+            return JambaTokenizer(model_path=model_path.parent, cache_dir=_MODEL_CACHE_DIR)
 
         config = cls._get_config(tokenizer_name)
         return JurassicTokenizer(model_path=model_path, config=config)
