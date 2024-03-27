@@ -28,3 +28,8 @@ def test_tokenizer_factory__get_tokenizer(
 
     assert tokenizer is not None
     assert isinstance(tokenizer, expected_tokenizer_instance)
+
+
+def test_tokenizer__when_tokenizer_name_is_not_supported__should_raise_value_error() -> None:
+    with pytest.raises(ValueError):
+        Tokenizer.get_tokenizer(tokenizer_name="unsupported")
