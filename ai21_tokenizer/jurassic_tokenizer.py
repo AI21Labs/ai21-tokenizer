@@ -70,7 +70,7 @@ class JurassicTokenizer(BaseTokenizer):
         return model_path
 
     def _get_config(self, model_path: Optional[PathLike], config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        if model_path is not None and Path(model_path).is_dir():
+        if model_path and Path(model_path).is_dir():
             config_path = model_path / _MODEL_CONFIG_FILENAME
             return load_json(config_path)
 
