@@ -14,7 +14,11 @@ from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
     argnames=["tokenizer_name", "expected_tokenizer_instance"],
     argvalues=[
         ("j2-tokenizer", JurassicTokenizer),
-        ("jamba-tokenizer", JambaInstructTokenizer),
+        pytest.param(
+            "jamba-tokenizer",
+            JambaInstructTokenizer,
+            marks=pytest.mark.skip(reason="JambaInstructTokenizer is not yet Open Source in HuggingFace"),
+        ),
     ],
 )
 def test_tokenizer_factory__get_tokenizer(
