@@ -2,7 +2,7 @@ from typing import Type
 
 import pytest
 from ai21_tokenizer import Tokenizer, BaseTokenizer
-from ai21_tokenizer.jamaba_tokenizer import JambaTokenizer
+from ai21_tokenizer.jamba_instruct_tokenizer import JambaInstructTokenizer
 from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
 
 
@@ -14,7 +14,7 @@ from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
     argnames=["tokenizer_name", "expected_tokenizer_instance"],
     argvalues=[
         ("j2-tokenizer", JurassicTokenizer),
-        ("jamba-tokenizer", JambaTokenizer),
+        ("jamba-tokenizer", JambaInstructTokenizer),
     ],
 )
 def test_tokenizer_factory__get_tokenizer(

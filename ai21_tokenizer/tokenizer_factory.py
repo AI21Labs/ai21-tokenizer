@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from ai21_tokenizer.base_tokenizer import BaseTokenizer
-from ai21_tokenizer.jamaba_tokenizer import JambaTokenizer
+from ai21_tokenizer.jamba_instruct_tokenizer import JambaInstructTokenizer
 from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
 from ai21_tokenizer.utils import PathLike
 
@@ -37,10 +37,10 @@ class TokenizerFactory:
         return cls._create_jurassic_tokenizer(model_path)
 
     @classmethod
-    def _create_jamaba_tokenizer(cls, model_path: str) -> JambaTokenizer:
+    def _create_jamaba_tokenizer(cls, model_path: str) -> JambaInstructTokenizer:
         os.environ["TRANSFORMERS_NO_ADVISORY_WARNINGS"] = "true"  # Disable Huggingface advice warning
 
-        return JambaTokenizer(model_path=model_path, cache_dir=_MODEL_CACHE_DIR)
+        return JambaInstructTokenizer(model_path=model_path, cache_dir=_MODEL_CACHE_DIR)
 
     @classmethod
     def _create_jurassic_tokenizer(cls, model_path: str) -> JurassicTokenizer:

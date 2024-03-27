@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Union, List, Optional
 
 from transformers import AutoTokenizer, PreTrainedTokenizerFast
@@ -6,12 +8,12 @@ from ai21_tokenizer import BaseTokenizer
 from ai21_tokenizer.utils import PathLike
 
 
-class JambaTokenizer(BaseTokenizer):
+class JambaInstructTokenizer(BaseTokenizer):
     _tokenizer: PreTrainedTokenizerFast
 
     def __init__(
         self,
-        model_path: Optional[PathLike],
+        model_path: PathLike,
         cache_dir: Optional[PathLike] = None,
     ):
         self._tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_path, cache_dir=cache_dir)
