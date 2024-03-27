@@ -61,6 +61,13 @@ class JurassicTokenizer(BaseTokenizer):
         self._space_mode = config.get("space_mode")
         self._space_tokens = self._map_space_tokens()
 
+    def _validate_init(self, model_path: Optional[PathLike], model_file_handle: Optional[BinaryIO]) -> None:
+        if model_path is None and model_file_handle is None:
+            raise ValueError("Must provide exactly one of model_path or model_file_handle. Got none.")
+
+        if model_path is not None and model_file_handle is not None:
+            raise ValueError("Must provide exactly one of model_path or model_file_handle. Got both.")
+
     def _get_model_file(self, model_path: PathLike) -> PathLike:
         model_path = Path(model_path)
 
@@ -75,13 +82,6 @@ class JurassicTokenizer(BaseTokenizer):
             return load_json(config_path)
 
         return config or {}
-
-    def _validate_init(self, model_path: Optional[PathLike], model_file_handle: Optional[BinaryIO]) -> None:
-        if model_path is None and model_file_handle is None:
-            raise ValueError("Must provide exactly one of model_path or model_file_handle. Got none.")
-
-        if model_path is not None and model_file_handle is not None:
-            raise ValueError("Must provide exactly one of model_path or model_file_handle. Got both.")
 
     def _map_space_tokens(self) -> List[SpaceSymbol]:
         res = []
