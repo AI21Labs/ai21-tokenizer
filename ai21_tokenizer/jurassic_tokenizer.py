@@ -2,12 +2,16 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from pathlib import Path
 from typing import List, Union, Optional, Dict, Any, Tuple, BinaryIO
 
 import sentencepiece as spm
 
 from ai21_tokenizer.base_tokenizer import BaseTokenizer
-from ai21_tokenizer.utils import load_binary, is_number, PathLike
+from ai21_tokenizer.utils import load_binary, is_number, PathLike, load_json
+
+_MODEL_EXTENSION = ".model"
+_MODEL_CONFIG_FILENAME = "config.json"
 
 
 @dataclass
@@ -25,11 +29,11 @@ class JurassicTokenizer(BaseTokenizer):
     ):
         self._validate_init(model_path=model_path, model_file_handle=model_file_handle)
 
-        model_proto = load_binary(model_path) if model_path else model_file_handle.read()
+        model_proto = load_binary(self._get_model_file(model_path)) if model_path else model_file_handle.read()
 
         # noinspection PyArgumentList
         self._sp = spm.SentencePieceProcessor(model_proto=model_proto)
-        config = config or {}
+        config = self._get_config(model_path=model_path, config=config)
 
         self.pad_id = config.get("pad_id")
         self.unk_id = config.get("unk_id")
@@ -63,6 +67,21 @@ class JurassicTokenizer(BaseTokenizer):
 
         if model_path is not None and model_file_handle is not None:
             raise ValueError("Must provide exactly one of model_path or model_file_handle. Got both.")
+
+    def _get_model_file(self, model_path: PathLike) -> PathLike:
+        model_path = Path(model_path)
+
+        if model_path.is_dir():
+            return model_path / f"{model_path.name}{_MODEL_EXTENSION}"
+
+        return model_path
+
+    def _get_config(self, model_path: Optional[PathLike], config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        if model_path and Path(model_path).is_dir():
+            config_path = model_path / _MODEL_CONFIG_FILENAME
+            return load_json(config_path)
+
+        return config or {}
 
     def _map_space_tokens(self) -> List[SpaceSymbol]:
         res = []
