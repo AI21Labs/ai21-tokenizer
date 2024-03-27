@@ -180,3 +180,13 @@ def test_tokenizer__(
         JurassicTokenizer(model_file_handle=model_file_handle, model_path=model_path, config={})
 
     assert error.value.args[0] == expected_error_message
+
+
+def test_init__when_model_path_is_a_file__should_support_backwards_compatability():
+    text = "Hello world!"
+    tokenizer = JurassicTokenizer(model_path=_LOCAL_RESOURCES_PATH / "j2-tokenizer.model")
+
+    encoded = tokenizer.encode(text)
+    decoded = tokenizer.decode(encoded)
+
+    assert decoded == text
