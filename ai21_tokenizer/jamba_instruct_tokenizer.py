@@ -1,35 +1,62 @@
 from __future__ import annotations
 
-from typing import Union, List, Optional
+import os
+import tempfile
+from pathlib import Path
+from typing import Union, List, cast, Optional
 
-from transformers import AutoTokenizer, PreTrainedTokenizerFast
+from tokenizers import Tokenizer
+from tokenizers import Tokenizer as TokenizerType
 
 from ai21_tokenizer import BaseTokenizer
 from ai21_tokenizer.utils import PathLike
 
+_TOKENIZER_FILE = "tokenizer.json"
+_DEFAULT_MODEL_CACHE_DIR = Path(tempfile.gettempdir()) / "tokenizer_cache"
+
 
 class JambaInstructTokenizer(BaseTokenizer):
-    _tokenizer: PreTrainedTokenizerFast
+    _tokenizer: TokenizerType
 
     def __init__(
         self,
         model_path: PathLike,
-        cache_dir: Optional[PathLike] = None,
+        cache_dir: Optional[PathLike] = _DEFAULT_MODEL_CACHE_DIR,
     ):
-        self._tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_path, cache_dir=cache_dir)
+        self._tokenizer = self._init_tokenizer(model_path=model_path, cache_dir=cache_dir or _DEFAULT_MODEL_CACHE_DIR)
+
+    def _init_tokenizer(self, model_path: PathLike, cache_dir: PathLike) -> TokenizerType:
+        if Path(cache_dir).exists() and _TOKENIZER_FILE in os.listdir(cache_dir):
+            return cast(TokenizerType, Tokenizer.from_file(str(cache_dir / _TOKENIZER_FILE)))
+
+        tokenizer = cast(
+            TokenizerType,
+            Tokenizer.from_pretrained(model_path),
+        )
+        # create cache directory for caching the tokenizer and save it
+        Path(cache_dir).mkdir(parents=True, exist_ok=True)
+        tokenizer.save(str(cache_dir / _TOKENIZER_FILE))
+
+        return tokenizer
 
     def encode(self, text: str, **kwargs) -> List[int]:
-        return self._tokenizer.encode(text=text, **kwargs)
+        return self._tokenizer.encode(text, **kwargs).ids
 
     def decode(self, token_ids: List[int], **kwargs) -> str:
-        return self._tokenizer.decode(token_ids=token_ids, **kwargs)
+        return self._tokenizer.decode(token_ids, **kwargs)
 
     def convert_tokens_to_ids(self, tokens: Union[str, List[str]]) -> Union[int, List[int]]:
-        return self._tokenizer.convert_tokens_to_ids(tokens)
+        if isinstance(tokens, str):
+            return self._tokenizer.token_to_id(tokens)
+
+        return [self._tokenizer.token_to_id(token) for token in tokens]
 
     def convert_ids_to_tokens(self, token_ids: Union[int, List[int]], **kwargs) -> Union[str, List[str]]:
-        return self._tokenizer.convert_ids_to_tokens(ids=token_ids, **kwargs)
+        if isinstance(token_ids, int):
+            return self._tokenizer.id_to_token(token_ids)
+
+        return [self._tokenizer.id_to_token(token_id) for token_id in token_ids]
 
     @property
     def vocab_size(self) -> int:
-        return self._tokenizer.vocab_size
+        return self._tokenizer.get_vocab_size()
