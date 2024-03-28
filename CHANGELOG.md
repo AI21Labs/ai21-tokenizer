@@ -2,7 +2,18 @@
 
 
 
+## v0.9.0 (2024-03-28)
+
+### Feature
+
+* feat: Jamba instruct tokenizer (#84) ([`88ff9af`](https://github.com/AI21Labs/ai21-tokenizer/commit/88ff9aff504caa8928d68bcde4430c24fbbc23f1))
+
+
 ## v0.8.2 (2024-03-11)
+
+### Chore
+
+* chore(release): v0.8.2 [skip ci] ([`1146741`](https://github.com/AI21Labs/ai21-tokenizer/commit/11467416dd263b824f6a8711983eb5588fb037dc))
 
 ### Ci
 
