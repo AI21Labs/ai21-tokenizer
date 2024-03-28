@@ -20,24 +20,38 @@ class JambaInstructTokenizer(BaseTokenizer):
 
     def __init__(
         self,
-        model_path: PathLike,
+        model_path: str,
         cache_dir: Optional[PathLike] = _DEFAULT_MODEL_CACHE_DIR,
     ):
+        """
+        Args:
+            model_path: str
+                The identifier of a Model on the Hugging Face Hub, that contains a tokenizer.json file
+            cache_dir: Optional[PathLike]
+                The directory to cache the tokenizer.json file.
+                 If not provided, the default cache directory will be used
+        """
         self._tokenizer = self._init_tokenizer(model_path=model_path, cache_dir=cache_dir or _DEFAULT_MODEL_CACHE_DIR)
 
     def _init_tokenizer(self, model_path: PathLike, cache_dir: PathLike) -> TokenizerType:
         if Path(cache_dir).exists() and _TOKENIZER_FILE in os.listdir(cache_dir):
-            return cast(TokenizerType, Tokenizer.from_file(str(cache_dir / _TOKENIZER_FILE)))
+            return self._load_from_cache(cache_dir / _TOKENIZER_FILE)
 
         tokenizer = cast(
             TokenizerType,
             Tokenizer.from_pretrained(model_path),
         )
+        self._cache_tokenizer(tokenizer, cache_dir)
+
+        return tokenizer
+
+    def _load_from_cache(self, cache_file: Path) -> TokenizerType:
+        return cast(TokenizerType, Tokenizer.from_file(str(cache_file)))
+
+    def _cache_tokenizer(self, tokenizer: TokenizerType, cache_dir: PathLike) -> None:
         # create cache directory for caching the tokenizer and save it
         Path(cache_dir).mkdir(parents=True, exist_ok=True)
         tokenizer.save(str(cache_dir / _TOKENIZER_FILE))
-
-        return tokenizer
 
     def encode(self, text: str, **kwargs) -> List[int]:
         return self._tokenizer.encode(text, **kwargs).ids
