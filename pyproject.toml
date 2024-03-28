@@ -70,6 +70,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 sentencepiece = "^0.2.0"
+tokenizers = "^0.15.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
@@ -100,16 +101,6 @@ match = "(main)"
 
 [tool.semantic_release.changelog.environment]
 newline_sequence = "\n"
-
-
-
-
-
-
-
-
-
-
 
 
 
