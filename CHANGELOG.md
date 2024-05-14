@@ -2,7 +2,18 @@
 
 
 
+## v0.9.1 (2024-05-14)
+
+### Fix
+
+* fix: depend on less restrictive version of tokenizers (#85) ([`eab6a14`](https://github.com/AI21Labs/ai21-tokenizer/commit/eab6a14a6a788efbff708df0cded59d2392ef7f2))
+
+
 ## v0.9.0 (2024-03-28)
+
+### Chore
+
+* chore(release): v0.9.0 [skip ci] ([`974df9e`](https://github.com/AI21Labs/ai21-tokenizer/commit/974df9e8e9c46f5545dfb1a2603d51bac0eab750))
 
 ### Feature
 
