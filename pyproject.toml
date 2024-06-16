@@ -59,7 +59,7 @@ schema_pattern = "(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|
 
 [tool.poetry]
 name = "ai21-tokenizer"
-version = "0.9.1"
+version = "0.10.0"
 description = ""
 authors = ["AI21 Labs"]
 readme = "README.md"
@@ -68,9 +68,10 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 sentencepiece = ">=0.2.0,<1.0.0"
 tokenizers = ">=0.15.0,<1.0.0"
+aiofiles = "^23.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
@@ -101,10 +102,6 @@ match = "(main)"
 
 [tool.semantic_release.changelog.environment]
 newline_sequence = "\n"
-
-
-
-
 
 
 
