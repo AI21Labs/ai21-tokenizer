@@ -2,12 +2,12 @@ import os
 from pathlib import Path
 
 from ai21_tokenizer.base_tokenizer import BaseTokenizer
-from ai21_tokenizer.jamba_instruct_tokenizer import JambaInstructTokenizer
-from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer
+from ai21_tokenizer.jamba_instruct_tokenizer import JambaInstructTokenizer, AsyncJambaInstructTokenizer
+from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer, AsyncJurassicTokenizer
 
 _LOCAL_RESOURCES_PATH = Path(__file__).parent / "resources"
 _ENV_CACHE_DIR_KEY = "AI21_TOKENIZER_CACHE_DIR"
-JAMABA_TOKENIZER_HF_PATH = "ai21labs/Jamba-v0.1"
+JAMBA_TOKENIZER_HF_PATH = "ai21labs/Jamba-v0.1"
 
 
 class PreTrainedTokenizers:
@@ -22,11 +22,33 @@ class TokenizerFactory:
     """
 
     @classmethod
-    def get_tokenizer(cls, tokenizer_name: str = PreTrainedTokenizers.J2_TOKENIZER) -> BaseTokenizer:
+    def get_tokenizer(
+        cls,
+        tokenizer_name: str = PreTrainedTokenizers.J2_TOKENIZER,
+    ) -> BaseTokenizer:
         if tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER:
-            return JambaInstructTokenizer(model_path=JAMABA_TOKENIZER_HF_PATH, cache_dir=os.getenv(_ENV_CACHE_DIR_KEY))
+            return JambaInstructTokenizer(model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=os.getenv(_ENV_CACHE_DIR_KEY))
 
         if tokenizer_name == PreTrainedTokenizers.J2_TOKENIZER:
             return JurassicTokenizer(_LOCAL_RESOURCES_PATH / PreTrainedTokenizers.J2_TOKENIZER)
+
+        raise ValueError(f"Tokenizer {tokenizer_name} is not supported")
+
+    @classmethod
+    async def get_async_tokenizer(
+        cls,
+        tokenizer_name: str = PreTrainedTokenizers.J2_TOKENIZER,
+    ) -> BaseTokenizer:
+        if tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER:
+            async with AsyncJambaInstructTokenizer(
+                model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=os.getenv(_ENV_CACHE_DIR_KEY)
+            ) as jamba_tokenizer:
+                return jamba_tokenizer
+
+        if tokenizer_name == PreTrainedTokenizers.J2_TOKENIZER:
+            async with AsyncJurassicTokenizer(
+                _LOCAL_RESOURCES_PATH / PreTrainedTokenizers.J2_TOKENIZER
+            ) as jurassic_tokenizer:
+                return jurassic_tokenizer
 
         raise ValueError(f"Tokenizer {tokenizer_name} is not supported")

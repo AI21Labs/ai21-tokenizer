@@ -52,6 +52,25 @@ config = {} # "dictionary object of your config.json file"
 tokenizer = JurassicTokenizer(model_path=model_path, config=config)
 ```
 
+### Async usage
+
+```python
+from ai21_tokenizer import Tokenizer
+
+tokenizer = Tokenizer.get_tokenizer(is_async=True)
+# Your code here
+```
+
+Direct usage of async Jurassic model:
+
+```python
+from ai21_tokenizer import AsyncJurassicTokenizer
+
+model_path = "<Path to your vocabs file. This is usually a binary file that end with .model>"
+config = {} # "dictionary object of your config.json file"
+tokenizer = AsyncJurassicTokenizer(model_path=model_path, config=config)
+```
+
 ### Functions
 
 #### Encode and Decode
