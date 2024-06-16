@@ -19,7 +19,6 @@ jobs:
       - name: Install Poetry
         run: |
           pipx install poetry
-          pipx install pipenv==2023.9.8
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -52,6 +51,7 @@ jobs:
       - name: Install Poetry
         run: |
           pipx install poetry
+          pipx install pipenv==2023.9.8
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
