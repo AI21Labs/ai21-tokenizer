@@ -68,7 +68,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 sentencepiece = ">=0.2.0,<1.0.0"
 tokenizers = ">=0.15.0,<1.0.0"
 aiofiles = "^23.2"
