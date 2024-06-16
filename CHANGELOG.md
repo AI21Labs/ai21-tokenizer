@@ -2,7 +2,18 @@
 
 
 
+## v0.10.0 (2024-06-16)
+
+### Feature
+
+* feat: remove python 3.7 support (#87) ([`58482ab`](https://github.com/AI21Labs/ai21-tokenizer/commit/58482abbda7767055345274b38c58ba9fd33b42f))
+
+
 ## v0.9.1 (2024-05-14)
+
+### Chore
+
+* chore(release): v0.9.1 [skip ci] ([`a260d76`](https://github.com/AI21Labs/ai21-tokenizer/commit/a260d76aece9992f03ac4f004edf6a6dd83f5f13))
 
 ### Fix
 
