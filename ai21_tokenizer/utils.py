@@ -2,7 +2,8 @@ import asyncio
 import json
 from pathlib import Path
 from typing import Any, Dict, Union, Optional, BinaryIO
-from anyio import open_file
+
+import aiofiles
 
 _NUMBER_DIGITS = set("0123456789")
 PathLike = Union[Path, str]
@@ -29,7 +30,7 @@ def load_binary(file_path: PathLike) -> bytes:
 async def aload_binary(file_path: PathLike) -> bytes:
     # file_path = _str_to_path(file_path)
 
-    async with await open_file(file_path, "rb") as f:
+    async with await aiofiles.open(file_path, "rb") as f:
         return await f.read()
 
 

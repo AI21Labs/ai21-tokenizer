@@ -71,7 +71,7 @@ packages = [
 python = "^3.7"
 sentencepiece = ">=0.2.0,<1.0.0"
 tokenizers = ">=0.15.0,<1.0.0"
-anyio = "3.7.1"
+aiofiles = "^23.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
@@ -102,6 +102,8 @@ match = "(main)"
 
 [tool.semantic_release.changelog.environment]
 newline_sequence = "\n"
+
+
 
 
 
