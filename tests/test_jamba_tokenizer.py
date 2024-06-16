@@ -69,6 +69,7 @@ def test_tokenizer__decode_with_start_of_line(
 ):
     actual_text = jamba_instruct_tokenizer.decode(tokens, skip_special_tokens=skip_special_tokens)
 
+    print("Hello")
     assert actual_text == expected_text
 
 
