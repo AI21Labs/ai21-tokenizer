@@ -17,33 +17,6 @@ _DEFAULT_MODEL_CACHE_DIR = Path(tempfile.gettempdir()) / "jamba_instruct"
 class BaseJambaInstructTokenizer(ABC):
     _tokenizer: Tokenizer = None
 
-    # def __init__(
-    #     self,
-    #     model_path: str,
-    #     cache_dir: Optional[PathLike] = None,
-    # ):
-    #     """
-    #     Args:
-    #         model_path: str
-    #             The identifier of a Model on the Hugging Face Hub, that contains a tokenizer.json file
-    #         cache_dir: Optional[PathLike]
-    #             The directory to cache the tokenizer.json file.
-    #              If not provided, the default cache directory will be used
-    #     """
-    #     self._tokenizer = self._init_tokenizer(model_path=model_path, cache_dir=cache_dir or _DEFAULT_MODEL_CACHE_DIR)
-
-    # def _init_tokenizer(self, model_path: PathLike, cache_dir: PathLike) -> Tokenizer:
-    #     if self._is_cached(cache_dir):
-    #         return self._load_from_cache(cache_dir / _TOKENIZER_FILE)
-    #
-    #     tokenizer = cast(
-    #         Tokenizer,
-    #         Tokenizer.from_pretrained(model_path),
-    #     )
-    #     self._cache_tokenizer(tokenizer, cache_dir)
-    #
-    #     return tokenizer
-
     @abstractmethod
     def _load_from_cache(self, cache_file: Path) -> Tokenizer:
         pass
