@@ -344,3 +344,17 @@ async def test_async_init__when_model_path_is_a_file__should_support_backwards_c
     decoded = await async_tokenizer.decode(encoded)
 
     assert decoded == TEXT
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_initialized_directly_and_uses_vocab_size__should_raise_error():
+    with pytest.raises(ValueError):
+        tokenizer = AsyncJurassicTokenizer(model_path=_LOCAL_RESOURCES_PATH / "j2-tokenizer.model")
+        _ = tokenizer.vocab_size
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_initialized_with_manager_and_uses_vocab_size__should_not_raise_error():
+    tokenizer = AsyncJurassicTokenizer(model_path=_LOCAL_RESOURCES_PATH / "j2-tokenizer.model")
+    async with tokenizer:
+        assert tokenizer.vocab_size > 0

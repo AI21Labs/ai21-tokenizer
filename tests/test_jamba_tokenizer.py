@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import List, Union
-from unittest.mock import patch, AsyncMock
+from unittest.mock import patch
 
 import pytest
 from ai21_tokenizer import JambaInstructTokenizer, AsyncJambaInstructTokenizer
@@ -179,46 +179,18 @@ async def test_async_tokenizer_encode_caches_tokenizer__should_have_tokenizer_in
 
 
 @pytest.mark.asyncio
-@patch("ai21_tokenizer.jamba_instruct_tokenizer._load_from_cache", new_callable=AsyncMock)
-async def test_async_tokenizer_when_cache_dir_exists__should_load_from_cache(
+async def test_async_tokenizer_initialized_directly_and_uses_vocab_size__should_raise_error(
     tmp_path: Path,
-    mock_async_jamba_instruct_tokenizer: AsyncJambaInstructTokenizer,
 ):
-    # Creating tokenizer once from repo
-    assert not (tmp_path / "tokenizer.json").exists()
-    tokenizer = AsyncJambaInstructTokenizer(JAMBA_TOKENIZER_HF_PATH, tmp_path)
-    _ = await tokenizer.encode("Hello world!")
-
-    assert (tmp_path / "tokenizer.json").exists()
-
-    tokenizer2 = AsyncJambaInstructTokenizer(JAMBA_TOKENIZER_HF_PATH, tmp_path)
-    assert (tmp_path / "tokenizer.json").exists()
-
-    _ = await tokenizer2.encode("Hello world!")
-
-    # Assert that _load_from_cache was called once
-    mock_async_jamba_instruct_tokenizer._load_from_cache.assert_called_once()
+    with pytest.raises(ValueError):
+        tokenizer = AsyncJambaInstructTokenizer(model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=tmp_path)
+        _ = tokenizer.vocab_size
 
 
-# @pytest.mark.asyncio
-# async def test_async_tokenizer__when_cache_dir_not_exists__should_save_tokenizer_in_cache_dir(tmp_path: Path):
-#     assert not (tmp_path / "tokenizer.json").exists()
-#     AsyncJambaInstructTokenizer(JAMABA_TOKENIZER_HF_PATH, tmp_path)
-#
-#     assert (tmp_path / "tokenizer.json").exists()
-
-
-# @pytest.mark.asyncio
-# async def test_async_tokenizer__when_cache_dir_exists__should_load_from_cache(tmp_path: Path):
-#     # Creating tokenizer once from repo
-#     assert not (tmp_path / "tokenizer.json").exists()
-#     AsyncJambaInstructTokenizer(JAMABA_TOKENIZER_HF_PATH, tmp_path)
-#
-#     # Creating tokenizer again to load from cache
-#     with patch.object(
-#         AsyncJambaInstructTokenizer, AsyncJambaInstructTokenizer._load_from_cache.__name__
-#     ) as mock_load_from_cache:
-#         AsyncJambaInstructTokenizer(JAMABA_TOKENIZER_HF_PATH, tmp_path)
-#
-#     # assert load_from_cache was called
-#     mock_load_from_cache.assert_called_once()
+@pytest.mark.asyncio
+async def test_async_tokenizer_initialized_with_manager_and_uses_vocab_size__should_not_raise_error(
+    tmp_path: Path,
+):
+    tokenizer = AsyncJambaInstructTokenizer(model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=tmp_path)
+    async with tokenizer:
+        assert tokenizer.vocab_size > 0

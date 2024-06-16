@@ -106,6 +106,8 @@ newline_sequence = "\n"
 
 
 
+
+
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
 pytest = "7.4.4"

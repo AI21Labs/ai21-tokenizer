@@ -29,9 +29,9 @@ def tokenizer() -> JurassicTokenizer:
     raise ValueError("JurassicTokenizer not found")
 
 
-@pytest.fixture(scope="session")
-def async_tokenizer() -> AsyncJurassicTokenizer:
-    jurassic_tokenizer = Tokenizer.get_tokenizer(tokenizer_name=PreTrainedTokenizers.J2_TOKENIZER, is_async=True)
+@pytest.fixture()
+async def async_tokenizer() -> AsyncJurassicTokenizer:
+    jurassic_tokenizer = await Tokenizer.get_async_tokenizer(tokenizer_name=PreTrainedTokenizers.J2_TOKENIZER)
 
     if isinstance(jurassic_tokenizer, AsyncJurassicTokenizer):
         return jurassic_tokenizer
@@ -49,8 +49,7 @@ def jamba_instruct_tokenizer() -> JambaInstructTokenizer:
     raise ValueError("JambaInstructTokenizer not found")
 
 
-@pytest.mark.asyncio
-@pytest.fixture()
+@pytest.fixture
 async def async_jamba_instruct_tokenizer() -> AsyncJambaInstructTokenizer:
     jamba_tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
 

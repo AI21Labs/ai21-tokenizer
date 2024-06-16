@@ -79,13 +79,12 @@ class AsyncJambaInstructTokenizer(BaseJambaInstructTokenizer, BaseTokenizer):
         """
         self._model_path = model_path
         self._cache_dir = cache_dir or _DEFAULT_MODEL_CACHE_DIR
-        # BaseJambaInstructTokenizer.__init__(self, model_path=model_path, cache_dir=cache_dir)
 
     async def __aenter__(self):
         await self._init_tokenizer()
         return self
 
-    def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
         pass
 
     async def encode(self, text: str, **kwargs) -> List[int]:
@@ -110,6 +109,11 @@ class AsyncJambaInstructTokenizer(BaseJambaInstructTokenizer, BaseTokenizer):
 
     @property
     def vocab_size(self) -> int:
+        if not self._tokenizer:
+            raise ValueError(
+                "Tokenizer not properly initialized. Please do not initialize the tokenizer directly. Use "
+                "Tokenizer.get_async_tokenizer instead."
+            )
         return self._tokenizer.get_vocab_size()
 
     async def _init_tokenizer(self):

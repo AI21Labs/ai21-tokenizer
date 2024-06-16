@@ -98,6 +98,11 @@ class AsyncJurassicTokenizer(BaseJurassicTokenizer, BaseTokenizer):
 
     @property
     def vocab_size(self) -> int:
+        if not self._sp:
+            raise ValueError(
+                "Tokenizer not properly initialized. Please do not initialize the tokenizer directly. Use "
+                "Tokenizer.get_async_tokenizer instead."
+            )
         return self._sp.vocab_size()
 
     async def encode(self, text: str, **kwargs) -> List[int]:

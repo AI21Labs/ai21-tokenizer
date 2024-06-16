@@ -35,6 +35,36 @@ poetry add ai21-tokenizer
 
 ### Tokenizer Creation
 
+### Jamba-Instruct Tokenizer
+
+```python
+from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
+
+tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
+# Your code here
+```
+
+Another way would be to use our Jamba model directly:
+
+```python
+from ai21_tokenizer import JambaInstructTokenizer
+
+model_path = "<Path to your vocabs file>"
+tokenizer = JambaInstructTokenizer(model_path=model_path)
+# Your code here
+```
+
+#### Async usage
+
+```python
+from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
+
+tokenizer = Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
+# Your code here
+```
+
+### J2 Tokenizer
+
 ```python
 from ai21_tokenizer import Tokenizer
 
@@ -52,23 +82,13 @@ config = {} # "dictionary object of your config.json file"
 tokenizer = JurassicTokenizer(model_path=model_path, config=config)
 ```
 
-### Async usage
+#### Async usage
 
 ```python
 from ai21_tokenizer import Tokenizer
 
-tokenizer = Tokenizer.get_tokenizer(is_async=True)
+tokenizer = Tokenizer.get_async_tokenizer()
 # Your code here
-```
-
-Direct usage of async Jurassic model:
-
-```python
-from ai21_tokenizer import AsyncJurassicTokenizer
-
-model_path = "<Path to your vocabs file. This is usually a binary file that end with .model>"
-config = {} # "dictionary object of your config.json file"
-tokenizer = AsyncJurassicTokenizer(model_path=model_path, config=config)
 ```
 
 ### Functions

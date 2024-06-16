@@ -4,7 +4,7 @@ from ai21_tokenizer import Tokenizer
 
 
 async def main():
-    tokenizer = Tokenizer.get_tokenizer(is_async=True)
+    tokenizer = await Tokenizer.get_async_tokenizer()
     example_sentence = "This sentence should be encoded and then decoded. Hurray!!"
     encoded = await tokenizer.encode(example_sentence)
     decoded = await tokenizer.decode(encoded)
