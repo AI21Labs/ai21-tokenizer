@@ -97,22 +97,34 @@ class AsyncJambaInstructTokenizer(BaseJambaInstructTokenizer, AsyncBaseTokenizer
     async def encode(self, text: str, **kwargs) -> List[int]:
         if not self._tokenizer:
             await self._init_tokenizer()
-        return await asyncio.to_thread(self._encode, text, **kwargs)
+        return await asyncio.get_running_loop().run_in_executor(
+            executor=None, func=lambda: self._encode(text=text, **kwargs)
+        )
 
     async def decode(self, token_ids: List[int], **kwargs) -> str:
         if not self._tokenizer:
             await self._init_tokenizer()
-        return await asyncio.to_thread(self._decode, token_ids, **kwargs)
+        return await asyncio.get_running_loop().run_in_executor(
+            executor=None, func=lambda: self._decode(token_ids=token_ids, **kwargs)
+        )
 
     async def convert_tokens_to_ids(self, tokens: Union[str, List[str]]) -> Union[int, List[int]]:
         if not self._tokenizer:
             await self._init_tokenizer()
-        return await asyncio.to_thread(self._convert_tokens_to_ids, tokens)
+        return await asyncio.get_running_loop().run_in_executor(
+            None,
+            self._convert_tokens_to_ids,
+            tokens,
+        )
 
     async def convert_ids_to_tokens(self, token_ids: Union[int, List[int]], **kwargs) -> Union[str, List[str]]:
         if not self._tokenizer:
             await self._init_tokenizer()
-        return await asyncio.to_thread(self._convert_ids_to_tokens, token_ids)
+        return await asyncio.get_running_loop().run_in_executor(
+            None,
+            self._convert_ids_to_tokens,
+            token_ids,
+        )
 
     @property
     def vocab_size(self) -> int:
@@ -127,7 +139,9 @@ class AsyncJambaInstructTokenizer(BaseJambaInstructTokenizer, AsyncBaseTokenizer
         if self._is_cached(self._cache_dir):
             self._tokenizer = await self._load_from_cache(self._cache_dir / _TOKENIZER_FILE)
         else:
-            tokenizer_from_pretrained = await asyncio.to_thread(Tokenizer.from_pretrained, self._model_path)
+            tokenizer_from_pretrained = await asyncio.get_running_loop().run_in_executor(
+                None, Tokenizer.from_pretrained, self._model_path
+            )
 
             tokenizer = cast(
                 Tokenizer,
@@ -138,5 +152,7 @@ class AsyncJambaInstructTokenizer(BaseJambaInstructTokenizer, AsyncBaseTokenizer
             self._tokenizer = tokenizer
 
     async def _load_from_cache(self, cache_file: Path) -> Tokenizer:
-        tokenizer_from_file = await asyncio.to_thread(Tokenizer.from_file, str(cache_file))
+        tokenizer_from_file = await asyncio.get_running_loop().run_in_executor(
+            None, Tokenizer.from_file, str(cache_file)
+        )
         return cast(Tokenizer, tokenizer_from_file)

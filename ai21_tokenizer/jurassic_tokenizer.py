@@ -121,7 +121,9 @@ class AsyncJurassicTokenizer(BaseJurassicTokenizer, AsyncBaseTokenizer):
         """
         if not self._sp:
             await self._aload_model_proto()
-        return await asyncio.to_thread(self._encode_wrapper, text, **kwargs)
+        return await asyncio.get_running_loop().run_in_executor(
+            executor=None, func=lambda: self._encode_wrapper(text=text, **kwargs)
+        )
 
     async def decode(self, token_ids: List[int], **kwargs) -> str:
         """
@@ -129,7 +131,9 @@ class AsyncJurassicTokenizer(BaseJurassicTokenizer, AsyncBaseTokenizer):
         """
         if not self._sp:
             await self._aload_model_proto()
-        return await asyncio.to_thread(self._decode_wrapper, token_ids, **kwargs)
+        return await asyncio.get_running_loop().run_in_executor(
+            executor=None, func=lambda: self._decode_wrapper(token_ids=token_ids, **kwargs)
+        )
 
     async def decode_with_offsets(self, token_ids: List[int], **kwargs) -> Tuple[str, List[Tuple[int, int]]]:
         """
@@ -137,17 +141,21 @@ class AsyncJurassicTokenizer(BaseJurassicTokenizer, AsyncBaseTokenizer):
         """
         if not self._sp:
             await self._aload_model_proto()
-        return await asyncio.to_thread(self._decode_with_offsets, token_ids, **kwargs)
+        return await asyncio.get_running_loop().run_in_executor(
+            executor=None, func=lambda: self._decode_with_offsets(token_ids=token_ids, **kwargs)
+        )
 
     async def convert_tokens_to_ids(self, tokens: Union[str, List[str]]) -> Union[int, List[int]]:
         if not self._sp:
             await self._aload_model_proto()
-        return await asyncio.to_thread(self._convert_tokens_to_ids, tokens)
+        return await asyncio.get_running_loop().run_in_executor(None, self._convert_tokens_to_ids, tokens)
 
     async def convert_ids_to_tokens(self, token_ids: Union[int, List[int]], **kwargs) -> Union[str, List[str]]:
         if not self._sp:
             await self._aload_model_proto()
-        return await asyncio.to_thread(self._convert_ids_to_tokens_wrapper, token_ids, **kwargs)
+        return await asyncio.get_running_loop().run_in_executor(
+            executor=None, func=lambda: self._convert_ids_to_tokens_wrapper(token_ids=token_ids, **kwargs)
+        )
 
     @classmethod
     async def from_file_handle(

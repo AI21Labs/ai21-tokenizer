@@ -65,7 +65,7 @@ jobs:
           poetry install --no-root --without dev
       - name: Run Tests
         run: |
-          poetry run pytest --asyncio-mode=auto
+          poetry run pytest
       - name: Upload pytest test results
         uses: actions/upload-artifact@v3
         with:
