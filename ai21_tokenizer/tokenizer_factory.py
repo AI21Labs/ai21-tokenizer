@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from ai21_tokenizer.base_tokenizer import BaseTokenizer
+from ai21_tokenizer.base_tokenizer import BaseTokenizer, AsyncBaseTokenizer
 from ai21_tokenizer.jamba_instruct_tokenizer import JambaInstructTokenizer, AsyncJambaInstructTokenizer
 from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer, AsyncJurassicTokenizer
 
@@ -12,7 +12,7 @@ JAMBA_TOKENIZER_HF_PATH = "ai21labs/Jamba-v0.1"
 
 class PreTrainedTokenizers:
     J2_TOKENIZER = "j2-tokenizer"
-    JAMBA_INSTRUCT_TOKENIZER = "jamba-instruct-tokenizer"
+    JAMBA_INSTRUCT_TOKENIZER = "jamba-tokenizer"
 
 
 class TokenizerFactory:
@@ -38,17 +38,17 @@ class TokenizerFactory:
     async def get_async_tokenizer(
         cls,
         tokenizer_name: str = PreTrainedTokenizers.J2_TOKENIZER,
-    ) -> BaseTokenizer:
+    ) -> AsyncBaseTokenizer:
         if tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER:
-            async with AsyncJambaInstructTokenizer(
+            jamba_tokenizer = await AsyncJambaInstructTokenizer.create(
                 model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=os.getenv(_ENV_CACHE_DIR_KEY)
-            ) as jamba_tokenizer:
-                return jamba_tokenizer
+            )
+            return jamba_tokenizer
 
         if tokenizer_name == PreTrainedTokenizers.J2_TOKENIZER:
-            async with AsyncJurassicTokenizer(
-                _LOCAL_RESOURCES_PATH / PreTrainedTokenizers.J2_TOKENIZER
-            ) as jurassic_tokenizer:
-                return jurassic_tokenizer
+            jurassic_tokenizer = await AsyncJurassicTokenizer.create(
+                model_path=_LOCAL_RESOURCES_PATH / PreTrainedTokenizers.J2_TOKENIZER
+            )
+            return jurassic_tokenizer
 
         raise ValueError(f"Tokenizer {tokenizer_name} is not supported")

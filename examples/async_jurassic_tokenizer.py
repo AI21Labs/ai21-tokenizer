@@ -2,7 +2,7 @@ import asyncio
 from pathlib import Path
 
 from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
-from ai21_tokenizer.utils import load_json
+from ai21_tokenizer.file_utils import load_json
 
 resource_path = Path(__file__).parent.parent / "ai21_tokenizer" / "resources"
 

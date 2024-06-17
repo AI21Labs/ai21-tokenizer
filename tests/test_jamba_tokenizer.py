@@ -173,24 +173,11 @@ async def test_async_tokenizer_encode_caches_tokenizer__should_have_tokenizer_in
     tmp_path: Path,
 ):
     assert not (tmp_path / "tokenizer.json").exists()
-    tokenizer = AsyncJambaInstructTokenizer(JAMBA_TOKENIZER_HF_PATH, tmp_path)
-    _ = await tokenizer.encode("Hello world!")
+    jamba_tokenizer = await AsyncJambaInstructTokenizer.create(JAMBA_TOKENIZER_HF_PATH, tmp_path)
+    _ = await jamba_tokenizer.encode("Hello world!")
     assert (tmp_path / "tokenizer.json").exists()
 
 
-@pytest.mark.asyncio
-async def test_async_tokenizer_initialized_directly_and_uses_vocab_size__should_raise_error(
-    tmp_path: Path,
-):
+def test_async_tokenizer_initialized_directly__should_raise_error():
     with pytest.raises(ValueError):
-        tokenizer = AsyncJambaInstructTokenizer(model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=tmp_path)
-        _ = tokenizer.vocab_size
-
-
-@pytest.mark.asyncio
-async def test_async_tokenizer_initialized_with_manager_and_uses_vocab_size__should_not_raise_error(
-    tmp_path: Path,
-):
-    tokenizer = AsyncJambaInstructTokenizer(model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=tmp_path)
-    async with tokenizer:
-        assert tokenizer.vocab_size > 0
+        AsyncJambaInstructTokenizer()

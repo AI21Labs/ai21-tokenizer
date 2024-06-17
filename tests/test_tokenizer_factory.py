@@ -17,7 +17,6 @@ from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer, AsyncJurassicTo
         pytest.param(
             "jamba-tokenizer",
             JambaInstructTokenizer,
-            marks=pytest.mark.skip(reason="JambaInstructTokenizer is not yet Open Source in HuggingFace"),
         ),
     ],
 )
@@ -42,7 +41,6 @@ def test_tokenizer_factory__get_tokenizer(
         pytest.param(
             "jamba-tokenizer",
             AsyncJambaInstructTokenizer,
-            marks=pytest.mark.skip(reason="JambaInstructTokenizer is not yet Open Source in HuggingFace"),
         ),
     ],
 )

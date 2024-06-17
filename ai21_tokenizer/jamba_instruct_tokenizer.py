@@ -7,8 +7,8 @@ from typing import Union, List, Optional, cast
 
 from tokenizers import Tokenizer
 
-from ai21_tokenizer import BaseTokenizer
-from ai21_tokenizer.utils import PathLike
+from ai21_tokenizer import BaseTokenizer, AsyncBaseTokenizer
+from ai21_tokenizer.file_utils import PathLike
 from ai21_tokenizer.base_jamba_instruct_tokenizer import BaseJambaInstructTokenizer
 
 _TOKENIZER_FILE = "tokenizer.json"
@@ -63,9 +63,20 @@ class JambaInstructTokenizer(BaseJambaInstructTokenizer, BaseTokenizer):
         return self._tokenizer.get_vocab_size()
 
 
-class AsyncJambaInstructTokenizer(BaseJambaInstructTokenizer, BaseTokenizer):
-    def __init__(
-        self,
+class AsyncJambaInstructTokenizer(BaseJambaInstructTokenizer, AsyncBaseTokenizer):
+    _model_path: str
+    _tokenizer: Tokenizer = None
+    _cache_dir: PathLike = None
+
+    def __init__(self):
+        raise ValueError(
+            "Create object with context manager only.Use either AsyncJambaInstructTokenizer.create or "
+            "Tokenizer.get_async_tokenizer"
+        )
+
+    @classmethod
+    async def create(
+        cls,
         model_path: str,
         cache_dir: Optional[PathLike] = None,
     ):
@@ -77,15 +88,11 @@ class AsyncJambaInstructTokenizer(BaseJambaInstructTokenizer, BaseTokenizer):
                 The directory to cache the tokenizer.json file.
                  If not provided, the default cache directory will be used
         """
+        self = cls.__new__(cls)
         self._model_path = model_path
         self._cache_dir = cache_dir or _DEFAULT_MODEL_CACHE_DIR
-
-    async def __aenter__(self):
         await self._init_tokenizer()
         return self
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        pass
 
     async def encode(self, text: str, **kwargs) -> List[int]:
         if not self._tokenizer:

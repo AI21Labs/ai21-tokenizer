@@ -6,9 +6,9 @@ from typing import List, Union, Optional, Dict, Any, Tuple, BinaryIO
 
 import sentencepiece as spm
 
-from ai21_tokenizer.base_tokenizer import BaseTokenizer
+from ai21_tokenizer.base_tokenizer import BaseTokenizer, AsyncBaseTokenizer
 from ai21_tokenizer.base_jurassic_tokenizer import BaseJurassicTokenizer
-from ai21_tokenizer.utils import PathLike, load_binary, aload_binary, aread_file_handle
+from ai21_tokenizer.file_utils import PathLike, load_binary, aload_binary, aread_file_handle
 
 _MODEL_EXTENSION = ".model"
 _MODEL_CONFIG_FILENAME = "config.json"
@@ -77,24 +77,34 @@ class JurassicTokenizer(BaseJurassicTokenizer, BaseTokenizer):
         return cls(model_path=model_path, config=config)
 
 
-class AsyncJurassicTokenizer(BaseJurassicTokenizer, BaseTokenizer):
-    def __init__(
-        self,
+class AsyncJurassicTokenizer(BaseJurassicTokenizer, AsyncBaseTokenizer):
+    def __init__(self):
+        raise ValueError(
+            "Create object with context manager only.Use either AsyncJurassicTokenizer.create or "
+            "Tokenizer.get_async_tokenizer"
+        )
+
+    @classmethod
+    async def create(
+        cls,
         model_path: Optional[PathLike] = None,
         config: Optional[Dict[str, Any]] = None,
         model_file_handle: Optional[BinaryIO] = None,
         model_proto: Optional[bytes] = None,
     ):
+        self = cls.__new__(cls)
         BaseJurassicTokenizer.__init__(
-            self, model_path=model_path, config=config, model_file_handle=model_file_handle, model_proto=model_proto
+            self,
+            model_path=model_path,
+            config=config,
+            model_file_handle=model_file_handle,
         )
+        if not model_proto:
+            await self._aload_model_proto()
+        else:
+            self._set_model_proto_related_variables(model_proto)
 
-    async def __aenter__(self):
-        await self._aload_model_proto()
         return self
-
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        pass
 
     @property
     def vocab_size(self) -> int:
@@ -144,27 +154,21 @@ class AsyncJurassicTokenizer(BaseJurassicTokenizer, BaseTokenizer):
         cls, model_file_handle: BinaryIO, config: Optional[Dict[str, Any]] = None
     ) -> AsyncJurassicTokenizer:
         model_proto = await aread_file_handle(model_file_handle)
-        return cls(model_file_handle=model_file_handle, config=config, model_proto=model_proto)
+        return await cls.create(model_file_handle=model_file_handle, config=config, model_proto=model_proto)
 
     @classmethod
     async def from_file_path(
         cls, model_path: PathLike, config: Optional[Dict[str, Any]] = None
     ) -> AsyncJurassicTokenizer:
         model_proto = await aload_binary(model_path)
-        return cls(model_path=model_path, config=config, model_proto=model_proto)
+        return await cls.create(model_path=model_path, config=config, model_proto=model_proto)
 
     def _load_model_proto(self):
         model_proto = (
             load_binary(self._get_model_file(self._model_path)) if self._model_path else self._model_file_handle.read()
         )
-        # noinspection PyArgumentList
-        self._sp = spm.SentencePieceProcessor(model_proto=model_proto)
-        self._id_to_token_map = {i: self._sp.id_to_piece(i) for i in range(self.vocab_size)}
-        self._token_to_id_map = {self._sp.id_to_piece(i): i for i in range(self.vocab_size)}
-        self._no_show_tokens = set(
-            self._convert_ids_to_tokens([i for i in range(self.vocab_size) if self._sp.IsControl(i)])
-        )
-        self.newline_id = self._token_to_id(self._newline_piece)
+
+        self._set_model_proto_related_variables(model_proto)
 
     async def _aload_model_proto(self):
         model_proto = (
@@ -172,6 +176,10 @@ class AsyncJurassicTokenizer(BaseJurassicTokenizer, BaseTokenizer):
             if self._model_path
             else await aread_file_handle(self._model_file_handle)
         )
+
+        self._set_model_proto_related_variables(model_proto)
+
+    def _set_model_proto_related_variables(self, model_proto: bytes):
         # noinspection PyArgumentList
         self._sp = spm.SentencePieceProcessor(model_proto=model_proto)
         self._id_to_token_map = {i: self._sp.id_to_piece(i) for i in range(self.vocab_size)}

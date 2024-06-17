@@ -3,19 +3,19 @@ from __future__ import annotations
 import os
 import tempfile
 from pathlib import Path
-from typing import List, Union
+from typing import List, Union, Optional
 from abc import ABC, abstractmethod
 
 from tokenizers import Tokenizer
 
-from ai21_tokenizer.utils import PathLike
+from ai21_tokenizer.file_utils import PathLike
 
 _TOKENIZER_FILE = "tokenizer.json"
 _DEFAULT_MODEL_CACHE_DIR = Path(tempfile.gettempdir()) / "jamba_instruct"
 
 
 class BaseJambaInstructTokenizer(ABC):
-    _tokenizer: Tokenizer = None
+    _tokenizer: Optional[Tokenizer] = None
 
     @abstractmethod
     def _load_from_cache(self, cache_file: Path) -> Tokenizer:

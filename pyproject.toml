@@ -104,20 +104,12 @@ match = "(main)"
 newline_sequence = "\n"
 
 
-
-
-
-
-
-
-
-
-
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
 pytest = "7.4.4"
 pytest-cov = "4.0.0"
 pytest-mock = "3.11.1"
+pytest-asyncio = "^0.23.7"
 
 [[tool.poetry.source]]
 name = "PyPI"

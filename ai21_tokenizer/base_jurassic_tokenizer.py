@@ -8,7 +8,7 @@ from typing import List, Optional, Dict, Any, BinaryIO, Tuple, Union
 import sentencepiece as spm
 
 from abc import ABC
-from ai21_tokenizer.utils import is_number, PathLike, load_json
+from ai21_tokenizer.file_utils import is_number, PathLike, load_json
 
 _MODEL_EXTENSION = ".model"
 _MODEL_CONFIG_FILENAME = "config.json"
@@ -33,7 +33,6 @@ class BaseJurassicTokenizer(ABC):
         model_path: Optional[PathLike] = None,
         config: Optional[Dict[str, Any]] = None,
         model_file_handle: Optional[BinaryIO] = None,
-        model_proto: Optional[bytes] = None,
     ):
         self._model_path = model_path
         self._model_file_handle = model_file_handle
@@ -57,18 +56,6 @@ class BaseJurassicTokenizer(ABC):
 
         self._number_mode = config.get("number_mode")
         self._space_mode = config.get("space_mode")
-
-        if model_proto:
-            # noinspection PyArgumentList
-            self._sp = spm.SentencePieceProcessor(model_proto=model_proto)
-            self._id_to_token_map = {i: self._sp.id_to_piece(i) for i in range(self.vocab_size)}
-            self._token_to_id_map = {self._sp.id_to_piece(i): i for i in range(self.vocab_size)}
-            self._no_show_tokens = set(
-                self._convert_ids_to_tokens([i for i in range(self.vocab_size) if self._sp.IsControl(i)])
-            )
-
-            self.newline_id = self._token_to_id(self._newline_piece)
-            self._space_tokens = self._map_space_tokens()
 
     def _validate_init(self, model_path: Optional[PathLike], model_file_handle: Optional[BinaryIO]) -> None:
         if model_path is None and model_file_handle is None:

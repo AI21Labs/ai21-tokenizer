@@ -327,34 +327,26 @@ async def test_async_tokenizer__from_file_path():
         ),
     ],
 )
-def test_async_tokenizer__(
+async def test_async_tokenizer__(
     model_path: Optional[PathLike], model_file_handle: Optional[BinaryIO], expected_error_message: str
 ):
     with pytest.raises(ValueError) as error:
-        AsyncJurassicTokenizer(model_file_handle=model_file_handle, model_path=model_path, config={})
+        await AsyncJurassicTokenizer.create(model_file_handle=model_file_handle, model_path=model_path, config={})
 
     assert error.value.args[0] == expected_error_message
 
 
 @pytest.mark.asyncio
 async def test_async_init__when_model_path_is_a_file__should_support_backwards_compatability():
-    async_tokenizer = AsyncJurassicTokenizer(model_path=_LOCAL_RESOURCES_PATH / "j2-tokenizer.model")
+    jurassic_tokenizer = await AsyncJurassicTokenizer.create(model_path=_LOCAL_RESOURCES_PATH / "j2-tokenizer.model")
 
-    encoded = await async_tokenizer.encode(TEXT)
-    decoded = await async_tokenizer.decode(encoded)
+    encoded = await jurassic_tokenizer.encode(TEXT)
+    decoded = await jurassic_tokenizer.decode(encoded)
 
     assert decoded == TEXT
 
 
 @pytest.mark.asyncio
-async def test_async_tokenizer_initialized_directly_and_uses_vocab_size__should_raise_error():
+async def test_async_tokenizer_initialized_directly__should_raise_error():
     with pytest.raises(ValueError):
-        tokenizer = AsyncJurassicTokenizer(model_path=_LOCAL_RESOURCES_PATH / "j2-tokenizer.model")
-        _ = tokenizer.vocab_size
-
-
-@pytest.mark.asyncio
-async def test_async_tokenizer_initialized_with_manager_and_uses_vocab_size__should_not_raise_error():
-    tokenizer = AsyncJurassicTokenizer(model_path=_LOCAL_RESOURCES_PATH / "j2-tokenizer.model")
-    async with tokenizer:
-        assert tokenizer.vocab_size > 0
+        AsyncJurassicTokenizer()

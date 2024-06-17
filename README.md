@@ -35,7 +35,7 @@ poetry add ai21-tokenizer
 
 ### Tokenizer Creation
 
-### Jamba-Instruct Tokenizer
+### Jamba Tokenizer
 
 ```python
 from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
@@ -44,7 +44,7 @@ tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZE
 # Your code here
 ```
 
-Another way would be to use our Jamba model directly:
+Another way would be to use our Jamba tokenizer directly:
 
 ```python
 from ai21_tokenizer import JambaInstructTokenizer
@@ -60,6 +60,16 @@ tokenizer = JambaInstructTokenizer(model_path=model_path)
 from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
 
 tokenizer = Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
+# Your code here
+```
+
+Another way would be to use our async Jamba tokenizer class method create:
+
+```python
+from ai21_tokenizer import AsyncJambaInstructTokenizer
+
+model_path = "<Path to your vocabs file>"
+tokenizer = AsyncJambaInstructTokenizer.create(model_path=model_path)
 # Your code here
 ```
 
@@ -91,6 +101,17 @@ tokenizer = Tokenizer.get_async_tokenizer()
 # Your code here
 ```
 
+Another way would be to use our async Jamba tokenizer class method create:
+
+```python
+from ai21_tokenizer import AsyncJurassicTokenizer
+
+model_path = "<Path to your vocabs file. This is usually a binary file that end with .model>"
+config = {} # "dictionary object of your config.json file"
+tokenizer = AsyncJurassicTokenizer.create(model_path=model_path, config=config)
+# Your code here
+```
+
 ### Functions
 
 #### Encode and Decode
@@ -106,10 +127,32 @@ decoded_text = tokenizer.decode(encoded_text)
 print(f"Decoded text: {decoded_text}")
 ```
 
+#### Async
+
+```python
+# Assuming you have created an async tokenizer
+text_to_encode = "apple orange banana"
+encoded_text = await tokenizer.encode(text_to_encode)
+print(f"Encoded text: {encoded_text}")
+
+decoded_text = await tokenizer.decode(encoded_text)
+print(f"Decoded text: {decoded_text}")
+```
+
 #### What if you had wanted to convert your tokens to ids or vice versa?
 
 ```python
 tokens = tokenizer.convert_ids_to_tokens(encoded_text)
+print(f"IDs corresponds to Tokens: {tokens}")
+
+ids = tokenizer.convert_tokens_to_ids(tokens)
+```
+
+#### Async
+
+```python
+# Assuming you have created an async tokenizer
+tokens = await tokenizer.convert_ids_to_tokens(encoded_text)
 print(f"IDs corresponds to Tokens: {tokens}")
 
 ids = tokenizer.convert_tokens_to_ids(tokens)
