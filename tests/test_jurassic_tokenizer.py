@@ -5,7 +5,7 @@ from typing import Union, List, BinaryIO, Optional
 import pytest
 
 from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer, AsyncJurassicTokenizer
-from ai21_tokenizer.utils import PathLike
+from ai21_tokenizer.file_utils import PathLike
 
 _LOCAL_RESOURCES_PATH = Path(__file__).parents[1] / "ai21_tokenizer" / "resources" / "j2-tokenizer"
 
