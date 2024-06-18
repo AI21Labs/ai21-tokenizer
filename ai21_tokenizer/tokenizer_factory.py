@@ -40,15 +40,13 @@ class TokenizerFactory:
         tokenizer_name: str = PreTrainedTokenizers.J2_TOKENIZER,
     ) -> AsyncBaseTokenizer:
         if tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER:
-            jamba_tokenizer = await AsyncJambaInstructTokenizer.create(
+            return await AsyncJambaInstructTokenizer.create(
                 model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=os.getenv(_ENV_CACHE_DIR_KEY)
             )
-            return jamba_tokenizer
 
         if tokenizer_name == PreTrainedTokenizers.J2_TOKENIZER:
-            jurassic_tokenizer = await AsyncJurassicTokenizer.create(
+            return await AsyncJurassicTokenizer.create(
                 model_path=_LOCAL_RESOURCES_PATH / PreTrainedTokenizers.J2_TOKENIZER
             )
-            return jurassic_tokenizer
 
         raise ValueError(f"Tokenizer {tokenizer_name} is not supported")

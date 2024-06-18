@@ -1,6 +1,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import List, Union
+import asyncio
 
 
 class BaseTokenizer(ABC):
@@ -82,7 +83,7 @@ class AsyncBaseTokenizer(ABC):
     """
     Base class for tokenizers.
 
-    This class defines the interface for tokenization operations such as encoding, decoding,
+    This class defines the interface for async tokenization operation such as encoding, decoding,
     converting tokens to IDs, and converting IDs to tokens.
     """
 
@@ -151,3 +152,6 @@ class AsyncBaseTokenizer(ABC):
             int: The size of the vocabs.
         """
         pass
+
+    async def _make_async_call(self, callback_func, **kwargs):
+        return await asyncio.get_running_loop().run_in_executor(executor=None, func=lambda: callback_func(**kwargs))
