@@ -71,6 +71,7 @@ packages = [
 python = "^3.8"
 sentencepiece = ">=0.2.0,<1.0.0"
 tokenizers = ">=0.15.0,<1.0.0"
+anyio = "^4.4.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
@@ -102,11 +103,13 @@ match = "(main)"
 [tool.semantic_release.changelog.environment]
 newline_sequence = "\n"
 
+
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
 pytest = "7.4.4"
 pytest-cov = "4.0.0"
 pytest-mock = "3.11.1"
+pytest-asyncio = "^0.23.7"
 
 [[tool.poetry.source]]
 name = "PyPI"
