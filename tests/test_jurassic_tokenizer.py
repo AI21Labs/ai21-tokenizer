@@ -178,6 +178,24 @@ def test_init__when_model_path_is_a_file__should_support_backwards_compatability
     assert decoded == TEXT
 
 
+def test_tokenizer__initializes_space_tokens_properly__should_encode_without_errors():
+    tokenizer = JurassicTokenizer(model_path=_LOCAL_RESOURCES_PATH / "j2-tokenizer.model", config=MODEL_CONFIG)
+    prompt = """
+Question: who is Albert Einstein?
+Thought:
+Action: Search
+Action Input: Albert Einstein
+Thought:
+Action:
+Action Input:
+Observation:  is not a valid tool, try one of [Search].
+Thought:"""
+    try:
+        _ = tokenizer.encode(prompt)
+    except Exception as e:
+        pytest.fail(f"Encoding failed with error: {e}")
+
+
 @pytest.mark.asyncio
 async def test_async_tokenizer_encode_decode(async_tokenizer: AsyncJurassicTokenizer):
     encoded = await async_tokenizer.encode(TEXT)
@@ -350,3 +368,24 @@ async def test_async_init__when_model_path_is_a_file__should_support_backwards_c
 async def test_async_tokenizer_initialized_directly__should_raise_error():
     with pytest.raises(ValueError):
         AsyncJurassicTokenizer()
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer__initializes_space_tokens_properly__should_encode_without_errors():
+    jurassic_tokenizer = await AsyncJurassicTokenizer.create(
+        model_path=_LOCAL_RESOURCES_PATH / "j2-tokenizer.model", config=MODEL_CONFIG
+    )
+    prompt = """
+Question: who is Albert Einstein?
+Thought:
+Action: Search
+Action Input: Albert Einstein
+Thought:
+Action:
+Action Input:
+Observation:  is not a valid tool, try one of [Search].
+Thought:"""
+    try:
+        _ = await jurassic_tokenizer.encode(prompt)
+    except Exception as e:
+        pytest.fail(f"Encoding failed with error: {e}")

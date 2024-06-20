@@ -36,6 +36,7 @@ class JurassicTokenizer(BaseJurassicTokenizer, BaseTokenizer):
             self._convert_ids_to_tokens([i for i in range(self.vocab_size) if self._sp.IsControl(i)])
         )
         self.newline_id = self._token_to_id(self._newline_piece)
+        self._space_tokens = self._map_space_tokens()
 
     @property
     def vocab_size(self) -> int:
@@ -194,3 +195,4 @@ class AsyncJurassicTokenizer(BaseJurassicTokenizer, AsyncBaseTokenizer):
             self._convert_ids_to_tokens([i for i in range(self.vocab_size) if self._sp.IsControl(i)])
         )
         self.newline_id = self._token_to_id(self._newline_piece)
+        self._space_tokens = self._map_space_tokens()
