@@ -1,6 +1,24 @@
 # CHANGELOG
 
+## v0.11.1 (2024-06-20)
+
+### Fix
+
+* fix: Added backwards compatibility for jamba tokenizer (#88)
+
+* fix: Added backwards compatibility for jamba tokenizer
+
+* fix: Added to async
+
+---------
+
+Co-authored-by: asafg &lt;asafg@ai21.com&gt; ([`9ad3475`](https://github.com/AI21Labs/ai21-tokenizer/commit/9ad34759295dc8ccde30fe273c508b617ea81175))
+
 ## v0.11.0 (2024-06-18)
+
+### Chore
+
+* chore(release): v0.11.0 [skip ci] ([`0df321c`](https://github.com/AI21Labs/ai21-tokenizer/commit/0df321c8491404c595f9a30cc413ccebdcf24551))
 
 ### Feature
 
