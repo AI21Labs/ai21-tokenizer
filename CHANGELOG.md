@@ -1,6 +1,20 @@
 # CHANGELOG
 
+## v0.11.2 (2024-06-20)
+
+### Fix
+
+* fix: add missing space tokens init on jursssic (#89)
+
+* fix: missing space tokens init on jursssic, fix import in example
+
+* test: add test for space_tokens init ([`4ec43a0`](https://github.com/AI21Labs/ai21-tokenizer/commit/4ec43a04e875d0fcb4dc557607c17a6ff8734176))
+
 ## v0.11.1 (2024-06-20)
+
+### Chore
+
+* chore(release): v0.11.1 [skip ci] ([`07bf0cd`](https://github.com/AI21Labs/ai21-tokenizer/commit/07bf0cd237d566a43fac94513ce30d8d20668fd7))
 
 ### Fix
 
