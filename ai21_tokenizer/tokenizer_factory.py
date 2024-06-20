@@ -12,7 +12,8 @@ JAMBA_TOKENIZER_HF_PATH = "ai21labs/Jamba-v0.1"
 
 class PreTrainedTokenizers:
     J2_TOKENIZER = "j2-tokenizer"
-    JAMBA_INSTRUCT_TOKENIZER = "jamba-tokenizer"
+    JAMBA_INSTRUCT_TOKENIZER = "jamba-instruct-tokenizer"
+    JAMBA_TOKENIZER = "jamba-tokenizer"
 
 
 class TokenizerFactory:
@@ -26,7 +27,10 @@ class TokenizerFactory:
         cls,
         tokenizer_name: str = PreTrainedTokenizers.J2_TOKENIZER,
     ) -> BaseTokenizer:
-        if tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER:
+        if (
+            tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER
+            or tokenizer_name == PreTrainedTokenizers.JAMBA_TOKENIZER
+        ):
             return JambaInstructTokenizer(model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=os.getenv(_ENV_CACHE_DIR_KEY))
 
         if tokenizer_name == PreTrainedTokenizers.J2_TOKENIZER:
@@ -39,7 +43,10 @@ class TokenizerFactory:
         cls,
         tokenizer_name: str = PreTrainedTokenizers.J2_TOKENIZER,
     ) -> AsyncBaseTokenizer:
-        if tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER:
+        if (
+            tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER
+            or tokenizer_name == PreTrainedTokenizers.JAMBA_TOKENIZER
+        ):
             return await AsyncJambaInstructTokenizer.create(
                 model_path=JAMBA_TOKENIZER_HF_PATH, cache_dir=os.getenv(_ENV_CACHE_DIR_KEY)
             )
