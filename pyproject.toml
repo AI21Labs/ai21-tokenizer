@@ -59,7 +59,7 @@ schema_pattern = "(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|
 
 [tool.poetry]
 name = "ai21-tokenizer"
-version = "0.8.2"
+version = "0.11.2"
 description = ""
 authors = ["AI21 Labs"]
 readme = "README.md"
@@ -68,8 +68,10 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-sentencepiece = "^0.2.0"
+python = "^3.8"
+sentencepiece = ">=0.2.0,<1.0.0"
+tokenizers = ">=0.15.0,<1.0.0"
+anyio = "^4.4.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
@@ -102,24 +104,12 @@ match = "(main)"
 newline_sequence = "\n"
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 [tool.poetry.group.test.dependencies]
 coverage = "^7.1.0"
 pytest = "7.4.4"
 pytest-cov = "4.0.0"
 pytest-mock = "3.11.1"
+pytest-asyncio = "^0.23.7"
 
 [[tool.poetry.source]]
 name = "PyPI"

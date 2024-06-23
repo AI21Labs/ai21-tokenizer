@@ -1,8 +1,136 @@
 # CHANGELOG
 
+## v0.11.2 (2024-06-20)
 
+### Fix
+
+* fix: add missing space tokens init on jursssic (#89)
+
+* fix: missing space tokens init on jursssic, fix import in example
+
+* test: add test for space_tokens init ([`4ec43a0`](https://github.com/AI21Labs/ai21-tokenizer/commit/4ec43a04e875d0fcb4dc557607c17a6ff8734176))
+
+## v0.11.1 (2024-06-20)
+
+### Chore
+
+* chore(release): v0.11.1 [skip ci] ([`07bf0cd`](https://github.com/AI21Labs/ai21-tokenizer/commit/07bf0cd237d566a43fac94513ce30d8d20668fd7))
+
+### Fix
+
+* fix: Added backwards compatibility for jamba tokenizer (#88)
+
+* fix: Added backwards compatibility for jamba tokenizer
+
+* fix: Added to async
+
+---------
+
+Co-authored-by: asafg &lt;asafg@ai21.com&gt; ([`9ad3475`](https://github.com/AI21Labs/ai21-tokenizer/commit/9ad34759295dc8ccde30fe273c508b617ea81175))
+
+## v0.11.0 (2024-06-18)
+
+### Chore
+
+* chore(release): v0.11.0 [skip ci] ([`0df321c`](https://github.com/AI21Labs/ai21-tokenizer/commit/0df321c8491404c595f9a30cc413ccebdcf24551))
+
+### Feature
+
+* feat: Async tokenizer (#86)
+
+* feat: support async, wip
+
+* feat: fix and add tests, examples, update readme
+
+* fix: poetry lock
+
+* fix: anyio -&gt; aiofiles
+
+* fix: try 3.8
+
+* fix: remove 3.7 from tests
+
+* fix: poetry lock
+
+* fix: add 3.7 back
+
+* fix: poetry lock
+
+* fix: poetry.lock
+
+* ci: pipenv
+
+* fix: pipenv
+
+* fix: pipenv
+
+* fix: pyproject
+
+* fix: lock
+
+* fix: version
+
+* fix: Removed aiofiles
+
+* ci: update python version,
+
+* fix: switch from aiofiles to anyio, remove redundant comments
+
+* chore: poetry lock
+
+* fix: disable initializing async classes directly, cr comments
+
+* test: fix import
+
+* ci: add asyncio-mode to test workflow
+
+* fix: to_thread -&gt; run_in_executor
+
+* ci: add asyncio
+
+* fix: cr comments
+
+* fix: cr comments
+
+---------
+
+Co-authored-by: asafg &lt;asafg@ai21.com&gt; ([`3006cda`](https://github.com/AI21Labs/ai21-tokenizer/commit/3006cda2305a5ad31d705d3f6e3fe5605820e2f5))
+
+## v0.10.0 (2024-06-16)
+
+### Chore
+
+* chore(release): v0.10.0 [skip ci] ([`1178ba7`](https://github.com/AI21Labs/ai21-tokenizer/commit/1178ba7fd1d980681cf143292848dacd51cdc2d5))
+
+### Feature
+
+* feat: remove python 3.7 support (#87) ([`58482ab`](https://github.com/AI21Labs/ai21-tokenizer/commit/58482abbda7767055345274b38c58ba9fd33b42f))
+
+## v0.9.1 (2024-05-14)
+
+### Chore
+
+* chore(release): v0.9.1 [skip ci] ([`a260d76`](https://github.com/AI21Labs/ai21-tokenizer/commit/a260d76aece9992f03ac4f004edf6a6dd83f5f13))
+
+### Fix
+
+* fix: depend on less restrictive version of tokenizers (#85) ([`eab6a14`](https://github.com/AI21Labs/ai21-tokenizer/commit/eab6a14a6a788efbff708df0cded59d2392ef7f2))
+
+## v0.9.0 (2024-03-28)
+
+### Chore
+
+* chore(release): v0.9.0 [skip ci] ([`974df9e`](https://github.com/AI21Labs/ai21-tokenizer/commit/974df9e8e9c46f5545dfb1a2603d51bac0eab750))
+
+### Feature
+
+* feat: Jamba instruct tokenizer (#84) ([`88ff9af`](https://github.com/AI21Labs/ai21-tokenizer/commit/88ff9aff504caa8928d68bcde4430c24fbbc23f1))
 
 ## v0.8.2 (2024-03-11)
+
+### Chore
+
+* chore(release): v0.8.2 [skip ci] ([`1146741`](https://github.com/AI21Labs/ai21-tokenizer/commit/11467416dd263b824f6a8711983eb5588fb037dc))
 
 ### Ci
 
@@ -22,7 +150,6 @@
 
 * Update issue templates ([`86ea6e7`](https://github.com/AI21Labs/ai21-tokenizer/commit/86ea6e79a5670c0e8049ac587ed1b5f4b8790ae9))
 
-
 ## v0.8.1 (2024-01-07)
 
 ### Chore
@@ -32,7 +159,6 @@
 ### Fix
 
 * fix: re-ordered parameters in ctor to avoid a breaking change (#79) ([`6c1b608`](https://github.com/AI21Labs/ai21-tokenizer/commit/6c1b6088c0914ffc77b53613047606c398e0557c))
-
 
 ## v0.8.0 (2024-01-03)
 
@@ -66,7 +192,6 @@ Co-authored-by: asafgardin &lt;147075902+asafgardin@users.noreply.github.com&gt;
 
 * test: added unittest with start_of_line=True and False ([`182a8d1`](https://github.com/AI21Labs/ai21-tokenizer/commit/182a8d10020862c233f7f67cddb965eee2398b98))
 
-
 ## v0.7.0 (2024-01-02)
 
 ### Chore
@@ -94,7 +219,6 @@ Co-authored-by: asafgardin &lt;147075902+asafgardin@users.noreply.github.com&gt;
 ---------
 
 Co-authored-by: Asaf Gardin &lt;asafg@ai21.com&gt; ([`dcb73a7`](https://github.com/AI21Labs/ai21-tokenizer/commit/dcb73a72348e576b06cd4a066e06141ceae37a44))
-
 
 ## v0.6.0 (2023-12-28)
 
@@ -128,7 +252,6 @@ Co-authored-by: Asaf Gardin &lt;asafg@ai21.com&gt; ([`dcb73a7`](https://github.c
 
 * refactor: take &#39;is_start&#39; from kwargs ([`296bda5`](https://github.com/AI21Labs/ai21-tokenizer/commit/296bda5578edd57ff58d6763b3ccd5b9ba709795))
 
-
 ## v0.5.0 (2023-12-28)
 
 ### Chore
@@ -155,7 +278,6 @@ Co-authored-by: Asaf Gardin &lt;asafg@ai21.com&gt; ([`dcb73a7`](https://github.c
 
 * fix: commitizen tag starts with &#34;v&#34; (#70) ([`cf495ad`](https://github.com/AI21Labs/ai21-tokenizer/commit/cf495ada8341131c0d022f02d2c9e86cee8723ba))
 
-
 ## v0.4.0 (2023-12-28)
 
 ### Chore
@@ -166,7 +288,6 @@ Co-authored-by: Asaf Gardin &lt;asafg@ai21.com&gt; ([`dcb73a7`](https://github.c
 
 * feat: add pad_id and bos_id to jurassic_tokenizer (#69) ([`ffb2ce3`](https://github.com/AI21Labs/ai21-tokenizer/commit/ffb2ce38aa59eec03305c4fdc6bfedd99c7b5255))
 
-
 ## v0.3.11 (2023-12-27)
 
 ### Chore
@@ -176,7 +297,6 @@ Co-authored-by: Asaf Gardin &lt;asafg@ai21.com&gt; ([`dcb73a7`](https://github.c
 ### Fix
 
 * fix: BaseTokenizer in init (#68) ([`3cc71e7`](https://github.com/AI21Labs/ai21-tokenizer/commit/3cc71e747a0b5d5450dbe70618456d415171ae23))
-
 
 ## v0.3.10 (2023-12-27)
 
@@ -268,7 +388,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 
 * refactor: sentencepiece version to support all patch versions (#66) ([`845008c`](https://github.com/AI21Labs/ai21-tokenizer/commit/845008cf61f86b40516bbc1836e0b4cfd0559192))
 
-
 ## v0.3.9 (2023-11-27)
 
 ### Chore
@@ -303,7 +422,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 
 * fix: README.md ([`20b7090`](https://github.com/AI21Labs/ai21-tokenizer/commit/20b709012059719a5084b7abed745f8705f0e8a1))
 
-
 ## v0.3.8 (2023-11-26)
 
 ### Chore
@@ -313,7 +431,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 ### Fix
 
 * fix: readme example (#56) ([`b713da8`](https://github.com/AI21Labs/ai21-tokenizer/commit/b713da8cdfe6434ac03cd25eaea7036ed172bf59))
-
 
 ## v0.3.7 (2023-11-23)
 
@@ -345,7 +462,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 
 * docs: Added docs to base class ([`94f3a3c`](https://github.com/AI21Labs/ai21-tokenizer/commit/94f3a3c9539346ac1bc501f6c83ce1e3525d055a))
 
-
 ## v0.3.6 (2023-11-22)
 
 ### Chore
@@ -366,7 +482,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 
 * fix: support ai21_tokenizer.__version__ (#52) ([`13944eb`](https://github.com/AI21Labs/ai21-tokenizer/commit/13944eb7a8ae540e0be329abb12920e374c62b23))
 
-
 ## v0.3.5 (2023-11-22)
 
 ### Chore
@@ -383,7 +498,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 
 * fix: exclude from pretty ([`f5c9204`](https://github.com/AI21Labs/ai21-tokenizer/commit/f5c920422c31b671d09af43758560dd2779ac358))
 
-
 ## v0.3.4 (2023-11-22)
 
 ### Chore
@@ -393,7 +507,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 ### Fix
 
 * fix: newline r (#46) ([`bc97ae1`](https://github.com/AI21Labs/ai21-tokenizer/commit/bc97ae14d403ee6e4313a1b313ea328dfe265a8a))
-
 
 ## v0.3.3 (2023-11-22)
 
@@ -412,7 +525,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 ### Fix
 
 * fix: setup (#45) ([`1b8c00f`](https://github.com/AI21Labs/ai21-tokenizer/commit/1b8c00f3240e94237f084202fd77ee8c7ef5a726))
-
 
 ## v0.3.2 (2023-11-21)
 
@@ -434,7 +546,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 
 * fix: name ([`ee4d744`](https://github.com/AI21Labs/ai21-tokenizer/commit/ee4d744bc8a5565f91e888b1ab81d9fd7011c0a2))
 
-
 ## v0.3.1 (2023-11-21)
 
 ### Chore
@@ -450,7 +561,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 * fix: crlf forbid
 
 * fix: test 1 ([`26da29e`](https://github.com/AI21Labs/ai21-tokenizer/commit/26da29e921dd8dd546a127c76214f20a0718f17d))
-
 
 ## v0.3.0 (2023-11-21)
 
@@ -489,7 +599,6 @@ Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.githu
 ### Fix
 
 * fix: string example (#38) ([`833038c`](https://github.com/AI21Labs/ai21-tokenizer/commit/833038c0ff348cfa240764346e2faffea09ed6ac))
-
 
 ## v0.2.0 (2023-11-21)
 
@@ -563,7 +672,6 @@ Co-authored-by: github-actions &lt;github-actions@github.com&gt; ([`e55cd1d`](ht
 
 * fix: token name (#34) ([`2b229b2`](https://github.com/AI21Labs/ai21-tokenizer/commit/2b229b28ace8ac72dcc9bc727d187350020a2e12))
 
-
 ## v0.1.2 (2023-11-21)
 
 ### Chore
@@ -623,7 +731,6 @@ Co-authored-by: asafgardin &lt;147075902+asafgardin@users.noreply.github.com&gt;
 
 * fix: workflow dispatch for release action (#33) ([`f81b4ab`](https://github.com/AI21Labs/ai21-tokenizer/commit/f81b4abbe4fe45163dec45dfce89677fe673e46b))
 
-
 ## v0.1.1 (2023-11-20)
 
 ### Chore
@@ -655,7 +762,6 @@ Co-authored-by: asafgardin &lt;147075902+asafgardin@users.noreply.github.com&gt;
 * test: uncomment
 
 * fix: Changed to main ([`2ff12c9`](https://github.com/AI21Labs/ai21-tokenizer/commit/2ff12c9b4d490eec0d089b18a6bdabda7e23e952))
-
 
 ## v0.1.0 (2023-11-20)
 
