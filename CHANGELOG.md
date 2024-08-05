@@ -1,6 +1,88 @@
 # CHANGELOG
 
+## v0.11.3 (2024-08-05)
+
+### Chore
+
+* chore(deps-dev): bump authlib from 1.2.1 to 1.3.1 (#91)
+
+Bumps [authlib](https://github.com/lepture/authlib) from 1.2.1 to 1.3.1.
+- [Release notes](https://github.com/lepture/authlib/releases)
+- [Changelog](https://github.com/lepture/authlib/blob/master/docs/changelog.rst)
+- [Commits](https://github.com/lepture/authlib/compare/v1.2.1...v1.3.1)
+
+---
+updated-dependencies:
+- dependency-name: authlib
+  dependency-type: indirect
+...
+
+Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt; ([`fe24518`](https://github.com/AI21Labs/ai21-tokenizer/commit/fe24518a0c4cb15ac48f8d246fe22887ffcc3216))
+
+* chore(deps-dev): bump black from 23.3.0 to 24.3.0 (#90)
+
+Bumps [black](https://github.com/psf/black) from 23.3.0 to 24.3.0.
+- [Release notes](https://github.com/psf/black/releases)
+- [Changelog](https://github.com/psf/black/blob/main/CHANGES.md)
+- [Commits](https://github.com/psf/black/compare/23.3.0...24.3.0)
+
+---
+updated-dependencies:
+- dependency-name: black
+  dependency-type: direct:development
+...
+
+Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt; ([`5257f3d`](https://github.com/AI21Labs/ai21-tokenizer/commit/5257f3d5c712380d857c7a575ffe3ac9966b4427))
+
+* chore(deps-dev): bump python-semantic-release from 8.3.0 to 8.7.0 (#80)
+
+Bumps [python-semantic-release](https://github.com/python-semantic-release/python-semantic-release) from 8.3.0 to 8.7.0.
+- [Release notes](https://github.com/python-semantic-release/python-semantic-release/releases)
+- [Changelog](https://github.com/python-semantic-release/python-semantic-release/blob/master/CHANGELOG.md)
+- [Commits](https://github.com/python-semantic-release/python-semantic-release/compare/v8.3.0...v8.7.0)
+
+---
+updated-dependencies:
+- dependency-name: python-semantic-release
+  dependency-type: direct:development
+  update-type: version-update:semver-minor
+...
+
+Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+Co-authored-by: Asaf Gardin &lt;147075902+asafgardin@users.noreply.github.com&gt;
+Co-authored-by: Asaf Joseph Gardin &lt;39553475+Josephasafg@users.noreply.github.com&gt; ([`376894f`](https://github.com/AI21Labs/ai21-tokenizer/commit/376894f7e548e96445234ccf1bde3df331b928cf))
+
+### Ci
+
+* ci: allow running tests and semantic checks on external prs (#93) ([`c08604d`](https://github.com/AI21Labs/ai21-tokenizer/commit/c08604d84deffd911718f568f11d4a4aa37395b3))
+
+### Fix
+
+* fix(deps): bump requests from 2.31.0 to 2.32.2 (#92)
+
+Bumps [requests](https://github.com/psf/requests) from 2.31.0 to 2.32.2.
+- [Release notes](https://github.com/psf/requests/releases)
+- [Changelog](https://github.com/psf/requests/blob/main/HISTORY.md)
+- [Commits](https://github.com/psf/requests/compare/v2.31.0...v2.32.2)
+
+---
+updated-dependencies:
+- dependency-name: requests
+  dependency-type: indirect
+...
+
+Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+Co-authored-by: dependabot[bot] &lt;49699333+dependabot[bot]@users.noreply.github.com&gt;
+Co-authored-by: Asaf Joseph Gardin &lt;39553475+Josephasafg@users.noreply.github.com&gt; ([`3216898`](https://github.com/AI21Labs/ai21-tokenizer/commit/321689884f7342f650293eb512aa6f728322b33f))
+
 ## v0.11.2 (2024-06-20)
+
+### Chore
+
+* chore(release): v0.11.2 [skip ci] ([`57e712e`](https://github.com/AI21Labs/ai21-tokenizer/commit/57e712efa7baba2d3ca3742b15794127f08455e9))
 
 ### Fix
 
