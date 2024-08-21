@@ -19,6 +19,7 @@ def _get_cache_dir(tokenizer_name: str) -> Path:
     tokenizer_name_as_path = tokenizer_name_as_path.replace("-", "_")
     default_tokenizer_cache_dir = Path(tempfile.gettempdir()) / tokenizer_name_as_path
     env_cache_from_env = os.getenv(_ENV_CACHE_DIR_KEY)
+
     if env_cache_from_env is not None:
         return Path(env_cache_from_env)
 
