@@ -80,7 +80,7 @@ isort = "*"
 mypy = "*"
 safety = "*"
 ruff = "*"
-python-semantic-release = "^8.3.0"
+python-semantic-release = "^9.8.7"
 
 [tool.semantic_release]
 version_toml = [
