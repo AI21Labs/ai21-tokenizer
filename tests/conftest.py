@@ -72,7 +72,7 @@ def jamba_1_5_mini_tokenizer() -> Jamba1_5Tokenizer:
     if isinstance(jamba_1_5_mini_tokenizer, Jamba1_5Tokenizer):
         return jamba_1_5_mini_tokenizer
 
-    raise ValueError("JambaTokenizer not found")
+    raise ValueError("Jamba1_5Tokenizer not found")
 
 
 @pytest.fixture
@@ -82,7 +82,7 @@ async def async_jamba_1_5_mini_tokenizer() -> AsyncJamba1_5Tokenizer:
     if isinstance(jamba_1_5_mini_tokenizer, AsyncJamba1_5Tokenizer):
         return jamba_1_5_mini_tokenizer
 
-    raise ValueError("AsyncJambaTokenizer not found")
+    raise ValueError("AsyncJamba1_5Tokenizer not found")
 
 
 @pytest.fixture(scope="session")
@@ -92,7 +92,7 @@ def jamba_1_5_large_tokenizer() -> Jamba1_5Tokenizer:
     if isinstance(jamba_1_5_large_tokenizer, Jamba1_5Tokenizer):
         return jamba_1_5_large_tokenizer
 
-    raise ValueError("JambaTokenizer not found")
+    raise ValueError("Jamba1_5Tokenizer not found")
 
 
 @pytest.fixture
@@ -102,4 +102,4 @@ async def async_jamba_1_5_large_tokenizer() -> AsyncJamba1_5Tokenizer:
     if isinstance(jamba_1_5_large_tokenizer, AsyncJamba1_5Tokenizer):
         return jamba_1_5_large_tokenizer
 
-    raise ValueError("AsyncJambaTokenizer not found")
+    raise ValueError("AsyncJamba1_5Tokenizer not found")
