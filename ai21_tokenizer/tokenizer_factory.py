@@ -4,7 +4,7 @@ from pathlib import Path
 
 from ai21_tokenizer.base_tokenizer import BaseTokenizer, AsyncBaseTokenizer
 from ai21_tokenizer.jamba_instruct_tokenizer import JambaInstructTokenizer, AsyncJambaInstructTokenizer
-from ai21_tokenizer.jamba_tokenizer import Jamba1_5Tokenizer, AsyncJamba1_5Tokenizer
+from ai21_tokenizer.jamba_1_5_tokenizer import Jamba1_5Tokenizer, AsyncJamba1_5Tokenizer
 from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer, AsyncJurassicTokenizer
 
 _LOCAL_RESOURCES_PATH = Path(__file__).parent / "resources"

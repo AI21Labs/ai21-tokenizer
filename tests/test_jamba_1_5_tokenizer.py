@@ -5,7 +5,7 @@ from unittest.mock import patch
 import pytest
 from pytest_lazyfixture import lazy_fixture
 
-from ai21_tokenizer.jamba_tokenizer import Jamba1_5Tokenizer, AsyncJamba1_5Tokenizer
+from ai21_tokenizer.jamba_1_5_tokenizer import Jamba1_5Tokenizer, AsyncJamba1_5Tokenizer
 from ai21_tokenizer.tokenizer_factory import JAMBA_1_5_MINI_TOKENIZER_HF_PATH, JAMBA_1_5_LARGE_TOKENIZER_HF_PATH
 
 
