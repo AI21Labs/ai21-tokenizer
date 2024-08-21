@@ -1,8 +1,26 @@
 # CHANGELOG
 
+## v0.12.0 (2024-08-21)
+
+### Feature
+
+* feat: add jamba 1.5 tokenizers (mini and large) (#96)
+
+* feat: add jamba 1.5 tokenizers (mini and large)
+
+* test: fix value error on conftest.py
+
+* refactor: rename file name
+
+* chore: fix path
+
+* fix: enter ([`e052b22`](https://github.com/AI21Labs/ai21-tokenizer/commit/e052b22e69f03bb03992129ea34b91c98bac0fbb))
+
 ## v0.11.3 (2024-08-05)
 
 ### Chore
+
+* chore(release): v0.11.3 [skip ci] ([`5be5b59`](https://github.com/AI21Labs/ai21-tokenizer/commit/5be5b59820cefe61ab4c6b4f273f9296fabb2983))
 
 * chore(deps-dev): bump authlib from 1.2.1 to 1.3.1 (#91)
 
