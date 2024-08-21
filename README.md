@@ -35,7 +35,63 @@ poetry add ai21-tokenizer
 
 ### Tokenizer Creation
 
-### Jamba Tokenizer
+### Jamba 1.5 Mini Tokenizer
+
+```python
+from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
+
+tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_1_5_MINI_TOKENIZER)
+# Your code here
+```
+
+Another way would be to use our Jamba 1.5 Mini tokenizer directly:
+
+```python
+from ai21_tokenizer import Jamba1_5Tokenizer
+
+model_path = "<Path to your vocabs file>"
+tokenizer = Jamba1_5Tokenizer(model_path=model_path)
+# Your code here
+```
+
+#### Async usage
+
+```python
+from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
+
+tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_1_5_MINI_TOKENIZER)
+# Your code here
+```
+
+### Jamba 1.5 Large Tokenizer
+
+```python
+from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
+
+tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_1_5_LARGE_TOKENIZER)
+# Your code here
+```
+
+Another way would be to use our Jamba 1.5 Large tokenizer directly:
+
+```python
+from ai21_tokenizer import Jamba1_5Tokenizer
+
+model_path = "<Path to your vocabs file>"
+tokenizer = Jamba1_5Tokenizer(model_path=model_path)
+# Your code here
+```
+
+#### Async usage
+
+```python
+from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
+
+tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_1_5_LARGE_TOKENIZER)
+# Your code here
+```
+
+### Jamba Instruct Tokenizer
 
 ```python
 from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
@@ -59,7 +115,7 @@ tokenizer = JambaInstructTokenizer(model_path=model_path)
 ```python
 from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
 
-tokenizer = Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
+tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
 # Your code here
 ```
 
@@ -97,7 +153,7 @@ tokenizer = JurassicTokenizer(model_path=model_path, config=config)
 ```python
 from ai21_tokenizer import Tokenizer
 
-tokenizer = Tokenizer.get_async_tokenizer()
+tokenizer = await Tokenizer.get_async_tokenizer()
 # Your code here
 ```
 

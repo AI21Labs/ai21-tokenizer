@@ -11,10 +11,10 @@ from ai21_tokenizer.file_utils import PathLike
 from ai21_tokenizer.base_jamba_tokenizer import BaseJambaTokenizer
 
 _TOKENIZER_FILE = "tokenizer.json"
-_DEFAULT_MODEL_CACHE_DIR = Path(tempfile.gettempdir()) / "jamba_instruct"
+_DEFAULT_MODEL_CACHE_DIR = Path(tempfile.gettempdir()) / "jamba_1_5"
 
 
-class JambaInstructTokenizer(BaseJambaTokenizer, BaseTokenizer):
+class Jamba1_5Tokenizer(BaseJambaTokenizer, BaseTokenizer):
     def __init__(
         self,
         model_path: str,
@@ -62,14 +62,14 @@ class JambaInstructTokenizer(BaseJambaTokenizer, BaseTokenizer):
         return self._tokenizer.get_vocab_size()
 
 
-class AsyncJambaInstructTokenizer(BaseJambaTokenizer, AsyncBaseTokenizer):
+class AsyncJamba1_5Tokenizer(BaseJambaTokenizer, AsyncBaseTokenizer):
     _model_path: str
     _tokenizer: Tokenizer = None
     _cache_dir: PathLike = None
 
     def __init__(self):
         raise ValueError(
-            "Do not create AsyncJambaInstructTokenizer directly. Use either AsyncJambaInstructTokenizer.create or "
+            "Do not create AsyncJamba1_5Tokenizer directly. Use either AsyncJamba1_5Tokenizer.create or "
             "Tokenizer.get_async_tokenizer"
         )
 
@@ -131,7 +131,8 @@ class AsyncJambaInstructTokenizer(BaseJambaTokenizer, AsyncBaseTokenizer):
             self._tokenizer = await self._load_from_cache(self._cache_dir / _TOKENIZER_FILE)
         else:
             tokenizer_from_pretrained = await self._make_async_call(
-                callback_func=Tokenizer.from_pretrained, identifier=self._model_path
+                callback_func=Tokenizer.from_pretrained,
+                identifier=self._model_path,
             )
 
             tokenizer = cast(
