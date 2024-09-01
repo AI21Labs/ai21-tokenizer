@@ -12,7 +12,6 @@ from ai21_tokenizer.file_utils import PathLike, load_binary, aload_binary, aread
 _MODEL_EXTENSION = ".model"
 _MODEL_CONFIG_FILENAME = "config.json"
 
-
 @dataclass
 class SpaceSymbol:
     tok_id: int
@@ -27,9 +26,11 @@ class JurassicTokenizer(BaseJurassicTokenizer, BaseTokenizer):
         model_file_handle: Optional[BinaryIO] = None,
     ):
         BaseJurassicTokenizer.__init__(self, model_path=model_path, config=config, model_file_handle=model_file_handle)
-        model_proto = load_binary(self._get_model_file(model_path)) if model_path else model_file_handle.read()
-        # noinspection PyArgumentList
-        self._sp = spm.SentencePieceProcessor(model_proto=model_proto)
+        if model_path:
+            self._sp = spm.SentencePieceProcessor()
+            self._sp.load(self._get_model_file(model_path))
+        else:
+            self._sp = spm.SentencePieceProcessor(model_proto=model_file_handle.read())
         self._id_to_token_map = {i: self._sp.id_to_piece(i) for i in range(self.vocab_size)}
         self._token_to_id_map = {self._sp.id_to_piece(i): i for i in range(self.vocab_size)}
         self._no_show_tokens = set(
@@ -64,7 +65,7 @@ class JurassicTokenizer(BaseJurassicTokenizer, BaseTokenizer):
         return self._convert_tokens_to_ids(tokens)
 
     def convert_ids_to_tokens(self, token_ids: Union[int, List[int]], **kwargs) -> Union[str, List[str]]:
-        return self._convert_ids_to_tokens_wrapper(token_ids, **kwargs)
+        return self._convert_ids_to_tokens_wrapper(token_ids, ** kwargs)
 
     @classmethod
     def from_file_handle(
@@ -80,7 +81,7 @@ class JurassicTokenizer(BaseJurassicTokenizer, BaseTokenizer):
 class AsyncJurassicTokenizer(BaseJurassicTokenizer, AsyncBaseTokenizer):
     def __init__(self):
         raise ValueError(
-            "Do not create AsyncJurassicTokenizer directly.Use either AsyncJurassicTokenizer.create or "
+            "Do not create AsyncJurassicTokenizer directly. Use either AsyncJurassicTokenizer.create or "
             "Tokenizer.get_async_tokenizer"
         )
 
@@ -153,7 +154,7 @@ class AsyncJurassicTokenizer(BaseJurassicTokenizer, AsyncBaseTokenizer):
             await self._aload_model_proto()
 
         return await self._make_async_call(
-            callback_func=self._convert_ids_to_tokens_wrapper, token_ids=token_ids, **kwargs
+            callback_func=self._convert_ids_to_tokens_wrapper, token_ids=token_ids, ** kwargs
         )
 
     @classmethod
@@ -196,3 +197,5 @@ class AsyncJurassicTokenizer(BaseJurassicTokenizer, AsyncBaseTokenizer):
         )
         self.newline_id = self._token_to_id(self._newline_piece)
         self._space_tokens = self._map_space_tokens()
+}
+}
