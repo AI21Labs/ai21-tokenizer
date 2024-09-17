@@ -5,6 +5,7 @@ on: [push, pull_request]
 env:
   POETRY_VERSION: "1.4.2"
   POETRY_URL: https://install.python-poetry.org
+  HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
 jobs:
   lint:
