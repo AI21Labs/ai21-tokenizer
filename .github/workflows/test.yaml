@@ -5,7 +5,6 @@ on: [push, pull_request]
 env:
   POETRY_VERSION: "1.4.2"
   POETRY_URL: https://install.python-poetry.org
-  HF_TOKEN: ${{ secrets.HF_TOKEN }}
 
 jobs:
   lint:
@@ -65,6 +64,9 @@ jobs:
         run: |
           poetry install --no-root --without dev
       - name: Run Tests
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HUGGING_FACE_HUB_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
           poetry run pytest --asyncio-mode=auto
       - name: Upload pytest test results
