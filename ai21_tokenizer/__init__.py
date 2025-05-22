@@ -1,9 +1,22 @@
-from ai21_tokenizer.base_tokenizer import BaseTokenizer, AsyncBaseTokenizer
-from ai21_tokenizer.jamba_instruct_tokenizer import JambaInstructTokenizer, AsyncJambaInstructTokenizer
-from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer, AsyncJurassicTokenizer
-from ai21_tokenizer.tokenizer_factory import TokenizerFactory as Tokenizer, PreTrainedTokenizers
-from ai21_tokenizer.jamba_1_5_tokenizer import Jamba1_5Tokenizer, AsyncJamba1_5Tokenizer
+from ai21_tokenizer.base_tokenizer import AsyncBaseTokenizer, BaseTokenizer
+from ai21_tokenizer.jamba_1_5_tokenizer import (
+    AsyncJamba1_5Tokenizer,
+    AsyncJambaTokenizer,
+    Jamba1_5Tokenizer,
+    SyncJambaTokenizer,
+)
+from ai21_tokenizer.jamba_instruct_tokenizer import (
+    AsyncJambaInstructTokenizer,
+    JambaInstructTokenizer,
+)
+from ai21_tokenizer.jurassic_tokenizer import AsyncJurassicTokenizer, JurassicTokenizer
+from ai21_tokenizer.tokenizer_factory import (
+    PreTrainedTokenizers,
+    TokenizerFactory as Tokenizer,
+)
+
 from .version import VERSION
+
 
 __version__ = VERSION
 
@@ -19,4 +32,6 @@ __all__ = [
     "AsyncJambaInstructTokenizer",
     "Jamba1_5Tokenizer",
     "AsyncJamba1_5Tokenizer",
+    "SyncJambaTokenizer",
+    "AsyncJambaTokenizer",
 ]

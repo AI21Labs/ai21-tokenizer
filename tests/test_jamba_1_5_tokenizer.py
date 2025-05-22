@@ -1,12 +1,21 @@
 from pathlib import Path
-from typing import Union, List
+from typing import List, Union
 from unittest.mock import patch
 
 import pytest
+
 from pytest_lazyfixture import lazy_fixture
 
-from ai21_tokenizer.jamba_1_5_tokenizer import Jamba1_5Tokenizer, AsyncJamba1_5Tokenizer
-from ai21_tokenizer.tokenizer_factory import JAMBA_1_5_MINI_TOKENIZER_HF_PATH, JAMBA_1_5_LARGE_TOKENIZER_HF_PATH
+from ai21_tokenizer.jamba_1_5_tokenizer import (
+    AsyncJamba1_5Tokenizer,
+    AsyncJambaTokenizer,
+    Jamba1_5Tokenizer,
+    SyncJambaTokenizer,
+)
+from ai21_tokenizer.tokenizer_factory import (
+    JAMBA_LARGE_1_6_TOKENIZER_HF_PATH,
+    JAMBA_MINI_1_6_TOKENIZER_HF_PATH,
+)
 
 
 @pytest.mark.parametrize(
@@ -20,7 +29,7 @@ from ai21_tokenizer.tokenizer_factory import JAMBA_1_5_MINI_TOKENIZER_HF_PATH, J
         (lazy_fixture("jamba_1_5_large_tokenizer"),),
     ],
 )
-def test_tokenizer_mini_encode_decode(tokenizer: Jamba1_5Tokenizer):
+def test_tokenizer_mini_encode_decode(tokenizer: SyncJambaTokenizer):
     text = "Hello world!"
     encoded = tokenizer.encode(text)
     decoded = tokenizer.decode(encoded)
@@ -46,7 +55,7 @@ def test_tokenizer_mini_encode_decode(tokenizer: Jamba1_5Tokenizer):
 def test_tokenizer_mini__convert_ids_to_tokens(
     ids: Union[int, List[int]],
     expected_tokens: Union[str, List[str]],
-    tokenizer: Jamba1_5Tokenizer,
+    tokenizer: SyncJambaTokenizer,
 ):
     actual_tokens = tokenizer.convert_ids_to_tokens(ids)
 
@@ -111,13 +120,13 @@ def test_tokenizer__decode_with_start_of_line(
     ],
     argnames=["hf_path"],
     argvalues=[
-        (JAMBA_1_5_MINI_TOKENIZER_HF_PATH,),
-        (JAMBA_1_5_LARGE_TOKENIZER_HF_PATH,),
+        (JAMBA_MINI_1_6_TOKENIZER_HF_PATH,),
+        (JAMBA_LARGE_1_6_TOKENIZER_HF_PATH,),
     ],
 )
 def test_tokenizer__when_cache_dir_not_exists__should_save_tokenizer_in_cache_dir(tmp_path: Path, hf_path: str):
     assert not (tmp_path / "tokenizer.json").exists()
-    Jamba1_5Tokenizer(hf_path, tmp_path)
+    SyncJambaTokenizer(hf_path, tmp_path)
 
     assert (tmp_path / "tokenizer.json").exists()
 
@@ -129,18 +138,18 @@ def test_tokenizer__when_cache_dir_not_exists__should_save_tokenizer_in_cache_di
     ],
     argnames=["hf_path"],
     argvalues=[
-        (JAMBA_1_5_MINI_TOKENIZER_HF_PATH,),
-        (JAMBA_1_5_LARGE_TOKENIZER_HF_PATH,),
+        (JAMBA_MINI_1_6_TOKENIZER_HF_PATH,),
+        (JAMBA_LARGE_1_6_TOKENIZER_HF_PATH,),
     ],
 )
 def test_tokenizer__when_cache_dir_exists__should_load_from_cache(tmp_path: Path, hf_path: str):
     # Creating tokenizer once from repo
     assert not (tmp_path / "tokenizer.json").exists()
-    Jamba1_5Tokenizer(hf_path, tmp_path)
+    SyncJambaTokenizer(hf_path, tmp_path)
 
     # Creating tokenizer again to load from cache
-    with patch.object(Jamba1_5Tokenizer, Jamba1_5Tokenizer._load_from_cache.__name__) as mock_load_from_cache:
-        Jamba1_5Tokenizer(hf_path, tmp_path)
+    with patch.object(SyncJambaTokenizer, SyncJambaTokenizer._load_from_cache.__name__) as mock_load_from_cache:
+        SyncJambaTokenizer(hf_path, tmp_path)
 
     # assert load_from_cache was called
     mock_load_from_cache.assert_called_once()
@@ -253,19 +262,19 @@ async def test_async_tokenizer__decode_with_start_of_line(
     ],
     argnames=["hf_path"],
     argvalues=[
-        (JAMBA_1_5_MINI_TOKENIZER_HF_PATH,),
-        (JAMBA_1_5_LARGE_TOKENIZER_HF_PATH,),
+        (JAMBA_MINI_1_6_TOKENIZER_HF_PATH,),
+        (JAMBA_LARGE_1_6_TOKENIZER_HF_PATH,),
     ],
 )
 async def test_async_tokenizer_encode_caches_tokenizer__should_have_tokenizer_in_cache_dir(
     tmp_path: Path, hf_path: str
 ):
     assert not (tmp_path / "tokenizer.json").exists()
-    jamba_tokenizer = await AsyncJamba1_5Tokenizer.create(hf_path, tmp_path)
+    jamba_tokenizer = await AsyncJambaTokenizer.create(hf_path, tmp_path)
     _ = await jamba_tokenizer.encode("Hello world!")
     assert (tmp_path / "tokenizer.json").exists()
 
 
 def test_async_tokenizer_initialized_directly__should_raise_error():
     with pytest.raises(ValueError):
-        AsyncJamba1_5Tokenizer()
+        AsyncJambaTokenizer()
