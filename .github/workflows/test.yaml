@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Poetry
         run: |
           pipx install poetry
@@ -47,7 +47,7 @@ jobs:
         python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install Poetry
         run: |
           pipx install poetry
@@ -70,7 +70,7 @@ jobs:
         run: |
           poetry run pytest --asyncio-mode=auto
       - name: Upload pytest test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pytest-results-${{ matrix.python-version }}
           path: junit/test-results-${{ matrix.python-version }}.xml

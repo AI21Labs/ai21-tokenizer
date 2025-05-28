@@ -1,14 +1,19 @@
 from __future__ import annotations
 
+import logging
 import tempfile
+
 from pathlib import Path
-from typing import Union, List, Optional, cast
+from typing import List, Optional, Union, cast
 
 from tokenizers import Tokenizer
 
-from ai21_tokenizer import BaseTokenizer, AsyncBaseTokenizer
-from ai21_tokenizer.file_utils import PathLike
+from ai21_tokenizer import AsyncBaseTokenizer, BaseTokenizer
 from ai21_tokenizer.base_jamba_tokenizer import BaseJambaTokenizer
+from ai21_tokenizer.file_utils import PathLike
+
+
+_logger = logging.getLogger(__name__)
 
 _TOKENIZER_FILE = "tokenizer.json"
 _DEFAULT_MODEL_CACHE_DIR = Path(tempfile.gettempdir()) / "jamba_1_5"
@@ -31,8 +36,11 @@ class Jamba1_5Tokenizer(BaseJambaTokenizer, BaseTokenizer):
         self._tokenizer = self._init_tokenizer(model_path=model_path, cache_dir=cache_dir or _DEFAULT_MODEL_CACHE_DIR)
 
     def _init_tokenizer(self, model_path: PathLike, cache_dir: PathLike) -> Tokenizer:
-        if self._is_cached(cache_dir):
-            return self._load_from_cache(cache_dir / _TOKENIZER_FILE)
+        try:
+            if self._is_cached(cache_dir):
+                return self._load_from_cache(cache_dir / _TOKENIZER_FILE)
+        except Exception as e:
+            _logger.error(f"Error loading tokenizer from cache. Trying to download: {e}")
 
         tokenizer = cast(
             Tokenizer,
@@ -127,9 +135,13 @@ class AsyncJamba1_5Tokenizer(BaseJambaTokenizer, AsyncBaseTokenizer):
         return self._tokenizer.get_vocab_size()
 
     async def _init_tokenizer(self):
-        if self._is_cached(self._cache_dir):
-            self._tokenizer = await self._load_from_cache(self._cache_dir / _TOKENIZER_FILE)
-        else:
+        try:
+            if self._is_cached(self._cache_dir):
+                self._tokenizer = await self._load_from_cache(self._cache_dir / _TOKENIZER_FILE)
+        except Exception as e:
+            _logger.error(f"Error loading tokenizer from cache. Trying to download: {e}")
+
+        if self._tokenizer is None:
             tokenizer_from_pretrained = await self._make_async_call(
                 callback_func=Tokenizer.from_pretrained,
                 identifier=self._model_path,
@@ -146,3 +158,11 @@ class AsyncJamba1_5Tokenizer(BaseJambaTokenizer, AsyncBaseTokenizer):
     async def _load_from_cache(self, cache_file: Path) -> Tokenizer:
         tokenizer_from_file = await self._make_async_call(callback_func=Tokenizer.from_file, path=str(cache_file))
         return cast(Tokenizer, tokenizer_from_file)
+
+
+class SyncJambaTokenizer(Jamba1_5Tokenizer):
+    pass
+
+
+class AsyncJambaTokenizer(AsyncJamba1_5Tokenizer):
+    pass
