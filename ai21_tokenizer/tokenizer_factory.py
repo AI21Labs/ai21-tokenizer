@@ -4,11 +4,7 @@ import tempfile
 from pathlib import Path
 
 from ai21_tokenizer.base_tokenizer import AsyncBaseTokenizer, BaseTokenizer
-from ai21_tokenizer.jamba_1_5_tokenizer import AsyncJambaTokenizer, SyncJambaTokenizer
-from ai21_tokenizer.jamba_instruct_tokenizer import (
-    AsyncJambaInstructTokenizer,
-    JambaInstructTokenizer,
-)
+from ai21_tokenizer.jamba_tokenizer import AsyncJambaTokenizer, SyncJambaTokenizer
 
 
 _LOCAL_RESOURCES_PATH = Path(__file__).parent / "resources"
@@ -31,12 +27,6 @@ def _get_cache_dir(tokenizer_name: str) -> Path:
 
 
 class PreTrainedTokenizers:
-    # deprecated tokenizers
-    JAMBA_INSTRUCT_TOKENIZER = "jamba-instruct-tokenizer"
-    JAMBA_TOKENIZER = "jamba-tokenizer"
-    JAMBA_1_5_MINI_TOKENIZER = "jamba-1.5-mini-tokenizer"
-    JAMBA_1_5_LARGE_TOKENIZER = "jamba-1.5-large-tokenizer"
-
     # active tokenizers
     JAMBA_MINI_1_6_TOKENIZER = "jamba-mini-1.6-tokenizer"
     JAMBA_LARGE_1_6_TOKENIZER = "jamba-large-1.6-tokenizer"
@@ -47,12 +37,8 @@ class PreTrainedTokenizers:
 _TOKENIZER_NAME_TO_MODEL_PATH = {
     PreTrainedTokenizers.JAMBA_MINI_TOKENIZER: JAMBA_MINI_1_6_TOKENIZER_HF_PATH,
     PreTrainedTokenizers.JAMBA_LARGE_TOKENIZER: JAMBA_LARGE_1_6_TOKENIZER_HF_PATH,
-    PreTrainedTokenizers.JAMBA_1_5_MINI_TOKENIZER: JAMBA_MINI_1_6_TOKENIZER_HF_PATH,
-    PreTrainedTokenizers.JAMBA_1_5_LARGE_TOKENIZER: JAMBA_LARGE_1_6_TOKENIZER_HF_PATH,
     PreTrainedTokenizers.JAMBA_MINI_1_6_TOKENIZER: JAMBA_MINI_1_6_TOKENIZER_HF_PATH,
     PreTrainedTokenizers.JAMBA_LARGE_1_6_TOKENIZER: JAMBA_LARGE_1_6_TOKENIZER_HF_PATH,
-    PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER: JAMBA_TOKENIZER_HF_PATH,
-    PreTrainedTokenizers.JAMBA_TOKENIZER: JAMBA_TOKENIZER_HF_PATH,
 }
 
 
@@ -74,15 +60,6 @@ class TokenizerFactory:
         if model_path is None:
             raise ValueError(f"Tokenizer {tokenizer_name} is not supported")
 
-        if (
-            tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER
-            or tokenizer_name == PreTrainedTokenizers.JAMBA_TOKENIZER
-        ):
-            return JambaInstructTokenizer(
-                model_path=model_path,
-                cache_dir=os.getenv(_ENV_CACHE_DIR_KEY),
-            )
-
         return SyncJambaTokenizer(model_path=model_path, cache_dir=cache_dir)
 
     @classmethod
@@ -96,14 +73,5 @@ class TokenizerFactory:
 
         if model_path is None:
             raise ValueError(f"Tokenizer {tokenizer_name} is not supported")
-
-        if (
-            tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER
-            or tokenizer_name == PreTrainedTokenizers.JAMBA_TOKENIZER
-        ):
-            return await AsyncJambaInstructTokenizer.create(
-                model_path=model_path,
-                cache_dir=os.getenv(_ENV_CACHE_DIR_KEY),
-            )
 
         return await AsyncJambaTokenizer.create(model_path=model_path, cache_dir=cache_dir)

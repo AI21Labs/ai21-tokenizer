@@ -16,10 +16,10 @@ from ai21_tokenizer.file_utils import PathLike
 _logger = logging.getLogger(__name__)
 
 _TOKENIZER_FILE = "tokenizer.json"
-_DEFAULT_MODEL_CACHE_DIR = Path(tempfile.gettempdir()) / "jamba_1_5"
+_DEFAULT_MODEL_CACHE_DIR = Path(tempfile.gettempdir()) / "jamba"
 
 
-class Jamba1_5Tokenizer(BaseJambaTokenizer, BaseTokenizer):
+class SyncJambaTokenizer(BaseJambaTokenizer, BaseTokenizer):
     def __init__(
         self,
         model_path: str,
@@ -70,7 +70,7 @@ class Jamba1_5Tokenizer(BaseJambaTokenizer, BaseTokenizer):
         return self._tokenizer.get_vocab_size()
 
 
-class AsyncJamba1_5Tokenizer(BaseJambaTokenizer, AsyncBaseTokenizer):
+class AsyncJambaTokenizer(BaseJambaTokenizer, AsyncBaseTokenizer):
     _model_path: str
     _tokenizer: Tokenizer = None
     _cache_dir: PathLike = None
@@ -158,11 +158,3 @@ class AsyncJamba1_5Tokenizer(BaseJambaTokenizer, AsyncBaseTokenizer):
     async def _load_from_cache(self, cache_file: Path) -> Tokenizer:
         tokenizer_from_file = await self._make_async_call(callback_func=Tokenizer.from_file, path=str(cache_file))
         return cast(Tokenizer, tokenizer_from_file)
-
-
-class SyncJambaTokenizer(Jamba1_5Tokenizer):
-    pass
-
-
-class AsyncJambaTokenizer(AsyncJamba1_5Tokenizer):
-    pass
