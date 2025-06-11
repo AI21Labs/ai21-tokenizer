@@ -1,10 +1,10 @@
 import asyncio
 
-from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
+from ai21_tokenizer import PreTrainedTokenizers, Tokenizer
 
 
 async def main():
-    tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
+    tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_MINI_1_6_TOKENIZER)
 
     example_sentence = "This sentence should be encoded and then decoded. Hurray!!!!"
     encoded = await tokenizer.encode(example_sentence)

@@ -1,43 +1,23 @@
 from pathlib import Path
 
 import pytest
+
 from pytest_mock import MockerFixture
 
 from ai21_tokenizer import (
-    Tokenizer,
-    PreTrainedTokenizers,
-    JambaInstructTokenizer,
-    AsyncJambaInstructTokenizer,
-    JurassicTokenizer,
-    AsyncJurassicTokenizer,
-    Jamba1_5Tokenizer,
     AsyncJamba1_5Tokenizer,
+    AsyncJambaInstructTokenizer,
+    Jamba1_5Tokenizer,
+    JambaInstructTokenizer,
+    PreTrainedTokenizers,
+    Tokenizer,
 )
+from ai21_tokenizer.jamba_1_5_tokenizer import AsyncJambaTokenizer, SyncJambaTokenizer
 
 
 @pytest.fixture
 def resources_path() -> Path:
     return Path(__file__).parent / "resources"
-
-
-@pytest.fixture(scope="session")
-def tokenizer() -> JurassicTokenizer:
-    jurassic_tokenizer = Tokenizer.get_tokenizer(tokenizer_name=PreTrainedTokenizers.J2_TOKENIZER)
-
-    if isinstance(jurassic_tokenizer, JurassicTokenizer):
-        return jurassic_tokenizer
-
-    raise ValueError("JurassicTokenizer not found")
-
-
-@pytest.fixture()
-async def async_tokenizer() -> AsyncJurassicTokenizer:
-    jurassic_tokenizer = await Tokenizer.get_async_tokenizer(tokenizer_name=PreTrainedTokenizers.J2_TOKENIZER)
-
-    if isinstance(jurassic_tokenizer, AsyncJurassicTokenizer):
-        return jurassic_tokenizer
-
-    raise ValueError("AsyncJurassicTokenizer not found")
 
 
 @pytest.fixture(scope="session")
@@ -86,20 +66,20 @@ async def async_jamba_1_5_mini_tokenizer() -> AsyncJamba1_5Tokenizer:
 
 
 @pytest.fixture(scope="session")
-def jamba_1_5_large_tokenizer() -> Jamba1_5Tokenizer:
+def jamba_1_5_large_tokenizer() -> SyncJambaTokenizer:
     jamba_1_5_large_tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_1_5_LARGE_TOKENIZER)
 
-    if isinstance(jamba_1_5_large_tokenizer, Jamba1_5Tokenizer):
+    if isinstance(jamba_1_5_large_tokenizer, SyncJambaTokenizer):
         return jamba_1_5_large_tokenizer
 
     raise ValueError("Jamba1_5Tokenizer not found")
 
 
 @pytest.fixture
-async def async_jamba_1_5_large_tokenizer() -> AsyncJamba1_5Tokenizer:
+async def async_jamba_1_5_large_tokenizer() -> AsyncJambaTokenizer:
     jamba_1_5_large_tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_1_5_LARGE_TOKENIZER)
 
-    if isinstance(jamba_1_5_large_tokenizer, AsyncJamba1_5Tokenizer):
+    if isinstance(jamba_1_5_large_tokenizer, AsyncJambaTokenizer):
         return jamba_1_5_large_tokenizer
 
     raise ValueError("AsyncJamba1_5Tokenizer not found")
