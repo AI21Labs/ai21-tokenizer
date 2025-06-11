@@ -5,6 +5,10 @@ from pathlib import Path
 
 from ai21_tokenizer.base_tokenizer import AsyncBaseTokenizer, BaseTokenizer
 from ai21_tokenizer.jamba_1_5_tokenizer import AsyncJambaTokenizer, SyncJambaTokenizer
+from ai21_tokenizer.jamba_instruct_tokenizer import (
+    AsyncJambaInstructTokenizer,
+    JambaInstructTokenizer,
+)
 
 
 _LOCAL_RESOURCES_PATH = Path(__file__).parent / "resources"
@@ -70,6 +74,15 @@ class TokenizerFactory:
         if model_path is None:
             raise ValueError(f"Tokenizer {tokenizer_name} is not supported")
 
+        if (
+            tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER
+            or tokenizer_name == PreTrainedTokenizers.JAMBA_TOKENIZER
+        ):
+            return JambaInstructTokenizer(
+                model_path=model_path,
+                cache_dir=os.getenv(_ENV_CACHE_DIR_KEY),
+            )
+
         return SyncJambaTokenizer(model_path=model_path, cache_dir=cache_dir)
 
     @classmethod
@@ -83,5 +96,14 @@ class TokenizerFactory:
 
         if model_path is None:
             raise ValueError(f"Tokenizer {tokenizer_name} is not supported")
+
+        if (
+            tokenizer_name == PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER
+            or tokenizer_name == PreTrainedTokenizers.JAMBA_TOKENIZER
+        ):
+            return await AsyncJambaInstructTokenizer.create(
+                model_path=model_path,
+                cache_dir=os.getenv(_ENV_CACHE_DIR_KEY),
+            )
 
         return await AsyncJambaTokenizer.create(model_path=model_path, cache_dir=cache_dir)

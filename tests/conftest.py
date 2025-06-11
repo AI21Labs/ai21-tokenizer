@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+import pytest_asyncio
 
 from pytest_mock import MockerFixture
 
@@ -30,7 +31,7 @@ def jamba_instruct_tokenizer() -> JambaInstructTokenizer:
     raise ValueError("JambaInstructTokenizer not found")
 
 
-@pytest.fixture
+@pytest_asyncio.fixture(scope="session")
 async def async_jamba_instruct_tokenizer() -> AsyncJambaInstructTokenizer:
     jamba_tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
 
@@ -55,7 +56,7 @@ def jamba_1_5_mini_tokenizer() -> Jamba1_5Tokenizer:
     raise ValueError("Jamba1_5Tokenizer not found")
 
 
-@pytest.fixture
+@pytest_asyncio.fixture(scope="session")
 async def async_jamba_1_5_mini_tokenizer() -> AsyncJamba1_5Tokenizer:
     jamba_1_5_mini_tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_1_5_MINI_TOKENIZER)
 
@@ -75,7 +76,7 @@ def jamba_1_5_large_tokenizer() -> SyncJambaTokenizer:
     raise ValueError("Jamba1_5Tokenizer not found")
 
 
-@pytest.fixture
+@pytest_asyncio.fixture(scope="session")
 async def async_jamba_1_5_large_tokenizer() -> AsyncJambaTokenizer:
     jamba_1_5_large_tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_1_5_LARGE_TOKENIZER)
 

@@ -155,101 +155,169 @@ def test_tokenizer__when_cache_dir_exists__should_load_from_cache(tmp_path: Path
     mock_load_from_cache.assert_called_once()
 
 
+# Async tests - restructured to avoid lazy_fixture with async parameters
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    ids=[
-        "when_mini",
-        "when_large",
-    ],
-    argnames=["async_tokenizer"],
-    argvalues=[
-        (lazy_fixture("async_jamba_1_5_mini_tokenizer"),),
-        (lazy_fixture("async_jamba_1_5_large_tokenizer"),),
-    ],
-)
-async def test_async_tokenizer_encode_decode(async_tokenizer: AsyncJamba1_5Tokenizer):
+async def test_async_tokenizer_encode_decode_mini(async_jamba_1_5_mini_tokenizer: AsyncJamba1_5Tokenizer):
     text = "Hello world!"
-    encoded = await async_tokenizer.encode(text)
-    decoded = await async_tokenizer.decode(encoded)
+    encoded = await async_jamba_1_5_mini_tokenizer.encode(text)
+    decoded = await async_jamba_1_5_mini_tokenizer.decode(encoded)
 
     assert decoded == text
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    ids=[
-        "when_mini_single_int__should_return_single_str",
-        "when_large_single_int__should_return_single_str",
-        "when_mini_list_of_int__should_return_list_of_str",
-        "when_large_list_of_int__should_return_list_of_str",
-    ],
-    argnames=["ids", "expected_tokens", "async_tokenizer"],
-    argvalues=[
-        (27164, "▁hello", lazy_fixture("async_jamba_1_5_mini_tokenizer")),
-        (27164, "▁hello", lazy_fixture("async_jamba_1_5_large_tokenizer")),
-        ([22560, 2620], ["▁Hello", "▁world"], lazy_fixture("async_jamba_1_5_mini_tokenizer")),
-        ([22560, 2620], ["▁Hello", "▁world"], lazy_fixture("async_jamba_1_5_large_tokenizer")),
-    ],
-)
-async def test_async_tokenizer__convert_ids_to_tokens(
-    ids: Union[int, List[int]],
-    expected_tokens: Union[str, List[str]],
-    async_tokenizer: AsyncJamba1_5Tokenizer,
+async def test_async_tokenizer_encode_decode_large(async_jamba_1_5_large_tokenizer: AsyncJambaTokenizer):
+    text = "Hello world!"
+    encoded = await async_jamba_1_5_large_tokenizer.encode(text)
+    decoded = await async_jamba_1_5_large_tokenizer.decode(encoded)
+
+    assert decoded == text
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_convert_ids_to_tokens_mini_single_int(
+    async_jamba_1_5_mini_tokenizer: AsyncJamba1_5Tokenizer,
 ):
-    actual_tokens = await async_tokenizer.convert_ids_to_tokens(ids)
+    ids = 27164
+    expected_tokens = "▁hello"
+
+    actual_tokens = await async_jamba_1_5_mini_tokenizer.convert_ids_to_tokens(ids)
 
     assert actual_tokens == expected_tokens
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    ids=[
-        "when_mini_single_str__should_return_single_int",
-        "when_large_single_str__should_return_single_int",
-        "when_mini_list_of_str__should_return_list_of_ints",
-        "when_large_list_of_str__should_return_list_of_ints",
-    ],
-    argnames=["tokens", "expected_ids", "async_tokenizer"],
-    argvalues=[
-        ("▁hello", 27164, lazy_fixture("async_jamba_1_5_mini_tokenizer")),
-        ("▁hello", 27164, lazy_fixture("async_jamba_1_5_large_tokenizer")),
-        (["▁Hello", "▁world"], [22560, 2620], lazy_fixture("async_jamba_1_5_mini_tokenizer")),
-        (["▁Hello", "▁world"], [22560, 2620], lazy_fixture("async_jamba_1_5_large_tokenizer")),
-    ],
-)
-async def test_async_tokenizer__convert_tokens_to_ids(
-    tokens: Union[str, List[str]],
-    expected_ids: Union[int, List[int]],
-    async_tokenizer: AsyncJamba1_5Tokenizer,
+async def test_async_tokenizer_convert_ids_to_tokens_large_single_int(
+    async_jamba_1_5_large_tokenizer: AsyncJambaTokenizer,
 ):
-    actual_ids = await async_tokenizer.convert_tokens_to_ids(tokens)
+    ids = 27164
+    expected_tokens = "▁hello"
+
+    actual_tokens = await async_jamba_1_5_large_tokenizer.convert_ids_to_tokens(ids)
+
+    assert actual_tokens == expected_tokens
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_convert_ids_to_tokens_mini_list_of_int(
+    async_jamba_1_5_mini_tokenizer: AsyncJamba1_5Tokenizer,
+):
+    ids = [22560, 2620]
+    expected_tokens = ["▁Hello", "▁world"]
+
+    actual_tokens = await async_jamba_1_5_mini_tokenizer.convert_ids_to_tokens(ids)
+
+    assert actual_tokens == expected_tokens
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_convert_ids_to_tokens_large_list_of_int(
+    async_jamba_1_5_large_tokenizer: AsyncJambaTokenizer,
+):
+    ids = [22560, 2620]
+    expected_tokens = ["▁Hello", "▁world"]
+
+    actual_tokens = await async_jamba_1_5_large_tokenizer.convert_ids_to_tokens(ids)
+
+    assert actual_tokens == expected_tokens
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_convert_tokens_to_ids_mini_single_str(
+    async_jamba_1_5_mini_tokenizer: AsyncJamba1_5Tokenizer,
+):
+    tokens = "▁hello"
+    expected_ids = 27164
+
+    actual_ids = await async_jamba_1_5_mini_tokenizer.convert_tokens_to_ids(tokens)
 
     assert actual_ids == expected_ids
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    ids=[
-        "when_mini_skip_special_tokens__should_return_no_leading_whitespace",
-        "when_large_skip_special_tokens__should_return_no_leading_whitespace",
-        "when_mini_not_skip_special_tokens__should_return_leading_whitespace",
-        "when_large_not_skip_special_tokens__should_return_leading_whitespace",
-    ],
-    argnames=["tokens", "skip_special_tokens", "expected_text", "async_tokenizer"],
-    argvalues=[
-        ([1, 26928], False, "<|startoftext|>hello", lazy_fixture("async_jamba_1_5_mini_tokenizer")),
-        ([1, 26928], False, "<|startoftext|>hello", lazy_fixture("async_jamba_1_5_large_tokenizer")),
-        ([1, 26928], True, "hello", lazy_fixture("async_jamba_1_5_mini_tokenizer")),
-        ([1, 26928], True, "hello", lazy_fixture("async_jamba_1_5_large_tokenizer")),
-    ],
-)
-async def test_async_tokenizer__decode_with_start_of_line(
-    tokens: List[int],
-    skip_special_tokens: bool,
-    expected_text: str,
-    async_tokenizer: AsyncJamba1_5Tokenizer,
+async def test_async_tokenizer_convert_tokens_to_ids_large_single_str(
+    async_jamba_1_5_large_tokenizer: AsyncJambaTokenizer,
 ):
-    actual_text = await async_tokenizer.decode(tokens, skip_special_tokens=skip_special_tokens)
+    tokens = "▁hello"
+    expected_ids = 27164
+
+    actual_ids = await async_jamba_1_5_large_tokenizer.convert_tokens_to_ids(tokens)
+
+    assert actual_ids == expected_ids
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_convert_tokens_to_ids_mini_list_of_str(
+    async_jamba_1_5_mini_tokenizer: AsyncJamba1_5Tokenizer,
+):
+    tokens = ["▁Hello", "▁world"]
+    expected_ids = [22560, 2620]
+
+    actual_ids = await async_jamba_1_5_mini_tokenizer.convert_tokens_to_ids(tokens)
+
+    assert actual_ids == expected_ids
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_convert_tokens_to_ids_large_list_of_str(
+    async_jamba_1_5_large_tokenizer: AsyncJambaTokenizer,
+):
+    tokens = ["▁Hello", "▁world"]
+    expected_ids = [22560, 2620]
+
+    actual_ids = await async_jamba_1_5_large_tokenizer.convert_tokens_to_ids(tokens)
+
+    assert actual_ids == expected_ids
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_decode_with_start_of_line_mini_skip_special_tokens(
+    async_jamba_1_5_mini_tokenizer: AsyncJamba1_5Tokenizer,
+):
+    tokens = [1, 26928]
+    skip_special_tokens = False
+    expected_text = "<|startoftext|>hello"
+
+    actual_text = await async_jamba_1_5_mini_tokenizer.decode(tokens, skip_special_tokens=skip_special_tokens)
+
+    assert actual_text == expected_text
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_decode_with_start_of_line_large_skip_special_tokens(
+    async_jamba_1_5_large_tokenizer: AsyncJambaTokenizer,
+):
+    tokens = [1, 26928]
+    skip_special_tokens = False
+    expected_text = "<|startoftext|>hello"
+
+    actual_text = await async_jamba_1_5_large_tokenizer.decode(tokens, skip_special_tokens=skip_special_tokens)
+
+    assert actual_text == expected_text
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_decode_with_start_of_line_mini_not_skip_special_tokens(
+    async_jamba_1_5_mini_tokenizer: AsyncJamba1_5Tokenizer,
+):
+    tokens = [1, 26928]
+    skip_special_tokens = True
+    expected_text = "hello"
+
+    actual_text = await async_jamba_1_5_mini_tokenizer.decode(tokens, skip_special_tokens=skip_special_tokens)
+
+    assert actual_text == expected_text
+
+
+@pytest.mark.asyncio
+async def test_async_tokenizer_decode_with_start_of_line_large_not_skip_special_tokens(
+    async_jamba_1_5_large_tokenizer: AsyncJambaTokenizer,
+):
+    tokens = [1, 26928]
+    skip_special_tokens = True
+    expected_text = "hello"
+
+    actual_text = await async_jamba_1_5_large_tokenizer.decode(tokens, skip_special_tokens=skip_special_tokens)
 
     assert actual_text == expected_text
 
