@@ -59,7 +59,7 @@ schema_pattern = "(build|ci|docs|feat|fix|perf|refactor|style|test|chore|revert|
 
 [tool.poetry]
 name = "ai21-tokenizer"
-version = "1.0.0"
+version = "1.1.0"
 description = ""
 authors = ["AI21 Labs"]
 readme = "README.md"
