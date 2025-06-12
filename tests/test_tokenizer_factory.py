@@ -1,22 +1,25 @@
 from typing import Type
 
 import pytest
-from ai21_tokenizer import Tokenizer, BaseTokenizer
-from ai21_tokenizer.jamba_instruct_tokenizer import JambaInstructTokenizer, AsyncJambaInstructTokenizer
-from ai21_tokenizer.jurassic_tokenizer import JurassicTokenizer, AsyncJurassicTokenizer
+
+from ai21_tokenizer import BaseTokenizer, Tokenizer
+from ai21_tokenizer.jamba_tokenizer import AsyncJambaTokenizer, SyncJambaTokenizer
 
 
 @pytest.mark.parametrize(
     ids=[
-        "when_tokenizer_name_is_jurassic_tokenizer__should_return_jurassic_tokenizer",
-        "when_tokenizer_name_is_jamba_tokenizer__should_return_jamba_tokenizer",
+        "when_tokenizer_name_is_jamba_mini_1_6_tokenizer__should_return_jamba_mini_1_6_tokenizer",
+        "when_tokenizer_name_is_jamba_large_1_6_tokenizer__should_return_jamba_large_1_6_tokenizer",
     ],
     argnames=["tokenizer_name", "expected_tokenizer_instance"],
     argvalues=[
-        ("j2-tokenizer", JurassicTokenizer),
         pytest.param(
-            "jamba-tokenizer",
-            JambaInstructTokenizer,
+            "jamba-mini-1.6-tokenizer",
+            SyncJambaTokenizer,
+        ),
+        pytest.param(
+            "jamba-large-1.6-tokenizer",
+            SyncJambaTokenizer,
         ),
     ],
 )
@@ -32,15 +35,18 @@ def test_tokenizer_factory__get_tokenizer(
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     ids=[
-        "when_tokenizer_name_is_jurassic_tokenizer__should_return_async_jurassic_tokenizer",
-        "when_tokenizer_name_is_jamba_tokenizer__should_return_async_jamba_tokenizer",
+        "when_tokenizer_name_is_jamba_mini_tokenizer__should_return_async_jamba_mini_tokenizer",
+        "when_tokenizer_name_is_jamba_large_tokenizer__should_return_async_jamba_large_tokenizer",
     ],
     argnames=["tokenizer_name", "expected_tokenizer_instance"],
     argvalues=[
-        ("j2-tokenizer", AsyncJurassicTokenizer),
         pytest.param(
-            "jamba-tokenizer",
-            AsyncJambaInstructTokenizer,
+            "jamba-mini-tokenizer",
+            AsyncJambaTokenizer,
+        ),
+        pytest.param(
+            "jamba-large-tokenizer",
+            AsyncJambaTokenizer,
         ),
     ],
 )

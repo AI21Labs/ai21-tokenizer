@@ -19,9 +19,9 @@
 
 ## Prerequisites
 
-- If you wish to use the tokenizers for `Jamba 1.5 Mini` or `Jamba 1.5 Large`, you will need to request access to the relevant model's HuggingFace repo:
-  - [Jamba 1.5 Mini](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Mini)
-  - [Jamba 1.5 Large](https://huggingface.co/ai21labs/AI21-Jamba-1.5-Large)
+- If you wish to use the tokenizers for `Jamba Mini` or `Jamba Large`, you will need to request access to the relevant model's HuggingFace repo:
+  - [Jamba Mini](https://huggingface.co/ai21labs/AI21-Jamba-Mini-1.6)
+  - [Jamba Large](https://huggingface.co/ai21labs/AI21-Jamba-Large-1.6)
 
 ## Installation
 
@@ -39,185 +39,95 @@ poetry add ai21-tokenizer
 
 ## Usage
 
-### Tokenizer Creation
-
-### Jamba 1.5 Mini Tokenizer
-
-```python
-from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
-
-tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_1_5_MINI_TOKENIZER)
-# Your code here
-```
-
-Another way would be to use our Jamba 1.5 Mini tokenizer directly:
-
-```python
-from ai21_tokenizer import Jamba1_5Tokenizer
-
-model_path = "<Path to your vocabs file>"
-tokenizer = Jamba1_5Tokenizer(model_path=model_path)
-# Your code here
-```
-
-#### Async usage
-
-```python
-from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
-
-tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_1_5_MINI_TOKENIZER)
-# Your code here
-```
-
-### Jamba 1.5 Large Tokenizer
-
-```python
-from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
-
-tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_1_5_LARGE_TOKENIZER)
-# Your code here
-```
-
-Another way would be to use our Jamba 1.5 Large tokenizer directly:
-
-```python
-from ai21_tokenizer import Jamba1_5Tokenizer
-
-model_path = "<Path to your vocabs file>"
-tokenizer = Jamba1_5Tokenizer(model_path=model_path)
-# Your code here
-```
-
-#### Async usage
-
-```python
-from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
-
-tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_1_5_LARGE_TOKENIZER)
-# Your code here
-```
-
-### Jamba Instruct Tokenizer
-
-```python
-from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
-
-tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
-# Your code here
-```
-
-Another way would be to use our Jamba tokenizer directly:
-
-```python
-from ai21_tokenizer import JambaInstructTokenizer
-
-model_path = "<Path to your vocabs file>"
-tokenizer = JambaInstructTokenizer(model_path=model_path)
-# Your code here
-```
-
-#### Async usage
-
-```python
-from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
-
-tokenizer = await Tokenizer.get_async_tokenizer(PreTrainedTokenizers.JAMBA_INSTRUCT_TOKENIZER)
-# Your code here
-```
-
-Another way would be to use our async Jamba tokenizer class method create:
-
-```python
-from ai21_tokenizer import AsyncJambaInstructTokenizer
-
-model_path = "<Path to your vocabs file>"
-tokenizer = AsyncJambaInstructTokenizer.create(model_path=model_path)
-# Your code here
-```
-
-### J2 Tokenizer
+### Basic Usage
 
 ```python
 from ai21_tokenizer import Tokenizer
 
+# Create tokenizer (defaults to Jamba Mini)
 tokenizer = Tokenizer.get_tokenizer()
-# Your code here
+
+# Encode text to token IDs
+text = "Hello, world!"
+encoded = tokenizer.encode(text)
+print(f"Encoded: {encoded}")
+
+# Decode token IDs back to text
+decoded = tokenizer.decode(encoded)
+print(f"Decoded: {decoded}")
 ```
 
-Another way would be to use our Jurassic model directly:
+### Specific Tokenizer Selection
 
 ```python
-from ai21_tokenizer import JurassicTokenizer
+from ai21_tokenizer import Tokenizer, PreTrainedTokenizers
 
-model_path = "<Path to your vocabs file. This is usually a binary file that end with .model>"
-config = {} # "dictionary object of your config.json file"
-tokenizer = JurassicTokenizer(model_path=model_path, config=config)
+# Jamba Mini tokenizer
+tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_MINI_TOKENIZER)
+
+# Jamba Large tokenizer
+tokenizer = Tokenizer.get_tokenizer(PreTrainedTokenizers.JAMBA_LARGE_TOKENIZER)
 ```
 
-#### Async usage
+### Async Usage
 
 ```python
+import asyncio
 from ai21_tokenizer import Tokenizer
 
-tokenizer = await Tokenizer.get_async_tokenizer()
-# Your code here
+async def main():
+    tokenizer = await Tokenizer.get_async_tokenizer()
+
+    text = "Hello, world!"
+    encoded = await tokenizer.encode(text)
+    decoded = await tokenizer.decode(encoded)
+
+    print(f"Original: {text}")
+    print(f"Encoded: {encoded}")
+    print(f"Decoded: {decoded}")
+
+asyncio.run(main())
 ```
 
-Another way would be to use our async Jamba tokenizer class method create:
+### Advanced Token Operations
 
 ```python
-from ai21_tokenizer import AsyncJurassicTokenizer
-
-model_path = "<Path to your vocabs file. This is usually a binary file that end with .model>"
-config = {} # "dictionary object of your config.json file"
-tokenizer = AsyncJurassicTokenizer.create(model_path=model_path, config=config)
-# Your code here
-```
-
-### Functions
-
-#### Encode and Decode
-
-These functions allow you to encode your text to a list of token ids and back to plaintext
-
-```python
-text_to_encode = "apple orange banana"
-encoded_text = tokenizer.encode(text_to_encode)
-print(f"Encoded text: {encoded_text}")
-
-decoded_text = tokenizer.decode(encoded_text)
-print(f"Decoded text: {decoded_text}")
-```
-
-#### Async
-
-```python
-# Assuming you have created an async tokenizer
-text_to_encode = "apple orange banana"
-encoded_text = await tokenizer.encode(text_to_encode)
-print(f"Encoded text: {encoded_text}")
-
-decoded_text = await tokenizer.decode(encoded_text)
-print(f"Decoded text: {decoded_text}")
-```
-
-#### What if you had wanted to convert your tokens to ids or vice versa?
-
-```python
-tokens = tokenizer.convert_ids_to_tokens(encoded_text)
-print(f"IDs corresponds to Tokens: {tokens}")
+# Convert between tokens and IDs
+tokens = tokenizer.convert_ids_to_tokens(encoded)
+print(f"Tokens: {tokens}")
 
 ids = tokenizer.convert_tokens_to_ids(tokens)
+print(f"IDs: {ids}")
 ```
 
-#### Async
+### Direct Class Usage
 
 ```python
-# Assuming you have created an async tokenizer
-tokens = await tokenizer.convert_ids_to_tokens(encoded_text)
-print(f"IDs corresponds to Tokens: {tokens}")
+from ai21_tokenizer import SyncJambaTokenizer
 
-ids = tokenizer.convert_tokens_to_ids(tokens)
+# Using local model file
+model_path = "/path/to/your/tokenizer.model"
+tokenizer = SyncJambaTokenizer(model_path=model_path)
+
+text = "Hello, world!"
+encoded = tokenizer.encode(text)
+decoded = tokenizer.decode(encoded)
+```
+
+### Async Direct Class Usage
+
+```python
+from ai21_tokenizer import AsyncJambaTokenizer
+
+async def main():
+    model_path = "/path/to/your/tokenizer.model"
+    tokenizer = await AsyncJambaTokenizer.create(model_path=model_path)
+
+    text = "Hello, world!"
+    encoded = await tokenizer.encode(text)
+    decoded = await tokenizer.decode(encoded)
+
+asyncio.run(main())
 ```
 
 **For more examples, please see our [examples](examples) folder.**
